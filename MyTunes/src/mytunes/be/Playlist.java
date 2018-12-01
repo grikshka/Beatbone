@@ -9,7 +9,7 @@ package mytunes.be;
 import java.util.ArrayList;
 import java.util.List;
 
- /**
+/**
  *
  * @author Acer
  */
@@ -17,34 +17,42 @@ import java.util.List;
 public class Playlist {
     
     private String name;
+    private int time;
+    private int numberOfSongs;
     private List<Song> tracklist;
     
     public Playlist(String name)
     {
         this.name = name;
+        time = 0;
+        numberOfSongs = 0;
         tracklist = new ArrayList();
     }
     
     public void addSong(Song song)
     {
         tracklist.add(song);
+        time += song.getTime();
+        numberOfSongs++;
     }
     
-    public void deleteSong(Song song)
+    public void removeSong(Song song)
     {
         tracklist.remove(song);
+        time -= song.getTime();
+        numberOfSongs--;
     }
-    
+
     public void setName(String name) 
     {
         this.name = name;
     }
-    
+
     public String getName() 
     {
         return name;
     }
-    
+
     public List<Song> getTracklist() 
     {
         return tracklist;
@@ -55,6 +63,15 @@ public class Playlist {
         tracklist.clear();
         tracklist.addAll(songs);
     }
-    
-    
+
+    public int getTime() 
+    {
+        return time;
+    }
+
+    public int getNumberOfSongs() 
+    {
+        return numberOfSongs;
+    }
+        
 }

@@ -199,6 +199,14 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickMoveUpOnPlaylist(ActionEvent event) {
+        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+        Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+        model.moveSongUpOnPlaylist(selectedPlaylist, selectedSong);
+        lstPlaylistSongs.getSelectionModel().select(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong));
+        if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
+        {
+            btnMoveUpOnPlaylist.setDisable(true);
+        }
     }
 
     @FXML

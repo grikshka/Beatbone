@@ -165,9 +165,25 @@ public class MainViewController implements Initializable {
     private void clickOnPlaylistSongs(MouseEvent event) {
         if(lstPlaylistSongs.getSelectionModel().getSelectedItem() != null)
         {
-            btnMoveUpOnPlaylist.setDisable(false);
-            btnMoveDownOnPlaylist.setDisable(false);
+            Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+            Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
             btnDeleteSongFromPlaylist.setDisable(false);
+            if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
+            {
+                btnMoveUpOnPlaylist.setDisable(true);
+            }
+            else
+            {
+                btnMoveUpOnPlaylist.setDisable(false);
+            }
+            if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs() - 1)
+            {
+                btnMoveDownOnPlaylist.setDisable(true);  
+            }
+            else
+            {
+                btnMoveDownOnPlaylist.setDisable(false);  
+            }
         }
     }
 
@@ -209,6 +225,12 @@ public class MainViewController implements Initializable {
         if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
         {
             btnMoveUpOnPlaylist.setDisable(true);
+            btnMoveDownOnPlaylist.setDisable(false);
+        }
+        else
+        {
+            btnMoveUpOnPlaylist.setDisable(false);
+            btnMoveDownOnPlaylist.setDisable(false);
         }
     }
 
@@ -221,6 +243,12 @@ public class MainViewController implements Initializable {
         if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs()-1)
         {
             btnMoveDownOnPlaylist.setDisable(true);
+            btnMoveUpOnPlaylist.setDisable(false);
+        }
+        else
+        {
+            btnMoveDownOnPlaylist.setDisable(false);
+            btnMoveUpOnPlaylist.setDisable(false);            
         }
     }
 

@@ -106,7 +106,13 @@ public class MainModel {
         Playlist pl = new Playlist(name);
         playlists.add(pl);
     }
-            
+    
+    public void updatePlaylist(Playlist playlist, String name)
+    {
+        playlist.setName(name);
+        updateListOfPlaylists(playlist);
+    }
+              
     public int getIndexOfSongInPlaylist(Playlist playlist, Song song)
     {
         return playlist.getTracklist().indexOf(song);

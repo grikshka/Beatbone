@@ -6,14 +6,17 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import mytunes.be.Song;
 import mytunes.gui.model.MainModel;
 
@@ -86,6 +89,8 @@ public class SongViewController implements Initializable {
 
     @FXML
     private void clickCancel(ActionEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
     
     private void disableElements()

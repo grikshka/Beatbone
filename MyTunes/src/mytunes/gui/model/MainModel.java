@@ -27,41 +27,7 @@ public class MainModel {
     private MainModel()
     {
         songlist = FXCollections.observableArrayList();
-        Song song1 = new Song("In the End", "Linkin Park", "Rock", 210);    // temporary - later we will get songs from database
-        Song song2 = new Song("Mamma mia", "ABBA", "Mom", 240);             // temporary - later we will get songs from database
-        songlist.add(song1);                                                // temporary - later we will get songs from database
-        songlist.add(song2);                                                // temporary - later we will get songs from database
-        Song song3 = new Song("Gucci Gang", "Lil Pump", "Rap", 420);            // temporary - later we will get songs from database
-        Song song4 = new Song("Will He", "Joji", "R&B", 170);            // temporary - later we will get songs from database
-        Song song5 = new Song("Still D.R.E.", "Snoop Dogg", "Rap", 870);            // temporary - later we will get songs from database
-        Song song6 = new Song("Awful Things", "Lil Peep", "Emo-Rap", 430);            // temporary - later we will get songs from database
-        Song song7 = new Song("Chasing Faith", "Underachievers", "Rap", 150);            // temporary - later we will get songs from database
-        Song song8 = new Song("Hotline Bling", "Drake", "Rap", 340);            // temporary - later we will get songs from database
-        songlist.add(song3);                                                // temporary - later we will get songs from database
-        songlist.add(song4);                                                // temporary - later we will get songs from database
-        songlist.add(song5);                                                // temporary - later we will get songs from database
-        songlist.add(song6);                                                // temporary - later we will get songs from database
-        songlist.add(song7);                                                // temporary - later we will get songs from database
-        songlist.add(song8);                                                // temporary - later we will get songs from database
-        
-        playlists = FXCollections.observableArrayList();                    // temporary - later we will get playlists from database
-        Playlist pl = new Playlist("Nice playlist");                        // temporary - later we will get playlists from database
-        Playlist p2 = new Playlist("Super nice playlist");                        // temporary - later we will get playlists from database
-        Playlist p3 = new Playlist("Super cool playlist");                        // temporary - later we will get playlists from database
-        pl.addSong(song1);                                                  // temporary - later we will get playlists from database
-        pl.addSong(song2);                                                  // temporary - later we will get playlists from database  
-        pl.addSong(song3);                                                  // temporary - later we will get playlists from database  
-        pl.addSong(song4);                                                  // temporary - later we will get playlists from database  
-        pl.addSong(song5);                                                  // temporary - later we will get playlists from database  
-        pl.addSong(song5);                                                  // temporary - later we will get playlists from database 
-        p2.addSong(song7);
-        p3.addSong(song2);
-        playlists.add(p3);
-        playlists.add(p2);                                                  // temporary - later we will get playlists from database
-        playlists.add(pl);                                                  // temporary - later we will get playlists from database
-        
-        playlistSongs = FXCollections.observableArrayList();
-        
+        playlists = FXCollections.observableArrayList();
         playlistSongs = FXCollections.observableArrayList();
         
     }
@@ -85,9 +51,9 @@ public class MainModel {
         songlist.remove(song);
     }
     
-    public void createSong(String title, String artist, String genre, int time)
+    public void createSong(String title, String artist, String genre, String path, int time)
     {
-        Song song = new Song(title,artist,genre,time);
+        Song song = new Song(title,artist,genre,path,time);
         songlist.add(song);
     }
     

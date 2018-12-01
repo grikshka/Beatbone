@@ -84,7 +84,7 @@ public class SongViewController implements Initializable {
     private void clickSave(ActionEvent event) {
         if(!editing)
         {
-            model.createSong(txtTitle.getText(), txtArtist.getText(), cmbGenre.getValue(), 300); //later we will get the time from field
+            model.createSong(txtTitle.getText(), txtArtist.getText(), cmbGenre.getValue(), txtFile.getText(), 300); //later we will get the time from field
         }
         else
         {

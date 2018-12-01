@@ -20,6 +20,7 @@ public class Song {
         this.title = title;
         this.artist = artist;
         this.genre = genre;
+        this.path = path;
         this.time = time;
     }
     

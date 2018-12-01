@@ -166,12 +166,8 @@ public class MainViewController implements Initializable {
             Song songToPlay = selectSongToPlay();
             if(songToPlay != null)
             {
-                File fileSong = new File(songToPlay.getPath());
-                Media song = new Media(fileSong.toURI().toString());
-                mediaPlayer = new MediaPlayer(song);
+                playSong(songToPlay);
                 enableChangeSongButtons();
-                mediaPlayer.setVolume(sldVolume.getValue());
-                mediaPlayer.play();
                 labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
                 btnPlaySong.setText("||");
             }
@@ -423,6 +419,15 @@ public class MainViewController implements Initializable {
                 tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
             }
         }
+    }
+    
+    private void playSong(Song songToPlay)
+    {
+        File fileSong = new File(songToPlay.getPath());
+        Media song = new Media(fileSong.toURI().toString());
+        mediaPlayer = new MediaPlayer(song);
+        mediaPlayer.setVolume(sldVolume.getValue());
+        mediaPlayer.play();
     }
     
     private Song selectSongToPlay()

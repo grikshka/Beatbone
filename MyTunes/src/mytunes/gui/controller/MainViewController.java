@@ -170,7 +170,6 @@ public class MainViewController implements Initializable {
             if(songToPlay != null)
             {
                 playSong(songToPlay, PlayingMode.SONG_LIST);
-                enableChangeSongButtons();
                 labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
                 btnPlaySong.setText("||");
             }
@@ -460,7 +459,11 @@ public class MainViewController implements Initializable {
     
     private void playSong(Song songToPlay, PlayingMode mode)
     {
-        if(mediaPlayer != null && mediaPlayer.getStatus().equals(Status.PLAYING))
+        if(mediaPlayer == null)
+        {
+            enableChangeSongButtons();
+        }
+        else if(mediaPlayer.getStatus().equals(Status.PLAYING))
         {
             mediaPlayer.stop();
         }

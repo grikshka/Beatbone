@@ -138,6 +138,11 @@ public class MainModel {
         playlistSongs.setAll(playlist.getTracklist());
     }
     
+    public void clearPlaylistSongs()
+    {
+        playlistSongs.clear();
+    }
+    
     public void addSongToPlaylist(Playlist playlist, Song song)
     {
         playlist.addSong(song);

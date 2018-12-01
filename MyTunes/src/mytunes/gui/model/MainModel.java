@@ -22,8 +22,9 @@ public class MainModel {
     private ObservableList<Song> songlist;
     private ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
+    private static MainModel instance;
     
-    public MainModel()
+    private MainModel()
     {
         songlist = FXCollections.observableArrayList();
         Song song1 = new Song("In the End", "Linkin Park", "Rock", 210);    // temporary - later we will get songs from database
@@ -63,6 +64,15 @@ public class MainModel {
         
         playlistSongs = FXCollections.observableArrayList();
         
+    }
+    
+    public static MainModel createInstance()
+    {
+        if(instance == null)
+        {
+            instance = new MainModel();
+        }
+        return instance;
     }
     
     public ObservableList<Song> getSongs()

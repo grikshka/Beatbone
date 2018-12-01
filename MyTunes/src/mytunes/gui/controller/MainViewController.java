@@ -87,7 +87,7 @@ public class MainViewController implements Initializable {
    
     public MainViewController()
     {
-        model = new MainModel();
+        model = MainModel.createInstance();
     }
     
     @Override

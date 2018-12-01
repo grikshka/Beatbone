@@ -28,6 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.gui.model.MainModel;
 
@@ -56,7 +57,7 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<?, ?> colSongTime;
     @FXML
-    private TableView<?> tblPlaylists;
+    private TableView<Playlist> tblPlaylists;
     @FXML
     private TableColumn<?, ?> colPlaylistName;
     @FXML
@@ -104,6 +105,13 @@ public class MainViewController implements Initializable {
     
     private void loadData()
     {
+        //load playlists
+        colPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
+        colPlaylistSongs.setCellValueFactory(new PropertyValueFactory("numberOfSongs"));
+        colPlaylistTime.setCellValueFactory(new PropertyValueFactory("time"));
+        tblPlaylists.setItems(model.getPlaylists());
+        
+        //load songs
         colSongTitle.setCellValueFactory(new PropertyValueFactory("title"));
         colSongArtist.setCellValueFactory(new PropertyValueFactory("artist"));
         colSongGenre.setCellValueFactory(new PropertyValueFactory("genre"));

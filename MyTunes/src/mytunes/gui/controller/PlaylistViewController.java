@@ -6,14 +6,18 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import mytunes.be.Playlist;
+import mytunes.gui.model.MainModel;
 
 /**
  * FXML Controller class
@@ -21,30 +25,52 @@ import mytunes.be.Playlist;
  * @author Acer
  */
 public class PlaylistViewController implements Initializable {
+    
+    private MainModel model;
 
     @FXML
     private TextField txtName;
     @FXML
     private Button btnSave;
+    
+    public PlaylistViewController()
+    {
+        model = MainModel.createInstance();
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        btnSave.setDisable(true);
     }    
 
     @FXML
     private void keyNameTyped(KeyEvent event) {
+        String name = txtName.getText().trim();
+        if(!name.isEmpty())
+        {
+            btnSave.setDisable(false);
+        }
+        else
+        {
+            btnSave.setDisable(true);
+        }
     }
 
     @FXML
     private void clickSave(ActionEvent event) {
+        String name = txtName.getText().trim();
+        model.createPlaylist(name);
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     private void clickCancel(ActionEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
     
     public void setElementsForEditing(Playlist playlist)

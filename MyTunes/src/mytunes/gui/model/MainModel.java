@@ -91,6 +91,25 @@ public class MainModel {
         songlist.add(song);
     }
     
+    public void updateSong(Song song, String title, String artist, String genre)
+    {
+        song.setTitle(title);
+        song.setArtist(artist);
+        song.setGenre(genre);
+        updateListOfSongs(song);
+    }
+    
+    private void updateListOfSongs(Song song)
+    {
+        int index = getIndexOfSong(song);
+        songlist.set(index, song);
+    }
+    
+    public int getIndexOfSong(Song song)
+    {
+        return songlist.indexOf(song);
+    }
+    
     public ObservableList<Playlist> getPlaylists()
     {
         return playlists;

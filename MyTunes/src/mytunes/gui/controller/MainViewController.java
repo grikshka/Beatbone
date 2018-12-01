@@ -233,6 +233,11 @@ public class MainViewController implements Initializable {
             tblPlaylists.getSelectionModel().clearSelection();
             model.clearPlaylistSongs();
             btnAddSongToPlaylist.setDisable(true);
+            btnDeletePlaylist.setDisable(true);
+            btnEditPlaylist.setDisable(true);
+            btnMoveUpOnPlaylist.setDisable(true);
+            btnMoveDownOnPlaylist.setDisable(true);
+            btnDeleteSongFromPlaylist.setDisable(true);
         }
     }
 

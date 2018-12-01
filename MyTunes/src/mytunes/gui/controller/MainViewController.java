@@ -426,7 +426,7 @@ public class MainViewController implements Initializable {
         File fileSong = new File(songToPlay.getPath());
         Media song = new Media(fileSong.toURI().toString());
         mediaPlayer = new MediaPlayer(song);
-        mediaPlayer.setVolume(sldVolume.getValue());
+        setMediaPlayer();      
         mediaPlayer.play();
     }
     
@@ -454,6 +454,20 @@ public class MainViewController implements Initializable {
             songToPlay = model.getFirstSong();
         }
         return songToPlay;
+    }
+    
+    private void setMediaPlayer()
+    {
+        mediaPlayer.setVolume(sldVolume.getValue());
+        mediaPlayer.setOnEndOfMedia(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    btnNextSong.fire();
+                }
+            }      
+        );
     }
     
     private void enableButtonsForPlaylists() 

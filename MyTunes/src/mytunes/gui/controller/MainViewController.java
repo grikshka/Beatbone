@@ -49,23 +49,23 @@ public class MainViewController implements Initializable {
     @FXML
     private TableView<Song> tblSongs;
     @FXML
-    private TableColumn<?, ?> colSongTitle;
+    private TableColumn<Song, String> colSongTitle;
     @FXML
-    private TableColumn<?, ?> colSongArtist;
+    private TableColumn<Song, String> colSongArtist;
     @FXML
-    private TableColumn<?, ?> colSongGenre;
+    private TableColumn<Song, String> colSongGenre;
     @FXML
-    private TableColumn<?, ?> colSongTime;
+    private TableColumn<Song, Integer> colSongTime;
     @FXML
     private TableView<Playlist> tblPlaylists;
     @FXML
-    private TableColumn<?, ?> colPlaylistName;
+    private TableColumn<Playlist, String> colPlaylistName;
     @FXML
-    private TableColumn<?, ?> colPlaylistSongs;
+    private TableColumn<Playlist, Integer> colPlaylistSongs;
     @FXML
-    private TableColumn<?, ?> colPlaylistTime;
+    private TableColumn<Playlist, Integer> colPlaylistTime;
     @FXML
-    private ListView<?> lstPlaylistSongs;
+    private ListView<Song> lstPlaylistSongs;
     @FXML
     private Button btnEditPlaylist;
     @FXML
@@ -149,11 +149,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickOnPlaylists(MouseEvent event) {
-        if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
-        {
-            btnEditPlaylist.setDisable(false);
-            btnDeletePlaylist.setDisable(false);
-        }
+        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+        enableButtonsForPlaylists();
+        model.setPlaylistSongs(selectedPlaylist);
+        lstPlaylistSongs.setItems(model.getPlaylistSongs());
     }
 
     @FXML
@@ -243,6 +242,15 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickAddSongToPlaylist(ActionEvent event) {
+    }
+    
+    private void enableButtonsForPlaylists() 
+    {
+        if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+        {
+            btnEditPlaylist.setDisable(false);
+            btnDeletePlaylist.setDisable(false);
+        }
     }
     
 }

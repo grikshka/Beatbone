@@ -113,6 +113,14 @@ public class MainModel {
         }
     }
     
+    public void removeSongFromPlaylist(Playlist playlist, Song song)
+    {
+        playlist.removeSong(song);
+        playlists.remove(playlist);
+        playlists.add(playlist);
+        setPlaylistSongs(playlist);      
+    }
+    
     public ObservableList<Song> getPlaylistSongs()
     {
         return playlistSongs;

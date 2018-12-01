@@ -145,10 +145,10 @@ public class SongViewController implements Initializable {
         txtTitle.setText(editingSong.getTitle());
         txtArtist.setText(editingSong.getArtist());
         cmbGenre.setValue(editingSong.getGenre());
+        txtFile.setText(editingSong.getPath());
         txtArtist.setFocusTraversable(false);
         txtTitle.setFocusTraversable(false);
         txtTime.setText(Integer.toString(editingSong.getTime()));
-        txtFile.setText(song.getPath());
     }
     
     private void checkInputs()

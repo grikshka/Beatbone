@@ -145,8 +145,11 @@ public class MainViewController implements Initializable {
         if(tblSongs.getSelectionModel().getSelectedItem() != null)
         {
             btnEditSong.setDisable(false);
-            btnAddSongToPlaylist.setDisable(false);
             btnDeleteSongFromSongs.setDisable(false);
+            if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+            {
+                btnAddSongToPlaylist.setDisable(false);
+            }
         }
     }
 
@@ -158,6 +161,10 @@ public class MainViewController implements Initializable {
             enableButtonsForPlaylists();
             model.setPlaylistSongs(selectedPlaylist);
             lstPlaylistSongs.setItems(model.getPlaylistSongs());
+            if(tblSongs.getSelectionModel().getSelectedItem() != null)
+            {
+                btnAddSongToPlaylist.setDisable(false);
+            }
         }
     }
 

@@ -91,7 +91,13 @@ public class MainViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        disableElements();
         loadData();
+    }
+    
+    private void disableElements()
+    {
+        btnEditSong.setDisable(true);
     }
     
     private void loadData()
@@ -121,6 +127,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickOnSongs(MouseEvent event) {
+        btnEditSong.setDisable(false);
     }
 
     @FXML
@@ -174,7 +181,18 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void clickEditSong(ActionEvent event) {
+    private void clickEditSong(ActionEvent event) throws IOException {
+        Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongView.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        SongViewController controller = (SongViewController) fxmlLoader.getController();
+        controller.setElementsForEditing(selectedSong);
+        controller.disableElementsForEditing();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Edit Song");
+        stage.setScene(new Scene(root));  
+        stage.show();  
     }
 
     @FXML

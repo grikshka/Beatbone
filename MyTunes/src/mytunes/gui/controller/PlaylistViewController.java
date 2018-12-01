@@ -27,6 +27,8 @@ import mytunes.gui.model.MainModel;
 public class PlaylistViewController implements Initializable {
     
     private MainModel model;
+    private boolean editing;
+    private Playlist editingPlaylist;
 
     @FXML
     private TextField txtName;
@@ -35,7 +37,8 @@ public class PlaylistViewController implements Initializable {
     
     public PlaylistViewController()
     {
-        model = MainModel.createInstance();
+        editing = false;
+        model = MainModel.createInstance();      
     }
 
     /**
@@ -62,7 +65,14 @@ public class PlaylistViewController implements Initializable {
     @FXML
     private void clickSave(ActionEvent event) {
         String name = txtName.getText().trim();
-        model.createPlaylist(name);
+        if(!editing)
+        {
+            model.createPlaylist(name);
+        }
+        else
+        {
+            model.updatePlaylist(editingPlaylist, name);
+        }
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
     }
@@ -75,7 +85,9 @@ public class PlaylistViewController implements Initializable {
     
     public void setElementsForEditing(Playlist playlist)
     {
-        txtName.setText(playlist.getName());
+        editing = true;
+        editingPlaylist = playlist;
+        txtName.setText(editingPlaylist.getName());
     }
     
 }

@@ -28,6 +28,7 @@ import mytunes.gui.model.MainModel;
 public class SongViewController implements Initializable {
     
     private boolean editing;
+    private Song editingSong;
     private MainModel model;
 
     @FXML
@@ -81,6 +82,16 @@ public class SongViewController implements Initializable {
 
     @FXML
     private void clickSave(ActionEvent event) {
+        if(!editing)
+        {
+            model.createSong(txtTitle.getText(), txtArtist.getText(), cmbGenre.getValue(), 300); //later we will get the time from field
+        }
+        else
+        {
+            model.updateSong(editingSong, txtTitle.getText(), txtArtist.getText(), cmbGenre.getValue());
+        }
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -103,8 +114,14 @@ public class SongViewController implements Initializable {
     public void setElementsForEditing(Song song)
     {
         editing = true;
+        editingSong = song;
         btnChoosePath.setDisable(true);
-        txtTime.setText(Integer.toString(song.getTime()));
+        txtTitle.setText(editingSong.getTitle());
+        txtArtist.setText(editingSong.getArtist());
+        cmbGenre.setValue(editingSong.getGenre());
+        txtArtist.setFocusTraversable(false);
+        txtTitle.setFocusTraversable(false);
+        txtTime.setText(Integer.toString(editingSong.getTime()));
     }
     
     private void checkInputs()

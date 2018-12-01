@@ -206,11 +206,21 @@ public class MainViewController implements Initializable {
     private void clickOnSongs(MouseEvent event) {
         if(tblSongs.getSelectionModel().getSelectedItem() != null)
         {
-            btnEditSong.setDisable(false);
-            btnDeleteSongFromSongs.setDisable(false);
-            if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
-                btnAddSongToPlaylist.setDisable(false);
+                Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
+                playSong(selectedSong);
+                labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
+                btnPlaySong.setText("||");
+            }
+            else
+            {
+                btnEditSong.setDisable(false);
+                btnDeleteSongFromSongs.setDisable(false);
+                if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+                {
+                    btnAddSongToPlaylist.setDisable(false);
+                }
             }
         }
     }
@@ -219,13 +229,27 @@ public class MainViewController implements Initializable {
     private void clickOnPlaylists(MouseEvent event) {
         if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
         {
-            Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-            enableButtonsForPlaylists();
-            model.setPlaylistSongs(selectedPlaylist);
-            lstPlaylistSongs.setItems(model.getPlaylistSongs());
-            if(tblSongs.getSelectionModel().getSelectedItem() != null)
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
-                btnAddSongToPlaylist.setDisable(false);
+                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+                Song selectedSong = model.getFirstSongFromPlaylist(selectedPlaylist);
+                if(selectedSong != null)
+                {
+                    playSong(selectedSong);
+                    labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
+                    btnPlaySong.setText("||");
+                }
+            }
+            else
+            {
+                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+                enableButtonsForPlaylists();
+                model.setPlaylistSongs(selectedPlaylist);
+                lstPlaylistSongs.setItems(model.getPlaylistSongs());
+                if(tblSongs.getSelectionModel().getSelectedItem() != null)
+                {
+                    btnAddSongToPlaylist.setDisable(false);
+                }
             }
         }
     }
@@ -234,24 +258,34 @@ public class MainViewController implements Initializable {
     private void clickOnPlaylistSongs(MouseEvent event) {
         if(lstPlaylistSongs.getSelectionModel().getSelectedItem() != null)
         {
-            Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-            Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
-            btnDeleteSongFromPlaylist.setDisable(false);
-            if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
-                btnMoveUpOnPlaylist.setDisable(true);
+                Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+                playSong(selectedSong);
+                labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
+                btnPlaySong.setText("||");
             }
             else
             {
-                btnMoveUpOnPlaylist.setDisable(false);
-            }
-            if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs() - 1)
-            {
-                btnMoveDownOnPlaylist.setDisable(true);  
-            }
-            else
-            {
-                btnMoveDownOnPlaylist.setDisable(false);  
+                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+                Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+                btnDeleteSongFromPlaylist.setDisable(false);
+                if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
+                {
+                    btnMoveUpOnPlaylist.setDisable(true);
+                }
+                else
+                {
+                    btnMoveUpOnPlaylist.setDisable(false);
+                }
+                if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs() - 1)
+                {
+                    btnMoveDownOnPlaylist.setDisable(true);  
+                }
+                else
+                {
+                    btnMoveDownOnPlaylist.setDisable(false);  
+                }
             }
         }
     }

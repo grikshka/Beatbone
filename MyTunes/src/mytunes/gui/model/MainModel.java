@@ -122,6 +122,22 @@ public class MainModel {
     {
         playlistSongs.setAll(playlist.getTracklist());
     }
+    
+    public void addSongToPlaylist(Playlist playlist, Song song)
+    {
+        if(!playlist.getTracklist().contains(song))
+        {
+            playlist.addSong(song);
+            playlists.remove(playlist);
+            playlists.add(playlist);
+            setPlaylistSongs(playlist);
+        }
+    }
+    
+    public int getIndexOfPlaylist(Playlist playlist)
+    {
+        return playlists.indexOf(playlist);
+    }
 
     
 }

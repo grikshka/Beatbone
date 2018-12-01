@@ -305,6 +305,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickAddSongToPlaylist(ActionEvent event) {
+        Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
+        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+        model.addSongToPlaylist(selectedPlaylist, selectedSong);
+        tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
     }
     
     private void enableButtonsForPlaylists() 

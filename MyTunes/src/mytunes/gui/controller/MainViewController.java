@@ -319,8 +319,24 @@ public class MainViewController implements Initializable {
     private void clickAddSongToPlaylist(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        model.addSongToPlaylist(selectedPlaylist, selectedSong);
-        tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
+        if(!selectedPlaylist.getTracklist().contains(selectedSong))
+        {
+            model.addSongToPlaylist(selectedPlaylist, selectedSong);
+            tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
+        }
+        else
+        {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Duplicate song");
+            alert.setHeaderText(null);
+            alert.setContentText("This song is already in your playlist, do you want to add it anyway?");
+            Optional<ButtonType> action = alert.showAndWait();
+            if(action.get() == ButtonType.OK)
+            {
+                model.addSongToPlaylist(selectedPlaylist, selectedSong);
+                tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
+            }
+        }
     }
     
     private void enableButtonsForPlaylists() 

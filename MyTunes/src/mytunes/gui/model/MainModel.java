@@ -140,11 +140,8 @@ public class MainModel {
     
     public void addSongToPlaylist(Playlist playlist, Song song)
     {
-        if(!playlist.getTracklist().contains(song))
-        {
-            playlist.addSong(song);
-            updateListOfPlaylists(playlist);
-        }
+        playlist.addSong(song);
+        updateListOfPlaylists(playlist);
     }
     
     public int getIndexOfPlaylist(Playlist playlist)

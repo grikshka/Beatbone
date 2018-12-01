@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import mytunes.be.Song;
+import mytunes.gui.model.MainModel;
 
 /**
  * FXML Controller class
@@ -22,6 +23,9 @@ import mytunes.be.Song;
  * @author Acer
  */
 public class SongViewController implements Initializable {
+    
+    private boolean editing;
+    private MainModel model;
 
     @FXML
     private TextField txtTitle;
@@ -32,30 +36,40 @@ public class SongViewController implements Initializable {
     @FXML
     private TextField txtFile;
     @FXML
-    private ComboBox<?> cmbGenre;
+    private ComboBox<String> cmbGenre;
     @FXML
     private Button btnSave;
     @FXML
     private Button btnChoosePath;
+    
+    public SongViewController()
+    {
+        editing = false;
+        model = MainModel.createInstance();
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        btnSave.setDisable(true);
+        cmbGenre.getItems().addAll("Hip Hop", "Rap", "Blues", "Rock");  // temporary - later we will get genres from database
     }    
 
     @FXML
     private void keyTitleTyped(KeyEvent event) {
+        checkInputs();
     }
 
     @FXML
     private void keyArtistTyped(KeyEvent event) {
+        checkInputs();
     }
 
     @FXML
     private void clickGenrePicked(ActionEvent event) {
+        checkInputs();
     }
 
     @FXML
@@ -83,7 +97,16 @@ public class SongViewController implements Initializable {
     
     public void setElementsForEditing(Song song)
     {
+        editing = true;
         txtTime.setText(Integer.toString(song.getTime()));
+    }
+    
+    private void checkInputs()
+    {
+        if(!(txtArtist.getText().isEmpty()) && !(txtTitle.getText().isEmpty()) && cmbGenre.getValue() != null)
+        {
+            btnSave.setDisable(false);
+        }
     }
     
 }

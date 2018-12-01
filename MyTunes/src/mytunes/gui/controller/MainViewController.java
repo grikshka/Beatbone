@@ -30,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -163,7 +164,7 @@ public class MainViewController implements Initializable {
     private void clickPlay(ActionEvent event) {
         if(mediaPlayer == null)
         {
-            Song songToPlay = selectSongToPlay();
+            Song songToPlay = model.getFirstSong();
             if(songToPlay != null)
             {
                 playSong(songToPlay);
@@ -429,33 +430,7 @@ public class MainViewController implements Initializable {
         setMediaPlayer();      
         mediaPlayer.play();
     }
-    
-    private Song selectSongToPlay()
-    {
-        Song songToPlay;
-        if(tblSongs.getItems().isEmpty())
-        {
-            return null;
-        }
-        if(lstPlaylistSongs.getSelectionModel().getSelectedItem() != null)
-        {
-            songToPlay = lstPlaylistSongs.getSelectionModel().getSelectedItem();
-        }
-//        else if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
-//        {
-//            fileSong = new File((model.getFirstSongInPlaylist(tblPlaylists.getSelectionModel().getSelectedItem()).getPath()));
-//        }
-        else if(tblSongs.getSelectionModel().getSelectedItem() != null)
-        {
-            songToPlay = tblSongs.getSelectionModel().getSelectedItem();
-        }
-        else
-        {
-            songToPlay = model.getFirstSong();
-        }
-        return songToPlay;
-    }
-    
+       
     private void setMediaPlayer()
     {
         mediaPlayer.setVolume(sldVolume.getValue());

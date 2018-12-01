@@ -21,8 +21,8 @@ public class MyTunes extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainView.fxml"));
         
-        Scene scene = new Scene(root);
-        
+        stage.setTitle("MyTunes");
+        Scene scene = new Scene(root);    
         stage.setScene(scene);
         stage.show();
     }

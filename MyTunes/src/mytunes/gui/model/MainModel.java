@@ -103,6 +103,16 @@ public class MainModel {
         }
     }
     
+    public void moveSongDownOnPlaylist(Playlist playlist, Song song)
+    {
+        int id = playlistSongs.indexOf(song);
+        if(id!= playlist.getNumberOfSongs()-1)
+        {
+            Collections.swap(playlistSongs, id, id+1);
+            Collections.swap(playlist.getTracklist(), id, id+1);
+        }
+    }
+    
     public ObservableList<Song> getPlaylistSongs()
     {
         return playlistSongs;

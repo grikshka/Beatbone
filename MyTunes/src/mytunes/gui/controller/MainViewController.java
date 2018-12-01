@@ -152,10 +152,13 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickOnPlaylists(MouseEvent event) {
-        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        enableButtonsForPlaylists();
-        model.setPlaylistSongs(selectedPlaylist);
-        lstPlaylistSongs.setItems(model.getPlaylistSongs());
+        if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+        {
+            Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+            enableButtonsForPlaylists();
+            model.setPlaylistSongs(selectedPlaylist);
+            lstPlaylistSongs.setItems(model.getPlaylistSongs());
+        }
     }
 
     @FXML
@@ -211,6 +214,14 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickMoveDownOnPlaylist(ActionEvent event) {
+        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+        Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+        model.moveSongDownOnPlaylist(selectedPlaylist, selectedSong);
+        lstPlaylistSongs.getSelectionModel().select(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong));
+        if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs()-1)
+        {
+            btnMoveDownOnPlaylist.setDisable(true);
+        }
     }
 
     @FXML
@@ -263,11 +274,8 @@ public class MainViewController implements Initializable {
     
     private void enableButtonsForPlaylists() 
     {
-        if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
-        {
-            btnEditPlaylist.setDisable(false);
-            btnDeletePlaylist.setDisable(false);
-        }
+        btnEditPlaylist.setDisable(false);
+        btnDeletePlaylist.setDisable(false);
     }
     
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import mytunes.be.Song;
 
 /**
  * FXML Controller class
@@ -71,6 +72,18 @@ public class SongViewController implements Initializable {
 
     @FXML
     private void clickCancel(ActionEvent event) {
+    }
+    
+    public void disableElementsForEditing()
+    {
+        txtTime.setDisable(true);
+        txtFile.setDisable(true);
+        btnChoosePath.setDisable(true);
+    }
+    
+    public void setElementsForEditing(Song song)
+    {
+        txtTime.setText(Integer.toString(song.getTime()));
     }
     
 }

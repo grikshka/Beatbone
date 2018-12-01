@@ -221,6 +221,19 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickDeletePlaylist(ActionEvent event) {
+        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete \"" + selectedPlaylist.getName() + "\" from your playlists?");
+        Optional<ButtonType> action = alert.showAndWait();
+        if(action.get() == ButtonType.OK)
+        {
+            model.deletePlaylist(selectedPlaylist);
+            tblPlaylists.getSelectionModel().clearSelection();
+            model.clearPlaylistSongs();
+            btnAddSongToPlaylist.setDisable(true);
+        }
     }
 
     @FXML

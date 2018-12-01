@@ -71,6 +71,15 @@ public class MainModel {
         songlist.set(index, song);
     }
     
+    public Song getFirstSong()
+    {
+        if(songlist == null)
+        {
+            return null;
+        }
+        return songlist.get(0);
+    }
+    
     public int getIndexOfSong(Song song)
     {
         return songlist.indexOf(song);

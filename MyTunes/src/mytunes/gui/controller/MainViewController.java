@@ -329,6 +329,10 @@ public class MainViewController implements Initializable {
         if(action.get() == ButtonType.OK)
         {
             model.deleteSong(selectedSong);
+            tblSongs.getSelectionModel().clearSelection();
+            btnAddSongToPlaylist.setDisable(true);
+            btnEditSong.setDisable(true);
+            btnDeleteSongFromSongs.setDisable(true);
         }
     }
 

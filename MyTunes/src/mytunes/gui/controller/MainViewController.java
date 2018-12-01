@@ -311,7 +311,6 @@ public class MainViewController implements Initializable {
         Parent root = (Parent) fxmlLoader.load();
         SongViewController controller = (SongViewController) fxmlLoader.getController();
         controller.setElementsForEditing(selectedSong);
-        controller.disableElementsForEditing();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edit Song");

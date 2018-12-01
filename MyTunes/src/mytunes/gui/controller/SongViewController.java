@@ -53,7 +53,7 @@ public class SongViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btnSave.setDisable(true);
+        disableElements();
         cmbGenre.getItems().addAll("Hip Hop", "Rap", "Blues", "Rock");  // temporary - later we will get genres from database
     }    
 
@@ -88,16 +88,17 @@ public class SongViewController implements Initializable {
     private void clickCancel(ActionEvent event) {
     }
     
-    public void disableElementsForEditing()
+    private void disableElements()
     {
+        btnSave.setDisable(true);
         txtTime.setDisable(true);
         txtFile.setDisable(true);
-        btnChoosePath.setDisable(true);
     }
     
     public void setElementsForEditing(Song song)
     {
         editing = true;
+        btnChoosePath.setDisable(true);
         txtTime.setText(Integer.toString(song.getTime()));
     }
     
@@ -106,6 +107,10 @@ public class SongViewController implements Initializable {
         if(!(txtArtist.getText().isEmpty()) && !(txtTitle.getText().isEmpty()) && cmbGenre.getValue() != null)
         {
             btnSave.setDisable(false);
+        }
+        else
+        {
+            btnSave.setDisable(true);
         }
     }
     

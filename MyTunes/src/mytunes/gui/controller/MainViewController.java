@@ -424,13 +424,17 @@ public class MainViewController implements Initializable {
     
     private void playSong(Song songToPlay)
     {
+        if(mediaPlayer != null && mediaPlayer.getStatus().equals(Status.PLAYING))
+        {
+            mediaPlayer.stop();
+        }
         File fileSong = new File(songToPlay.getPath());
         Media song = new Media(fileSong.toURI().toString());
         mediaPlayer = new MediaPlayer(song);
         setMediaPlayer();      
         mediaPlayer.play();
-    }
-       
+    }    
+    
     private void setMediaPlayer()
     {
         mediaPlayer.setVolume(sldVolume.getValue());

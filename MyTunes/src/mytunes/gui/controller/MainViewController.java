@@ -101,6 +101,8 @@ public class MainViewController implements Initializable {
         btnEditSong.setDisable(true);
         btnAddSongToPlaylist.setDisable(true);
         btnDeleteSongFromSongs.setDisable(true);
+        btnEditPlaylist.setDisable(true);
+        btnDeletePlaylist.setDisable(true);
     }
     
     private void loadData()
@@ -137,13 +139,21 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickOnSongs(MouseEvent event) {
-        btnEditSong.setDisable(false);
-        btnAddSongToPlaylist.setDisable(false);
-        btnDeleteSongFromSongs.setDisable(false);
+        if(tblSongs.getSelectionModel().getSelectedItem() != null)
+        {
+            btnEditSong.setDisable(false);
+            btnAddSongToPlaylist.setDisable(false);
+            btnDeleteSongFromSongs.setDisable(false);
+        }
     }
 
     @FXML
     private void clickOnPlaylists(MouseEvent event) {
+        if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+        {
+            btnEditPlaylist.setDisable(false);
+            btnDeletePlaylist.setDisable(false);
+        }
     }
 
     @FXML

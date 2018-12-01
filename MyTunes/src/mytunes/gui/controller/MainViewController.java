@@ -98,6 +98,8 @@ public class MainViewController implements Initializable {
     private void disableElements()
     {
         btnEditSong.setDisable(true);
+        btnAddSongToPlaylist.setDisable(true);
+        btnDeleteSongFromSongs.setDisable(true);
     }
     
     private void loadData()
@@ -128,6 +130,8 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickOnSongs(MouseEvent event) {
         btnEditSong.setDisable(false);
+        btnAddSongToPlaylist.setDisable(false);
+        btnDeleteSongFromSongs.setDisable(false);
     }
 
     @FXML

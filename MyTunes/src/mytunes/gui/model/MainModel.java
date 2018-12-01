@@ -82,4 +82,9 @@ public class MainModel {
         playlistSongs.setAll(playlist.getTracklist());
     }
     
+    public int getIndexOfSongInPlaylist(Playlist playlist, Song song)
+    {
+        return playlist.getTracklist().indexOf(song);
+    }
+    
 }

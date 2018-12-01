@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.be.Song;
 import mytunes.gui.model.MainModel;
@@ -95,7 +97,31 @@ public class SongViewController implements Initializable {
     }
 
     @FXML
-    private void clickChooseFilePath(ActionEvent event) {
+    private void clickChooseFilePath(ActionEvent event)
+    {
+        FileChooser songChooser = createSongChooser();
+        File selectedFile = songChooser.showOpenDialog(null);
+        if(selectedFile != null)
+        {
+            txtFile.setText(selectedFile.getPath());
+            setTimeField(selectedFile);
+            checkInputs();
+        }
+    }
+    
+    private FileChooser createSongChooser()
+    {
+        FileChooser songChooser = new FileChooser();
+        songChooser.setTitle("Select song");
+        FileChooser.ExtensionFilter generalFilter = new FileChooser.ExtensionFilter("All Music Files", "*.mp3", "*.wav", "*.mp4", "*.m4a", "*.m4v");
+        FileChooser.ExtensionFilter mp3Filter = new FileChooser.ExtensionFilter("MP3 (*.mp3)", "*.mp3");
+        FileChooser.ExtensionFilter mp4Filter = new FileChooser.ExtensionFilter("MP4 (*.mp4, *.m4a, *.m4v)","*.mp4", "*.m4a", "*.m4v");
+        FileChooser.ExtensionFilter wavFilter = new FileChooser.ExtensionFilter("WAV (*.wav)","*.wav");
+        songChooser.getExtensionFilters().add(generalFilter);
+        songChooser.getExtensionFilters().add(mp3Filter);
+        songChooser.getExtensionFilters().add(mp4Filter);
+        songChooser.getExtensionFilters().add(wavFilter);       
+        return songChooser;
     }
 
     @FXML
@@ -122,11 +148,12 @@ public class SongViewController implements Initializable {
         txtArtist.setFocusTraversable(false);
         txtTitle.setFocusTraversable(false);
         txtTime.setText(Integer.toString(editingSong.getTime()));
+        txtFile.setText(song.getPath());
     }
     
     private void checkInputs()
     {
-        if(!(txtArtist.getText().isEmpty()) && !(txtTitle.getText().isEmpty()) && cmbGenre.getValue() != null)
+        if(!(txtArtist.getText().isEmpty()) && !(txtTitle.getText().isEmpty()) && cmbGenre.getValue() != null && !(txtFile.getText().isEmpty()))
         {
             btnSave.setDisable(false);
         }
@@ -134,6 +161,11 @@ public class SongViewController implements Initializable {
         {
             btnSave.setDisable(true);
         }
+    }
+    
+    private void setTimeField(File selectedFile) 
+    {
+        
     }
     
 }

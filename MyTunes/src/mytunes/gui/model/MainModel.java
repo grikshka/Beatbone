@@ -23,6 +23,7 @@ public class MainModel {
     private ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
     private static MainModel instance;
+    private Song currentlyPlaying;
     
     private MainModel()
     {
@@ -180,5 +181,9 @@ public class MainModel {
         setPlaylistSongs(playlist);
     }
 
+    public void setCurrentlyPlaying(Song playedSong)
+    {
+        currentlyPlaying = playedSong;
+    }
     
 }

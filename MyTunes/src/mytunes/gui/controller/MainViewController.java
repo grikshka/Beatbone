@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -26,6 +27,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
@@ -38,7 +42,8 @@ import mytunes.gui.model.MainModel;
  */
 public class MainViewController implements Initializable {
     
-    MainModel model;
+    private MainModel model;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     private Button btnPlaySong;
@@ -106,6 +111,8 @@ public class MainViewController implements Initializable {
         btnMoveUpOnPlaylist.setDisable(true);
         btnMoveDownOnPlaylist.setDisable(true);
         btnDeleteSongFromPlaylist.setDisable(true);
+        btnPreviousSong.setDisable(true);
+        btnNextSong.setDisable(true);
     }
     
     private void loadData()
@@ -130,6 +137,39 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickPlay(ActionEvent event) {
+        if(mediaPlayer == null)
+        {
+            Song songToPlay = selectSongToPlay();
+            if(songToPlay != null)
+            {
+                File fileSong = new File(songToPlay.getPath());
+                Media song = new Media(fileSong.toURI().toString());
+                mediaPlayer = new MediaPlayer(song);
+                enableChangeSongButtons();
+                mediaPlayer.play();
+                labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
+                btnPlaySong.setText("||");
+            }
+            else
+            {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Cannot play a song");
+                alert.setHeaderText(null);
+                alert.setContentText("Your list of songs is empty");
+                Optional<ButtonType> action = alert.showAndWait();
+            }
+            
+        }
+        else if(mediaPlayer.getStatus().equals(Status.PLAYING))
+        {
+            mediaPlayer.pause();
+            btnPlaySong.setText("⏵");
+        }
+        else
+        {
+            mediaPlayer.play();
+            btnPlaySong.setText("||");
+        }
     }
 
     @FXML
@@ -360,10 +400,42 @@ public class MainViewController implements Initializable {
         }
     }
     
+    private Song selectSongToPlay()
+    {
+        Song songToPlay;
+        if(tblSongs.getItems().isEmpty())
+        {
+            return null;
+        }
+        if(lstPlaylistSongs.getSelectionModel().getSelectedItem() != null)
+        {
+            songToPlay = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+        }
+//        else if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
+//        {
+//            fileSong = new File((model.getFirstSongInPlaylist(tblPlaylists.getSelectionModel().getSelectedItem()).getPath()));
+//        }
+        else if(tblSongs.getSelectionModel().getSelectedItem() != null)
+        {
+            songToPlay = tblSongs.getSelectionModel().getSelectedItem();
+        }
+        else
+        {
+            songToPlay = model.getFirstSong();
+        }
+        return songToPlay;
+    }
+    
     private void enableButtonsForPlaylists() 
     {
         btnEditPlaylist.setDisable(false);
         btnDeletePlaylist.setDisable(false);
+    }
+    
+    private void enableChangeSongButtons() 
+    {
+        btnPreviousSong.setDisable(false);
+        btnNextSong.setDisable(false);
     }
     
 }

@@ -43,14 +43,23 @@ public class MainModel {
         songlist.add(song7);                                                // temporary - later we will get songs from database
         songlist.add(song8);                                                // temporary - later we will get songs from database
         
+        playlists = FXCollections.observableArrayList();                    // temporary - later we will get playlists from database
         Playlist pl = new Playlist("Nice playlist");                        // temporary - later we will get playlists from database
+        Playlist p2 = new Playlist("Super nice playlist");                        // temporary - later we will get playlists from database
+        Playlist p3 = new Playlist("Super cool playlist");                        // temporary - later we will get playlists from database
         pl.addSong(song1);                                                  // temporary - later we will get playlists from database
         pl.addSong(song2);                                                  // temporary - later we will get playlists from database  
         pl.addSong(song3);                                                  // temporary - later we will get playlists from database  
         pl.addSong(song4);                                                  // temporary - later we will get playlists from database  
+        pl.addSong(song5);                                                  // temporary - later we will get playlists from database  
         pl.addSong(song5);                                                  // temporary - later we will get playlists from database 
-        playlists = FXCollections.observableArrayList();                    // temporary - later we will get playlists from database
-        playlists.add(pl);
+        p2.addSong(song7);
+        p3.addSong(song2);
+        playlists.add(p3);
+        playlists.add(p2);                                                  // temporary - later we will get playlists from database
+        playlists.add(pl);                                                  // temporary - later we will get playlists from database
+        
+        playlistSongs = FXCollections.observableArrayList();
         
         playlistSongs = FXCollections.observableArrayList();
         
@@ -116,9 +125,7 @@ public class MainModel {
     public void removeSongFromPlaylist(Playlist playlist, Song song)
     {
         playlist.removeSong(song);
-        playlists.remove(playlist);
-        playlists.add(playlist);
-        setPlaylistSongs(playlist);      
+        updateListOfPlaylists(playlist);     
     }
     
     public ObservableList<Song> getPlaylistSongs()
@@ -136,15 +143,20 @@ public class MainModel {
         if(!playlist.getTracklist().contains(song))
         {
             playlist.addSong(song);
-            playlists.remove(playlist);
-            playlists.add(playlist);
-            setPlaylistSongs(playlist);
+            updateListOfPlaylists(playlist);
         }
     }
     
     public int getIndexOfPlaylist(Playlist playlist)
     {
         return playlists.indexOf(playlist);
+    }
+    
+    private void updateListOfPlaylists(Playlist playlist)
+    {
+        int index = getIndexOfPlaylist(playlist);
+        playlists.set(index, playlist);
+        setPlaylistSongs(playlist);
     }
 
     

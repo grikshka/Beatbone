@@ -19,16 +19,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mytunes.be.Song;
+import mytunes.gui.model.MainModel;
 
 /**
  *
  * @author Acer
  */
 public class MainViewController implements Initializable {
+    
+    MainModel model;
 
     @FXML
     private Button btnPlaySong;
@@ -37,7 +42,7 @@ public class MainViewController implements Initializable {
     @FXML
     private Button btnPreviousSong;
     @FXML
-    private TableView<?> tblSongs;
+    private TableView<Song> tblSongs;
     @FXML
     private TableColumn<?, ?> colSongTitle;
     @FXML
@@ -75,11 +80,24 @@ public class MainViewController implements Initializable {
     @FXML
     private Label labelCurrentSong;
    
+    public MainViewController()
+    {
+        model = new MainModel();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        loadData();
+    }
+    
+    private void loadData()
+    {
+        colSongTitle.setCellValueFactory(new PropertyValueFactory("title"));
+        colSongArtist.setCellValueFactory(new PropertyValueFactory("artist"));
+        colSongGenre.setCellValueFactory(new PropertyValueFactory("genre"));
+        colSongTime.setCellValueFactory(new PropertyValueFactory("time"));
+        tblSongs.setItems(model.getSongs());
+    }
 
     @FXML
     private void inputSearch(KeyEvent event) {

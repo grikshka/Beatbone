@@ -172,7 +172,17 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void clickEditPlaylist(ActionEvent event) {
+    private void clickEditPlaylist(ActionEvent event) throws IOException {
+        Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/PlaylistView.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        PlaylistViewController controller = (PlaylistViewController) fxmlLoader.getController();
+        controller.setElementsForEditing(selectedPlaylist);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Edit Playlist");
+        stage.setScene(new Scene(root));  
+        stage.show();
     }
 
     @FXML

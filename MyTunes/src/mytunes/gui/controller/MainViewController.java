@@ -40,6 +40,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.gui.PlayingMode;
 import mytunes.gui.model.MainModel;
 
 /**
@@ -50,6 +51,7 @@ public class MainViewController implements Initializable {
     
     private MainModel model;
     private MediaPlayer mediaPlayer;
+    private PlayingMode playMode;
 
     @FXML
     private Button btnPlaySong;
@@ -167,7 +169,7 @@ public class MainViewController implements Initializable {
             Song songToPlay = model.getFirstSong();
             if(songToPlay != null)
             {
-                playSong(songToPlay);
+                playSong(songToPlay, PlayingMode.SONG_LIST);
                 enableChangeSongButtons();
                 labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
                 btnPlaySong.setText("||");
@@ -209,7 +211,7 @@ public class MainViewController implements Initializable {
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
                 Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
-                playSong(selectedSong);
+                playSong(selectedSong, PlayingMode.SONG_LIST);
                 labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
                 btnPlaySong.setText("||");
             }
@@ -235,7 +237,7 @@ public class MainViewController implements Initializable {
                 Song selectedSong = model.getFirstSongFromPlaylist(selectedPlaylist);
                 if(selectedSong != null)
                 {
-                    playSong(selectedSong);
+                    playSong(selectedSong, PlayingMode.PLAYLIST);
                     labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
                     btnPlaySong.setText("||");
                 }
@@ -261,7 +263,7 @@ public class MainViewController implements Initializable {
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
                 Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
-                playSong(selectedSong);
+                playSong(selectedSong, PlayingMode.PLAYLIST);
                 labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
                 btnPlaySong.setText("||");
             }
@@ -456,7 +458,7 @@ public class MainViewController implements Initializable {
         }
     }
     
-    private void playSong(Song songToPlay)
+    private void playSong(Song songToPlay, PlayingMode mode)
     {
         if(mediaPlayer != null && mediaPlayer.getStatus().equals(Status.PLAYING))
         {
@@ -465,7 +467,9 @@ public class MainViewController implements Initializable {
         File fileSong = new File(songToPlay.getPath());
         Media song = new Media(fileSong.toURI().toString());
         mediaPlayer = new MediaPlayer(song);
-        setMediaPlayer();      
+        setMediaPlayer();     
+        model.setCurrentlyPlaying(songToPlay);
+        playMode = mode;
         mediaPlayer.play();
     }    
     

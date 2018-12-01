@@ -73,7 +73,7 @@ public class MainModel {
     
     public Song getFirstSong()
     {
-        if(songlist == null)
+        if(songlist.isEmpty())
         {
             return null;
         }

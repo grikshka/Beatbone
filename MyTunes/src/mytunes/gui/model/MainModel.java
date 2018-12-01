@@ -106,6 +106,15 @@ public class MainModel {
         playlist.setName(name);
         updateListOfPlaylists(playlist);
     }
+    
+    public Song getFirstSongFromPlaylist(Playlist playlist)
+    {
+        if(playlist.getTracklist().isEmpty())
+        {
+            return null;
+        }
+        return playlist.getTracklist().get(0);
+    }
               
     public int getIndexOfSongInPlaylist(Playlist playlist, Song song)
     {

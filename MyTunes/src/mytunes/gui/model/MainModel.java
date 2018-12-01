@@ -32,4 +32,9 @@ public class MainModel {
         return songlist;
     }
     
+    public void deleteSong(Song song)
+    {
+        songlist.remove(song);
+    }
+    
 }

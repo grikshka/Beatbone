@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import mytunes.be.Playlist;
 
 /**
  * FXML Controller class
@@ -44,6 +45,11 @@ public class PlaylistViewController implements Initializable {
 
     @FXML
     private void clickCancel(ActionEvent event) {
+    }
+    
+    public void setElementsForEditing(Playlist playlist)
+    {
+        txtName.setText(playlist.getName());
     }
     
 }

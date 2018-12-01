@@ -8,6 +8,7 @@ package mytunes.gui.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
 
  /**
@@ -18,12 +19,21 @@ import mytunes.be.Song;
 public class MainModel {
     
     private ObservableList<Song> songlist;
+    private ObservableList<Playlist> playlists;
     
     public MainModel()
     {
         songlist = FXCollections.observableArrayList();
-        songlist.add(new Song("In the End", "Linkin Park", "Rock", 210)); // temporary - later we will get songs from database
-        songlist.add(new Song("Mamma mia", "ABBA", "Mom", 240));          // temporary - later we will get songs from database
+        Song song1 = new Song("In the End", "Linkin Park", "Rock", 210);    // temporary - later we will get songs from database
+        Song song2 = new Song("Mamma mia", "ABBA", "Mom", 240);             // temporary - later we will get songs from database
+        songlist.add(song1);                                                // temporary - later we will get songs from database
+        songlist.add(song2);                                                // temporary - later we will get songs from database
+        
+        Playlist pl = new Playlist("Nice playlist");                        // temporary - later we will get playlists from database
+        pl.addSong(song1);                                                  // temporary - later we will get playlists from database
+        pl.addSong(song2);                                                  // temporary - later we will get playlists from database
+        playlists = FXCollections.observableArrayList();                    // temporary - later we will get playlists from database
+        playlists.add(pl);
         
     }
     
@@ -35,6 +45,28 @@ public class MainModel {
     public void deleteSong(Song song)
     {
         songlist.remove(song);
+    }
+    
+    public void createSong(String title, String artist, String genre, int time)
+    {
+        Song song = new Song(title,artist,genre,time);
+        songlist.add(song);
+    }
+    
+    public ObservableList<Playlist> getPlaylists()
+    {
+        return playlists;
+    }
+    
+    public void deletePlaylist(Playlist playlist)
+    {
+        playlists.remove(playlist);
+    }
+    
+    public void createPlaylist(String name)
+    {
+        Playlist pl = new Playlist(name);
+        playlists.add(pl);
     }
     
 }

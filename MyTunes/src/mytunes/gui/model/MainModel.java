@@ -20,6 +20,7 @@ public class MainModel {
     
     private ObservableList<Song> songlist;
     private ObservableList<Playlist> playlists;
+    private ObservableList<Song> playlistSongs;
     
     public MainModel()
     {
@@ -34,6 +35,8 @@ public class MainModel {
         pl.addSong(song2);                                                  // temporary - later we will get playlists from database
         playlists = FXCollections.observableArrayList();                    // temporary - later we will get playlists from database
         playlists.add(pl);
+        
+        playlistSongs = FXCollections.observableArrayList();
         
     }
     
@@ -67,6 +70,16 @@ public class MainModel {
     {
         Playlist pl = new Playlist(name);
         playlists.add(pl);
+    }
+    
+    public ObservableList<Song> getPlaylistSongs()
+    {
+        return playlistSongs;
+    }
+    
+    public void setPlaylistSongs(Playlist playlist)
+    {
+        playlistSongs.setAll(playlist.getTracklist());
     }
     
 }

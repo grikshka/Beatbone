@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +24,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -89,6 +94,8 @@ public class MainViewController implements Initializable {
     private Button btnAddSongToPlaylist;
     @FXML
     private Label labelCurrentSong;
+    @FXML
+    private Slider sldVolume;
    
     public MainViewController()
     {
@@ -98,6 +105,7 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         disableElements();
+        createSliderListener();
         loadData();
     }
     
@@ -113,6 +121,22 @@ public class MainViewController implements Initializable {
         btnDeleteSongFromPlaylist.setDisable(true);
         btnPreviousSong.setDisable(true);
         btnNextSong.setDisable(true);
+    }
+    
+    public void createSliderListener()
+    {
+        sldVolume.valueProperty().addListener(new ChangeListener()
+            {
+                @Override
+                public void changed(ObservableValue arg0, Object arg1, Object arg2)
+                {
+                    if(mediaPlayer != null)
+                    {
+                        mediaPlayer.setVolume(sldVolume.getValue());
+                    }
+                }
+            }     
+        );
     }
     
     private void loadData()
@@ -146,6 +170,7 @@ public class MainViewController implements Initializable {
                 Media song = new Media(fileSong.toURI().toString());
                 mediaPlayer = new MediaPlayer(song);
                 enableChangeSongButtons();
+                mediaPlayer.setVolume(sldVolume.getValue());
                 mediaPlayer.play();
                 labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
                 btnPlaySong.setText("||");
@@ -179,7 +204,7 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickPreviousSong(ActionEvent event) {
     }
-
+    
     @FXML
     private void clickOnSongs(MouseEvent event) {
         if(tblSongs.getSelectionModel().getSelectedItem() != null)

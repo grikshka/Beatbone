@@ -7,10 +7,12 @@
 package mytunes.gui.model;
 
 import java.util.Collections;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.bll.util.MusicSearcher;
 import mytunes.gui.PlayingMode;
 
  /**
@@ -247,6 +249,12 @@ public class MainModel {
                 return songlist.get(index-1);
             }
         }
+    }
+    
+    public ObservableList<Song> getFilteredSongs(String filter)
+    {
+        ObservableList<Song> filteredList = FXCollections.observableArrayList(MusicSearcher.searchSongs(songlist, filter));
+        return filteredList;
     }
     
 }

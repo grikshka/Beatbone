@@ -205,6 +205,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickPreviousSong(ActionEvent event) {
+        Song songToPlay = model.getPreviousSong(playMode);
+        playSong(songToPlay, playMode);
+        labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
+        btnPlaySong.setText("||");
     }
     
     @FXML

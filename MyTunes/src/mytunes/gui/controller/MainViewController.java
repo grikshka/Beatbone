@@ -101,7 +101,9 @@ public class MainViewController implements Initializable {
     @FXML
     private Slider sldVolume;
     @FXML
-    private TextField txtSearch;
+    private TextField txtSearchSongs;
+    @FXML
+    private TextField txtSearchPlaylists;
    
     public MainViewController()
     {
@@ -162,8 +164,8 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void inputSearch(KeyEvent event) {
-        String filter = txtSearch.getText().trim();
+    private void inputSearchSongs(KeyEvent event) {
+        String filter = txtSearchSongs.getText().trim();
         if(filter.isEmpty())
         {
             tblSongs.setItems(model.getSongs());
@@ -173,6 +175,11 @@ public class MainViewController implements Initializable {
             tblSongs.setItems(model.getFilteredSongs(filter));
         }
     }
+    
+    @FXML
+    private void inputSearchPlaylists(KeyEvent event) {
+    }
+    
 
     @FXML
     private void clickPlay(ActionEvent event) {
@@ -521,5 +528,5 @@ public class MainViewController implements Initializable {
         btnPreviousSong.setDisable(false);
         btnNextSong.setDisable(false);
     }
-    
+
 }

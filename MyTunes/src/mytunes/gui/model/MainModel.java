@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.bll.util.MusicSearcher;
+import mytunes.bll.util.TimeConverter;
 import mytunes.gui.PlayingMode;
 
  /**
@@ -261,6 +262,16 @@ public class MainModel {
     {
         ObservableList<Playlist> filteredList = FXCollections.observableArrayList(MusicSearcher.searchPlaylists(playlists, filter));
         return filteredList;
+    }
+    
+    public String getTimeInString(int timeInSeconds)
+    {
+        return TimeConverter.convertToString(timeInSeconds);
+    }
+    
+    public int getTimeInInt(String timeInString)
+    {
+        return TimeConverter.convertToInt(timeInString);
     }
     
 }

@@ -257,4 +257,10 @@ public class MainModel {
         return filteredList;
     }
     
+    public ObservableList<Playlist> getFilteredPlaylists(String filter)
+    {
+        ObservableList<Playlist> filteredList = FXCollections.observableArrayList(MusicSearcher.searchPlaylists(playlists, filter));
+        return filteredList;
+    }
+    
 }

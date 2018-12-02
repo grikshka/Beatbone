@@ -27,6 +27,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
@@ -99,6 +100,8 @@ public class MainViewController implements Initializable {
     private Label labelCurrentSong;
     @FXML
     private Slider sldVolume;
+    @FXML
+    private TextField txtSearch;
    
     public MainViewController()
     {
@@ -160,6 +163,15 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void inputSearch(KeyEvent event) {
+        String filter = txtSearch.getText().trim();
+        if(filter.isEmpty())
+        {
+            tblSongs.setItems(model.getSongs());
+        }
+        else
+        {
+            tblSongs.setItems(model.getFilteredSongs(filter));
+        }
     }
 
     @FXML

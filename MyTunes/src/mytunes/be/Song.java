@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package mytunes.be;
+
+import mytunes.bll.util.TimeConverter;
+
  /**
  *
  * @author Acer
@@ -66,6 +69,11 @@ public class Song {
     public void setPath(String path) 
     {
         this.path = path;
+    }
+    
+    public String getTimeInString()
+    {
+        return TimeConverter.convertToString(time);
     }
     
     @Override

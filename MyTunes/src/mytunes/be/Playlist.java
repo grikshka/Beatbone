@@ -8,6 +8,7 @@ package mytunes.be;
 
 import java.util.ArrayList;
 import java.util.List;
+import mytunes.bll.util.TimeConverter;
 
 /**
  *
@@ -73,5 +74,9 @@ public class Playlist {
     {
         return numberOfSongs;
     }
-        
+    
+    public String getTimeInString()
+    {
+        return TimeConverter.convertToString(time);
+    }
 }

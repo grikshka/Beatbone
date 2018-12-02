@@ -178,6 +178,15 @@ public class MainViewController implements Initializable {
     
     @FXML
     private void inputSearchPlaylists(KeyEvent event) {
+        String filter = txtSearchPlaylists.getText().trim();
+        if(filter.isEmpty())
+        {
+            tblPlaylists.setItems(model.getPlaylists());
+        }
+        else
+        {
+            tblPlaylists.setItems(model.getFilteredPlaylists(filter));
+        }
     }
     
 

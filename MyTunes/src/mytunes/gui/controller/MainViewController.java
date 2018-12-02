@@ -234,21 +234,20 @@ public class MainViewController implements Initializable {
     private void clickOnPlaylists(MouseEvent event) {
         if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
         {
+            Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
-                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-                Song selectedSong = model.getFirstSongFromPlaylist(selectedPlaylist);
-                if(selectedSong != null)
+                Song songToPlay = model.getFirstSongFromPlaylist(selectedPlaylist);
+                if(songToPlay != null)
                 {
-                    playSong(selectedSong, PlayingMode.PLAYLIST);
+                    playSong(songToPlay, PlayingMode.PLAYLIST);
                     model.setCurrentPlaylist(selectedPlaylist);
-                    labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
+                    labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
                     btnPlaySong.setText("||");
                 }
             }
             else
             {
-                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
                 enableButtonsForPlaylists();
                 model.setPlaylistSongs(selectedPlaylist);
                 lstPlaylistSongs.setItems(model.getPlaylistSongs());
@@ -264,19 +263,17 @@ public class MainViewController implements Initializable {
     private void clickOnPlaylistSongs(MouseEvent event) {
         if(lstPlaylistSongs.getSelectionModel().getSelectedItem() != null)
         {
+            Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+            Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
-            {
-                Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
-                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
+            {              
                 playSong(selectedSong, PlayingMode.PLAYLIST);
                 model.setCurrentPlaylist(selectedPlaylist);
                 labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
                 btnPlaySong.setText("||");
             }
             else
-            {
-                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-                Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+            {                
                 btnDeleteSongFromPlaylist.setDisable(false);
                 if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
                 {

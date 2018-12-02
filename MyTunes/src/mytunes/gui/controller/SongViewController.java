@@ -152,7 +152,7 @@ public class SongViewController implements Initializable {
         txtFile.setText(editingSong.getPath());
         txtArtist.setFocusTraversable(false);
         txtTitle.setFocusTraversable(false);
-        txtTime.setText(Integer.toString(editingSong.getTime()));
+        txtTime.setText(editingSong.getTimeInString());
     }
     
     private void checkInputs()

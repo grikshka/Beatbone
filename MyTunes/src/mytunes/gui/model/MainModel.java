@@ -221,4 +221,32 @@ public class MainModel {
         }
     }
     
+    public Song getPreviousSong(PlayingMode mode)
+    {
+        if(mode == PlayingMode.PLAYLIST)
+        {
+            int index = currentPlaylist.getTracklist().indexOf(currentlyPlaying);
+            if(index == 0)
+            {
+                return currentlyPlaying;
+            }
+            else
+            {
+                return currentPlaylist.getTracklist().get(index-1);
+            }
+        }
+        else
+        {
+            int index = songlist.indexOf(currentlyPlaying);
+            if(index == 0)
+            {
+                return currentlyPlaying;
+            }
+            else
+            {
+                return songlist.get(index-1);
+            }
+        }
+    }
+    
 }

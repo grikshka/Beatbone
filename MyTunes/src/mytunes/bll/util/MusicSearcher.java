@@ -7,6 +7,7 @@ package mytunes.bll.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
 
 /**
@@ -31,6 +32,21 @@ public class MusicSearcher {
             }
         }
         return filteredSongs;
+    }
+    
+    public static List<Playlist> searchPlaylists(List<Playlist> allPlaylists, String filter)
+    {
+        filter = filter.toLowerCase();
+        List<Playlist> filteredPlaylists = new ArrayList();
+        for(Playlist p : allPlaylists)
+        {
+            if(filter.length() <= p.getName().length() && filter.equals(p.getName().toLowerCase().substring(0, filter.length())))
+            {
+                filteredPlaylists.add(p);
+            }
+        }
+        return filteredPlaylists;
+        
     }
     
 }

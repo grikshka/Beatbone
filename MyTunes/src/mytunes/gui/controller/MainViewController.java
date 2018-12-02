@@ -197,6 +197,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickNextSong(ActionEvent event) {
+        Song songToPlay = model.getNextSong(playMode);
+        playSong(songToPlay, playMode);
+        labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
+        btnPlaySong.setText("||");
     }
 
     @FXML
@@ -237,6 +241,7 @@ public class MainViewController implements Initializable {
                 if(selectedSong != null)
                 {
                     playSong(selectedSong, PlayingMode.PLAYLIST);
+                    model.setCurrentPlaylist(selectedPlaylist);
                     labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
                     btnPlaySong.setText("||");
                 }
@@ -262,7 +267,9 @@ public class MainViewController implements Initializable {
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
                 Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
+                Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
                 playSong(selectedSong, PlayingMode.PLAYLIST);
+                model.setCurrentPlaylist(selectedPlaylist);
                 labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
                 btnPlaySong.setText("||");
             }

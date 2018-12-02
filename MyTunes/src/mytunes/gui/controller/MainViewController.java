@@ -152,14 +152,14 @@ public class MainViewController implements Initializable {
         //load playlists
         colPlaylistName.setCellValueFactory(new PropertyValueFactory("name"));
         colPlaylistSongs.setCellValueFactory(new PropertyValueFactory("numberOfSongs"));
-        colPlaylistTime.setCellValueFactory(new PropertyValueFactory("time"));
+        colPlaylistTime.setCellValueFactory(new PropertyValueFactory("timeInString"));
         tblPlaylists.setItems(model.getPlaylists());
         
         //load songs
         colSongTitle.setCellValueFactory(new PropertyValueFactory("title"));
         colSongArtist.setCellValueFactory(new PropertyValueFactory("artist"));
         colSongGenre.setCellValueFactory(new PropertyValueFactory("genre"));
-        colSongTime.setCellValueFactory(new PropertyValueFactory("time"));
+        colSongTime.setCellValueFactory(new PropertyValueFactory("timeInString"));
         tblSongs.setItems(model.getSongs());
     }
 

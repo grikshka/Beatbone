@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.gui.PlayingMode;
 
  /**
  *
@@ -24,6 +25,7 @@ public class MainModel {
     private ObservableList<Song> playlistSongs;
     private static MainModel instance;
     private Song currentlyPlaying;
+    private Playlist currentPlaylist;
     
     private MainModel()
     {
@@ -184,6 +186,39 @@ public class MainModel {
     public void setCurrentlyPlaying(Song playedSong)
     {
         currentlyPlaying = playedSong;
+    }
+    
+    public void setCurrentPlaylist(Playlist playlist)
+    {
+        currentPlaylist = playlist;
+    }
+    
+    public Song getNextSong(PlayingMode mode)
+    {
+        if(mode == PlayingMode.PLAYLIST)
+        {
+            int index = currentPlaylist.getTracklist().indexOf(currentlyPlaying);
+            if(index == currentPlaylist.getNumberOfSongs()-1)
+            {
+                return getFirstSongFromPlaylist(currentPlaylist);
+            }
+            else
+            {
+                return currentPlaylist.getTracklist().get(index+1);
+            }
+        }
+        else
+        {
+            int index = songlist.indexOf(currentlyPlaying);
+            if(index == songlist.size()-1)
+            {
+                return getFirstSong();
+            }
+            else
+            {
+                return songlist.get(index+1);
+            }
+        }
     }
     
 }

@@ -17,9 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.be.Song;
+import mytunes.bll.util.TimeConverter;
 import mytunes.gui.model.MainModel;
 
 /**
@@ -86,7 +89,8 @@ public class SongViewController implements Initializable {
     private void clickSave(ActionEvent event) {
         if(!editing)
         {
-            model.createSong(txtTitle.getText(), txtArtist.getText(), cmbGenre.getValue(), txtFile.getText(), 300); //later we will get the time from field
+            model.createSong(txtTitle.getText(), txtArtist.getText(), cmbGenre.getValue(), 
+                    txtFile.getText(), model.getTimeInInt(txtTime.getText()));
         }
         else
         {
@@ -165,7 +169,18 @@ public class SongViewController implements Initializable {
     
     private void setTimeField(File selectedFile) 
     {
-        
+        Media mediaFile = new Media(selectedFile.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(mediaFile);
+        mediaPlayer.setOnReady(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    int timeOfSong = (int) mediaFile.getDuration().toSeconds();
+                    txtTime.setText(model.getTimeInString(timeOfSong));
+                }
+            }      
+        );
     }
     
 }

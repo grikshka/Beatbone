@@ -13,18 +13,25 @@ import mytunes.bll.util.TimeConverter;
  */
 public class Song {
     
+    private int id;
     private String title;
     private String artist;
     private String genre;
     private String path;
     private int time;
     
-    public Song(String title, String artist, String genre, String path, int time) {
+    public Song(int id, String title, String artist, String genre, String path, int time) {
+        this.id = id;
         this.title = title;
         this.artist = artist;
         this.genre = genre;
         this.path = path;
         this.time = time;
+    }
+    
+    public int getId()
+    {
+        return id;
     }
     
     public String getTitle() 

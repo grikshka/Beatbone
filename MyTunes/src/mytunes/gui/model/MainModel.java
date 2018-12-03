@@ -173,8 +173,8 @@ public class MainModel {
     
     public void addSongToPlaylist(Playlist playlist, Song song)
     {
-        playlist.addSong(song);
-        updateListOfPlaylists(playlist);
+        Playlist updatedPlaylist = bllManager.addSongToPlaylist(playlist, song);       
+        updateListOfPlaylists(updatedPlaylist);
     }
     
     public int getIndexOfPlaylist(Playlist playlist)

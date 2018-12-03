@@ -82,7 +82,7 @@ public class BllManager implements IBllFacade{
 
     @Override
     public Playlist addSongToPlaylist(Playlist playlist, Song song) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dalController.addSongToPlaylist(playlist, song);
     }
     
 }

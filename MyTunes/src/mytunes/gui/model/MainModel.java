@@ -105,8 +105,8 @@ public class MainModel {
     
     public void createPlaylist(String name)
     {
-        Playlist pl = new Playlist(name);
-        playlists.add(pl);
+        Playlist playlist = bllManager.createPlaylist(name);
+        playlists.add(playlist);
     }
     
     public void updatePlaylist(Playlist playlist, String name)

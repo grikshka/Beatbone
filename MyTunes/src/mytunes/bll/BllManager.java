@@ -57,7 +57,7 @@ public class BllManager implements IBllFacade{
 
     @Override
     public void deletePlaylist(Playlist playlist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dalController.deletePlaylist(playlist);
     }
 
     @Override

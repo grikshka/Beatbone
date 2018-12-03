@@ -17,13 +17,15 @@ import mytunes.bll.util.TimeConverter;
 
 public class Playlist {
     
+    private int id;
     private String name;
     private int time;
     private int numberOfSongs;
     private List<Song> tracklist;
     
-    public Playlist(String name)
+    public Playlist(int id, String name)
     {
+        this.id = 0;
         this.name = name;
         time = 0;
         numberOfSongs = 0;
@@ -52,6 +54,11 @@ public class Playlist {
     public String getName() 
     {
         return name;
+    }
+    
+    public int getId()
+    {
+        return id;
     }
 
     public List<Song> getTracklist() 

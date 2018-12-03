@@ -480,16 +480,11 @@ public class MainViewController implements Initializable {
         }
         else
         {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
+            Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Duplicate song");
             alert.setHeaderText(null);
-            alert.setContentText("This song is already in your playlist, do you want to add it anyway?");
+            alert.setContentText("This song is already in your playlist");
             Optional<ButtonType> action = alert.showAndWait();
-            if(action.get() == ButtonType.OK)
-            {
-                model.addSongToPlaylist(selectedPlaylist, selectedSong);
-                tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
-            }
         }
     }
     

@@ -37,7 +37,7 @@ public class MainModel {
     {
         bllManager = new BllManager();
         songlist = FXCollections.observableArrayList(bllManager.getAllSongs());
-        playlists = FXCollections.observableArrayList();
+        playlists = FXCollections.observableArrayList(bllManager.getAllPlaylists());
         playlistSongs = FXCollections.observableArrayList();
         
     }
@@ -111,7 +111,7 @@ public class MainModel {
     
     public void updatePlaylist(Playlist playlist, String name)
     {
-        playlist.setName(name);
+        Playlist updatedPlaylist = bllManager.updatePlaylist(playlist, name);
         updateListOfPlaylists(playlist);
     }
     

@@ -25,7 +25,7 @@ public class Playlist {
     
     public Playlist(int id, String name)
     {
-        this.id = 0;
+        this.id = id;
         this.name = name;
         time = 0;
         numberOfSongs = 0;

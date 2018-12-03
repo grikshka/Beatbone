@@ -91,7 +91,16 @@ public class DalController implements IDalFacade{
 
     @Override
     public Playlist updatePlaylist(Playlist playlist, String newName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Playlist updatedPlaylist = null;
+        try
+        {
+            updatedPlaylist = playlistDao.updatePlaylist(playlist, newName);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return updatedPlaylist;
     }
 
     @Override
@@ -101,7 +110,16 @@ public class DalController implements IDalFacade{
 
     @Override
     public List<Playlist> getAllPlaylists() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Playlist> allPlaylists = null;
+        try
+        {
+            allPlaylists = playlistDao.getAllPlaylists();
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return allPlaylists;
     }
 
     @Override

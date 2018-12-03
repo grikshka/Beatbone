@@ -11,6 +11,7 @@ import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.dal.daos.PlaylistDAO;
+import mytunes.dal.daos.PlaylistSongsDAO;
 import mytunes.dal.daos.SongDAO;
 
 /**
@@ -21,11 +22,13 @@ public class DalController implements IDalFacade{
     
     private SongDAO songDao;
     private PlaylistDAO playlistDao;
+    private PlaylistSongsDAO playlistSongsDao;
     
     public DalController()
     {
         songDao = new SongDAO();
         playlistDao = new PlaylistDAO();
+        playlistSongsDao = new PlaylistSongsDAO();
     }
     
     public Song createSong(String title, String artist, String genre, String path, int time)
@@ -146,7 +149,16 @@ public class DalController implements IDalFacade{
 
     @Override
     public Playlist addSongToPlaylist(Playlist playlist, Song song) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Playlist updatedPlaylist = null;
+        try
+        {
+            updatedPlaylist = playlistSongsDao.addSongToPlaylist(playlist, song);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return updatedPlaylist;
     }
     
 }

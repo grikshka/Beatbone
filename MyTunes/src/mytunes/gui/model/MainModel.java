@@ -100,6 +100,7 @@ public class MainModel {
     
     public void deletePlaylist(Playlist playlist)
     {
+        bllManager.deletePlaylist(playlist);
         playlists.remove(playlist);
     }
     

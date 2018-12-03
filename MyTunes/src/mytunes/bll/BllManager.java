@@ -52,7 +52,7 @@ public class BllManager implements IBllFacade{
 
     @Override
     public Playlist updatePlaylist(Playlist playlist, String newName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dalController.updatePlaylist(playlist, newName);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class BllManager implements IBllFacade{
 
     @Override
     public List<Playlist> getAllPlaylists() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dalController.getAllPlaylists();
     }
 
     @Override

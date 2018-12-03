@@ -5,12 +5,15 @@
  */
 package mytunes.dal.daos;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import mytunes.be.Song;
 import mytunes.dal.DbConnectionProvider;
 
@@ -44,6 +47,46 @@ public class SongDAO {
             int id = rs.getInt(1);
             return new Song(id, title,artist,genre,path,time);
         }
+    }
+    
+    public Song updateSong(Song song, String newTitle, String newArtist, String newGenre) throws SQLException
+    {
+        String sqlStatement = "UPDATE Songs SET title=?, artist=?, genre=? WHERE id=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setString(1, newTitle);
+            statement.setString(2, newArtist);
+            statement.setString(3, newGenre);
+            statement.setInt(4, song.getId());
+            statement.execute();
+            song.setTitle(newTitle);
+            song.setArtist(newArtist);
+            song.setGenre(newGenre);
+            return song;
+        }
+    }
+    
+    public List<Song> getAllSongs() throws SQLException
+    {
+        String sqlStatement = "SELECT * FROM Songs";
+        List<Song> allSongs = new ArrayList();
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String artist = rs.getString("artist");
+                String genre = rs.getString("genre");
+                String path = rs.getString("path");
+                int time = rs.getInt("time");
+                allSongs.add(new Song(id,title,artist,genre,path,time));
+            }
+        }
+        return allSongs;
     }
     
 }

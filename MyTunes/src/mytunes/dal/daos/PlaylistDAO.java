@@ -54,7 +54,6 @@ public class PlaylistDAO {
             statement.setString(1, newName);
             statement.setInt(2, playlist.getId());
             statement.execute();
-            System.out.println(playlist.getId());
             playlist.setName(newName);
             return playlist;
         }
@@ -76,5 +75,16 @@ public class PlaylistDAO {
             }
         }
         return allPlaylists;
+    }
+    
+    public void deletePlaylist(Playlist playlist) throws SQLException
+    {
+        String sqlStatement = "DELETE FROM Playlists WHERE id=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setInt(1, playlist.getId());
+            statement.execute();
+        }
     }
 }

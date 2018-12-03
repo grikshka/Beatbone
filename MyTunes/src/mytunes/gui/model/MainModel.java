@@ -12,9 +12,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.bll.BllManager;
 import mytunes.bll.util.MusicSearcher;
 import mytunes.bll.util.TimeConverter;
 import mytunes.gui.PlayingMode;
+import mytunes.bll.IBllFacade;
 
  /**
  *
@@ -29,9 +31,11 @@ public class MainModel {
     private static MainModel instance;
     private Song currentlyPlaying;
     private Playlist currentPlaylist;
+    private IBllFacade bllManager;
     
     private MainModel()
     {
+        bllManager = new BllManager();
         songlist = FXCollections.observableArrayList();
         playlists = FXCollections.observableArrayList();
         playlistSongs = FXCollections.observableArrayList();
@@ -59,7 +63,7 @@ public class MainModel {
     
     public void createSong(String title, String artist, String genre, String path, int time)
     {
-        Song song = new Song(title,artist,genre,path,time);
+        Song song = bllManager.createSong(title, artist, genre, path, time);
         songlist.add(song);
     }
     

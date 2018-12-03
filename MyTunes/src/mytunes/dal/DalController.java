@@ -41,7 +41,16 @@ public class DalController implements IDalFacade{
 
     @Override
     public Song updateSong(Song song, String title, String artist, String genre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Song updatedSong = null;
+        try
+        {
+            updatedSong = songDao.updateSong(song, title, artist, genre);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return updatedSong;
     }
 
     @Override
@@ -51,7 +60,16 @@ public class DalController implements IDalFacade{
 
     @Override
     public List<Song> getAllSongs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Song> allSongs = null;
+        try
+        {
+            allSongs = songDao.getAllSongs();
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return allSongs;
     }
 
     @Override

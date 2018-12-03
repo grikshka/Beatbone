@@ -105,7 +105,14 @@ public class DalController implements IDalFacade{
 
     @Override
     public void deletePlaylist(Playlist playlist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            playlistDao.deletePlaylist(playlist);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
     }
 
     @Override

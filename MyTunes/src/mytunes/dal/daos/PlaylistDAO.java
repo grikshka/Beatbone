@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.dal.DbConnectionProvider;
 
@@ -41,5 +43,38 @@ public class PlaylistDAO {
             int id = rs.getInt(1);
             return new Playlist(id, name);
         }
-    }   
+    }
+    
+    public Playlist updatePlaylist(Playlist playlist, String newName) throws SQLException
+    {
+        String sqlStatement = "UPDATE Playlists SET name=? WHERE id=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setString(1, newName);
+            statement.setInt(2, playlist.getId());
+            statement.execute();
+            System.out.println(playlist.getId());
+            playlist.setName(newName);
+            return playlist;
+        }
+    }
+    
+    public List<Playlist> getAllPlaylists() throws SQLException
+    {
+        String sqlStatement = "SELECT * FROM Playlists";
+        List<Playlist> allPlaylists = new ArrayList();
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                allPlaylists.add(new Playlist(id, name));
+            }
+        }
+        return allPlaylists;
+    }
 }

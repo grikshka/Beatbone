@@ -135,6 +135,8 @@ public class MainModel {
         int id = playlistSongs.indexOf(song);
         if(id!=0)
         {
+            Song secondSong = playlistSongs.get(id-1);
+            bllManager.switchSongsPlacesOnPlaylist(playlist, song, secondSong);
             Collections.swap(playlistSongs, id, id-1);
             Collections.swap(playlist.getTracklist(), id, id-1);
         }
@@ -145,6 +147,8 @@ public class MainModel {
         int id = playlistSongs.indexOf(song);
         if(id!= playlist.getNumberOfSongs()-1)
         {
+            Song secondSong = playlistSongs.get(id+1);
+            bllManager.switchSongsPlacesOnPlaylist(playlist, song, secondSong);
             Collections.swap(playlistSongs, id, id+1);
             Collections.swap(playlist.getTracklist(), id, id+1);
         }

@@ -82,11 +82,6 @@ public class MainModel {
         songlist.set(index, song);
     }
     
-    public Song getFirstSong()
-    {
-        return SongChooser.getFirstSong(songlist);
-    }
-    
     public int getIndexOfSong(Song song)
     {
         return songlist.indexOf(song);
@@ -113,11 +108,6 @@ public class MainModel {
     {
         Playlist updatedPlaylist = bllManager.updatePlaylist(playlist, name);
         updateListOfPlaylists(playlist);
-    }
-    
-    public Song getFirstSongFromPlaylist(Playlist playlist)
-    {
-        return SongChooser.getFirstSong(playlist.getTracklist());
     }
               
     public int getIndexOfSongInPlaylist(Playlist playlist, Song song)
@@ -227,6 +217,16 @@ public class MainModel {
         currentPlaylist = playlist;
     }
     
+    public Song getFirstSong()
+    {
+        return SongChooser.getFirstSong(songlist);
+    }
+    
+    public Song getFirstSongFromPlaylist(Playlist playlist)
+    {
+        return SongChooser.getFirstSong(playlist.getTracklist());
+    }
+        
     public Song getNextSong(PlayingMode mode)
     {
         if(mode == PlayingMode.PLAYLIST)

@@ -24,10 +24,12 @@ import mytunes.dal.DbConnectionProvider;
 public class SongDAO {
     
     private DbConnectionProvider connector;
+    private PlaylistSongsDAO playlistSongsDao;
     
     public SongDAO()
     {
         connector = new DbConnectionProvider();
+        playlistSongsDao = new PlaylistSongsDAO();
     }
     
     public Song createSong(String title, String artist, String genre, String path, int time) throws SQLException
@@ -87,6 +89,18 @@ public class SongDAO {
             }
         }
         return allSongs;
+    }
+    
+    public void deleteSong(Song song) throws SQLException
+    {
+        playlistSongsDao.deleteSongFromAllPlaylists(song);
+        String sqlStatement = "DELETE FROM Songs WHERE id=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setInt(1, song.getId());
+            statement.execute();
+        }
     }
     
 }

@@ -24,10 +24,12 @@ import mytunes.dal.DbConnectionProvider;
 public class PlaylistDAO {
     
     private DbConnectionProvider connector;
+    private PlaylistSongsDAO psDao;
     
     public PlaylistDAO()
     {
         connector = new DbConnectionProvider();
+        psDao = new PlaylistSongsDAO();
     }
     
     public Playlist createPlaylist(String name) throws SQLException
@@ -75,7 +77,7 @@ public class PlaylistDAO {
                 String name = rs.getString("name");
                 allPlaylists.add(new Playlist(id, name));
             }
-            addSongsToPlaylists(allPlaylists);
+            psDao.addAllSongsToAllPlaylists(allPlaylists);
         }
         return allPlaylists;
     }
@@ -91,30 +93,4 @@ public class PlaylistDAO {
         }
     }
     
-    private void addSongsToPlaylists(List<Playlist> allPlaylists) throws SQLException
-    {
-        String sqlStatement = "SELECT Playlists.id as playlistId, Songs.* FROM PlaylistSongs " +
-                                        "INNER JOIN Playlists on PlaylistSongs.playlistId=Playlists.id " +
-                                        "INNER JOIN Songs on PlaylistSongs.songId=Songs.id";
-        try(Connection con = connector.getConnection();
-                PreparedStatement songsStatement = con.prepareStatement(sqlStatement))
-        {
-        ResultSet rs = songsStatement.executeQuery();
-        rs.next();
-        for(Playlist p : allPlaylists)
-            {
-                while(!rs.isAfterLast() && rs.getInt("playlistId") == p.getId())
-                {
-                    int id = rs.getInt("id");
-                    String title = rs.getString("title");
-                    String artist = rs.getString("artist");
-                    String genre = rs.getString("genre");
-                    String path = rs.getString("path");
-                    int time = rs.getInt("time");
-                    p.addSong(new Song(id, title, artist, genre, path, time));
-                    rs.next();
-                }
-            }
-        }
-    }
 }

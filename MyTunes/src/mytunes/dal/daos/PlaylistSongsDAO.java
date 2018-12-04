@@ -7,7 +7,9 @@ package mytunes.dal.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.dal.DbConnectionProvider;
@@ -40,6 +42,33 @@ public class PlaylistSongsDAO {
             statement.execute();
             playlist.addSong(song);
             return playlist;
+        }
+    }
+    
+    public void addAllSongsToAllPlaylists(List<Playlist> allPlaylists) throws SQLException
+    {
+        String sqlStatement = "SELECT Playlists.id as playlistId, Songs.* FROM PlaylistSongs " +
+                                        "INNER JOIN Playlists on PlaylistSongs.playlistId=Playlists.id " +
+                                        "INNER JOIN Songs on PlaylistSongs.songId=Songs.id";
+        try(Connection con = connector.getConnection();
+                PreparedStatement songsStatement = con.prepareStatement(sqlStatement))
+        {
+        ResultSet rs = songsStatement.executeQuery();
+        rs.next();
+        for(Playlist p : allPlaylists)
+            {
+                while(!rs.isAfterLast() && rs.getInt("playlistId") == p.getId())
+                {
+                    int id = rs.getInt("id");
+                    String title = rs.getString("title");
+                    String artist = rs.getString("artist");
+                    String genre = rs.getString("genre");
+                    String path = rs.getString("path");
+                    int time = rs.getInt("time");
+                    p.addSong(new Song(id, title, artist, genre, path, time));
+                    rs.next();
+                }
+            }
         }
     }
     

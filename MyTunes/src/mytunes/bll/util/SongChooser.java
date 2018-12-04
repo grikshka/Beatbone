@@ -16,6 +16,8 @@ import mytunes.be.Song;
  */
 public class SongChooser {
     
+    private static Stack<Song> previousSongs = new Stack();
+    
     public static Song getFirstSong(List<Song> songList)
     {
         if(songList.isEmpty())
@@ -67,7 +69,25 @@ public class SongChooser {
         {
             nextSongId = rand.nextInt(songList.size());
         }
+        previousSongs.add(currentSong);
         return songList.get(nextSongId);
+    }
+    
+    public static Song getPreviousRandomSong(Song currentSong)
+    {
+        if(previousSongs.isEmpty())
+        {
+            return currentSong;
+        }
+        else
+        {
+            return previousSongs.pop();
+        }
+    }
+    
+    public static void clearPreviousRandomSongs()
+    {
+        previousSongs = new Stack();
     }
     
 }

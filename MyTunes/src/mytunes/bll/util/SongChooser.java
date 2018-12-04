@@ -6,6 +6,8 @@
 package mytunes.bll.util;
 
 import java.util.List;
+import java.util.Random;
+import java.util.Stack;
 import mytunes.be.Song;
 
 /**
@@ -21,6 +23,13 @@ public class SongChooser {
             return null;
         }
         return songList.get(0);
+    }
+    
+    public static Song getRandomSong(List<Song> songList)
+    {
+        Random rand = new Random();
+        int songId = rand.nextInt(songList.size());
+        return songList.get(songId);
     }
     
     public static Song getNextSong(List<Song> songList, Song currentSong)
@@ -47,6 +56,18 @@ public class SongChooser {
         {
             return songList.get(index-1);
         }
+    }
+    
+    public static Song getNextRandomSong(List<Song> songList, Song currentSong)
+    {
+        Random rand = new Random();
+        int currentSongId = songList.indexOf(currentSong);
+        int nextSongId = currentSongId;
+        while(currentSongId == nextSongId)
+        {
+            nextSongId = rand.nextInt(songList.size());
+        }
+        return songList.get(nextSongId);
     }
     
 }

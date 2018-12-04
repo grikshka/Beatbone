@@ -91,4 +91,16 @@ public class PlaylistSongsDAO {
         }
     }
     
+    public void deleteSongFromPlaylist(Playlist playlist, Song song) throws SQLException
+    {
+        String sqlStatement = "DELETE FROM PlaylistSongs WHERE playlistId=? and songId=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setInt(1, playlist.getId());
+            statement.setInt(2, song.getId());
+            statement.execute();
+        }
+    }
+    
 }

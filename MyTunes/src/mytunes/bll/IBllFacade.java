@@ -31,9 +31,7 @@ public interface IBllFacade {
     
     List<Playlist> getAllPlaylists();
     
-    Playlist moveSongUpOnPlaylist(Playlist playlist, Song song);
-    
-    Playlist moveSongDownOnPlaylist(Playlist playlist, Song song);
+    void switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2);
     
     void deleteSongFromPlaylist(Playlist playlist, Song song);
     

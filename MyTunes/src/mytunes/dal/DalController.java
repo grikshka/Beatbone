@@ -133,13 +133,16 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public Playlist moveSongUpOnPlaylist(Playlist playlist, Song song) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Playlist moveSongDownOnPlaylist(Playlist playlist, Song song) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
+    {
+        try
+        {
+            playlistSongsDao.switchSongPlacesOnPlaylist(playlist, song1, song2);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
     }
 
     @Override
@@ -160,5 +163,5 @@ public class DalController implements IDalFacade{
         }
         return updatedPlaylist;
     }
-    
+
 }

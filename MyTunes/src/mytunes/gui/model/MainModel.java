@@ -156,12 +156,13 @@ public class MainModel {
         updateListOfPlaylists(playlist);     
     }
     
-    public ObservableList<Song> getPlaylistSongs()
+    public ObservableList<Song> getPlaylistSongs(Playlist playlist)
     {
+        playlistSongs.setAll(playlist.getTracklist());
         return playlistSongs;
     }
     
-    public void setPlaylistSongs(Playlist playlist)
+    private void setPlaylistSongs(Playlist playlist)
     {
         playlistSongs.setAll(playlist.getTracklist());
     }

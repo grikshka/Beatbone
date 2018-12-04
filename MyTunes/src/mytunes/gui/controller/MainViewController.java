@@ -281,8 +281,7 @@ public class MainViewController implements Initializable {
             else
             {
                 enableButtonsForPlaylists();
-                model.setPlaylistSongs(selectedPlaylist);
-                lstPlaylistSongs.setItems(model.getPlaylistSongs());
+                lstPlaylistSongs.setItems(model.getPlaylistSongs(selectedPlaylist));
                 if(tblSongs.getSelectionModel().getSelectedItem() != null)
                 {
                     btnAddSongToPlaylist.setDisable(false);

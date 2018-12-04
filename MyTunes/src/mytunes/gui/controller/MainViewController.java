@@ -240,6 +240,12 @@ public class MainViewController implements Initializable {
     }
     
     @FXML
+    private void clickShuffle(ActionEvent event) {
+        model.switchShuffling();
+    }
+
+    
+    @FXML
     private void clickOnSongs(MouseEvent event) {
         if(tblSongs.getSelectionModel().getSelectedItem() != null)
         {

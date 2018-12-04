@@ -32,14 +32,16 @@ public class MainModel {
     private static MainModel instance;
     private Song currentlyPlaying;
     private Playlist currentPlaylist;
+    private boolean shuffle;
     private IBllFacade bllManager;
-    
+       
     private MainModel()
     {
         bllManager = new BllManager();
         songlist = FXCollections.observableArrayList(bllManager.getAllSongs());
         playlists = FXCollections.observableArrayList(bllManager.getAllPlaylists());
         playlistSongs = FXCollections.observableArrayList();
+        shuffle = false;
         
     }
     
@@ -217,25 +219,58 @@ public class MainModel {
         currentPlaylist = playlist;
     }
     
+    public void switchShuffling()
+    {
+        shuffle = !shuffle;
+    }
+    
     public Song getFirstSong()
     {
-        return SongChooser.getFirstSong(songlist);
+        if(shuffle)
+        {
+            return SongChooser.getRandomSong(songlist);
+        }
+        else
+        {
+            return SongChooser.getFirstSong(songlist);
+        }
     }
     
     public Song getFirstSongFromPlaylist(Playlist playlist)
     {
-        return SongChooser.getFirstSong(playlist.getTracklist());
+        if(shuffle)
+        {
+            return SongChooser.getRandomSong(playlist.getTracklist());
+        }
+        else
+        {
+            return SongChooser.getFirstSong(playlist.getTracklist());
+        }
     }
         
     public Song getNextSong(PlayingMode mode)
     {
-        if(mode == PlayingMode.PLAYLIST)
+        if(shuffle)
         {
-            return SongChooser.getNextSong(currentPlaylist.getTracklist(), currentlyPlaying);
+            if(mode == PlayingMode.PLAYLIST)
+            {
+                return SongChooser.getNextRandomSong(currentPlaylist.getTracklist(), currentlyPlaying);
+            }
+            else
+            {
+                return SongChooser.getNextRandomSong(songlist, currentlyPlaying);
+            }
         }
         else
         {
-            return SongChooser.getNextSong(songlist, currentlyPlaying);
+            if(mode == PlayingMode.PLAYLIST)
+            {
+                return SongChooser.getNextSong(currentPlaylist.getTracklist(), currentlyPlaying);
+            }
+            else
+            {
+                return SongChooser.getNextSong(songlist, currentlyPlaying);
+            }
         }
     }
     

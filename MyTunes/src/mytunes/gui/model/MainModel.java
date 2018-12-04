@@ -17,6 +17,7 @@ import mytunes.bll.util.MusicSearcher;
 import mytunes.bll.util.TimeConverter;
 import mytunes.gui.PlayingMode;
 import mytunes.bll.IBllFacade;
+import mytunes.bll.util.SongChooser;
 
  /**
  *
@@ -83,11 +84,7 @@ public class MainModel {
     
     public Song getFirstSong()
     {
-        if(songlist.isEmpty())
-        {
-            return null;
-        }
-        return songlist.get(0);
+        return SongChooser.getFirstSong(songlist);
     }
     
     public int getIndexOfSong(Song song)
@@ -120,11 +117,7 @@ public class MainModel {
     
     public Song getFirstSongFromPlaylist(Playlist playlist)
     {
-        if(playlist.getTracklist().isEmpty())
-        {
-            return null;
-        }
-        return playlist.getTracklist().get(0);
+        return SongChooser.getFirstSong(playlist.getTracklist());
     }
               
     public int getIndexOfSongInPlaylist(Playlist playlist, Song song)
@@ -238,27 +231,11 @@ public class MainModel {
     {
         if(mode == PlayingMode.PLAYLIST)
         {
-            int index = currentPlaylist.getTracklist().indexOf(currentlyPlaying);
-            if(index == currentPlaylist.getNumberOfSongs()-1)
-            {
-                return getFirstSongFromPlaylist(currentPlaylist);
-            }
-            else
-            {
-                return currentPlaylist.getTracklist().get(index+1);
-            }
+            return SongChooser.getNextSong(currentPlaylist.getTracklist(), currentlyPlaying);
         }
         else
         {
-            int index = songlist.indexOf(currentlyPlaying);
-            if(index == songlist.size()-1)
-            {
-                return getFirstSong();
-            }
-            else
-            {
-                return songlist.get(index+1);
-            }
+            return SongChooser.getNextSong(songlist, currentlyPlaying);
         }
     }
     
@@ -266,27 +243,11 @@ public class MainModel {
     {
         if(mode == PlayingMode.PLAYLIST)
         {
-            int index = currentPlaylist.getTracklist().indexOf(currentlyPlaying);
-            if(index == 0)
-            {
-                return currentlyPlaying;
-            }
-            else
-            {
-                return currentPlaylist.getTracklist().get(index-1);
-            }
+            return SongChooser.getPreviousSong(currentPlaylist.getTracklist(), currentlyPlaying);
         }
         else
         {
-            int index = songlist.indexOf(currentlyPlaying);
-            if(index == 0)
-            {
-                return currentlyPlaying;
-            }
-            else
-            {
-                return songlist.get(index-1);
-            }
+            return SongChooser.getPreviousSong(songlist, currentlyPlaying);
         }
     }
     

@@ -58,6 +58,8 @@ public class MainModel {
     
     public void deleteSong(Song song)
     {
+        bllManager.deleteSong(song);
+        deleteSongFromAllPlaylists(song);
         songlist.remove(song);
     }
     
@@ -193,6 +195,21 @@ public class MainModel {
     {
         Playlist updatedPlaylist = bllManager.addSongToPlaylist(playlist, song);       
         updateListOfPlaylists(updatedPlaylist);
+    }
+    
+    private void deleteSongFromAllPlaylists(Song song)
+    {
+        for(int i = 0; i < playlists.size(); i++)
+        {
+            for(int j = 0; j < playlists.get(i).getTracklist().size(); j++)
+            {
+                if(song.getId() == playlists.get(i).getTracklist().get(j).getId())
+                {
+                    playlists.get(i).removeSong(playlists.get(i).getTracklist().get(j));
+                    updateListOfPlaylists(playlists.get(i));
+                }
+            }
+        }
     }
     
     public int getIndexOfPlaylist(Playlist playlist)

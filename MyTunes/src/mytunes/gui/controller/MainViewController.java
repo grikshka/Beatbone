@@ -472,7 +472,7 @@ public class MainViewController implements Initializable {
     private void clickAddSongToPlaylist(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        if(!selectedPlaylist.getTracklist().contains(selectedSong))
+        if(!model.checkIfPlaylistContainsSong(selectedPlaylist,selectedSong))
         {
             model.addSongToPlaylist(selectedPlaylist, selectedSong);
             tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));

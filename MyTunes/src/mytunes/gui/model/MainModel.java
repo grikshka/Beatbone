@@ -162,6 +162,18 @@ public class MainModel {
         return playlistSongs;
     }
     
+    public boolean checkIfPlaylistContainsSong(Playlist playlist, Song song)
+    {
+        for(Song s : playlist.getTracklist())
+        {
+            if(s.getId() == song.getId())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private void setPlaylistSongs(Playlist playlist)
     {
         playlistSongs.setAll(playlist.getTracklist());

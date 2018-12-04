@@ -30,6 +30,7 @@ public class MainModel {
     private ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
     private static MainModel instance;
+    private PlayingMode mode;
     private Song currentlyPlaying;
     private Playlist currentPlaylist;
     private boolean shuffle;
@@ -209,8 +210,13 @@ public class MainModel {
         setPlaylistSongs(playlist);
     }
 
-    public void setCurrentlyPlaying(Song playedSong)
+    public void setCurrentlyPlaying(Song playedSong, PlayingMode mode)
     {
+        if(mode!=this.mode)
+        {
+            SongChooser.clearPreviousRandomSongs();
+        }
+        this.mode = mode;
         currentlyPlaying = playedSong;
     }
     
@@ -221,6 +227,7 @@ public class MainModel {
     
     public void switchShuffling()
     {
+        SongChooser.clearPreviousRandomSongs();
         shuffle = !shuffle;
     }
     
@@ -248,7 +255,7 @@ public class MainModel {
         }
     }
         
-    public Song getNextSong(PlayingMode mode)
+    public Song getNextSong()
     {
         if(shuffle)
         {
@@ -274,15 +281,27 @@ public class MainModel {
         }
     }
     
-    public Song getPreviousSong(PlayingMode mode)
+    public PlayingMode getCurrentPlayingMode()
     {
-        if(mode == PlayingMode.PLAYLIST)
+        return mode;
+    }
+    
+    public Song getPreviousSong()
+    {
+        if(shuffle)
         {
-            return SongChooser.getPreviousSong(currentPlaylist.getTracklist(), currentlyPlaying);
+            return SongChooser.getPreviousRandomSong(currentlyPlaying);
         }
         else
         {
-            return SongChooser.getPreviousSong(songlist, currentlyPlaying);
+            if(mode == PlayingMode.PLAYLIST)
+            {
+                return SongChooser.getPreviousSong(currentPlaylist.getTracklist(), currentlyPlaying);
+            }
+            else
+            {
+                return SongChooser.getPreviousSong(songlist, currentlyPlaying);
+            }
         }
     }
     

@@ -41,6 +41,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.bll.util.SongChooser;
 import mytunes.gui.PlayingMode;
 import mytunes.gui.model.MainModel;
 
@@ -52,7 +53,7 @@ public class MainViewController implements Initializable {
     
     private MainModel model;
     private MediaPlayer mediaPlayer;
-    private PlayingMode playMode;
+//    private PlayingMode playMode;
 
     @FXML
     private Button btnPlaySong;
@@ -225,16 +226,16 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickNextSong(ActionEvent event) {
-        Song songToPlay = model.getNextSong(playMode);
-        playSong(songToPlay, playMode);
+        Song songToPlay = model.getNextSong();
+        playSong(songToPlay, model.getCurrentPlayingMode());
         labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
         btnPlaySong.setText("||");
     }
 
     @FXML
     private void clickPreviousSong(ActionEvent event) {
-        Song songToPlay = model.getPreviousSong(playMode);
-        playSong(songToPlay, playMode);
+        Song songToPlay = model.getPreviousSong();
+        playSong(songToPlay, model.getCurrentPlayingMode());
         labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
         btnPlaySong.setText("||");
     }
@@ -506,9 +507,9 @@ public class MainViewController implements Initializable {
         File fileSong = new File(songToPlay.getPath());
         Media song = new Media(fileSong.toURI().toString());
         mediaPlayer = new MediaPlayer(song);
-        setMediaPlayer();     
-        model.setCurrentlyPlaying(songToPlay);
-        playMode = mode;
+        setMediaPlayer();  
+        model.setCurrentlyPlaying(songToPlay, mode);
+//        playMode = mode;
         mediaPlayer.play();
     }    
     

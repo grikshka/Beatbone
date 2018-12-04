@@ -72,4 +72,23 @@ public class PlaylistSongsDAO {
         }
     }
     
+    public void switchSongPlacesOnPlaylist(Playlist playlist, Song song1, Song song2) throws SQLException
+    {
+        String sqlStatement = "UPDATE PlaylistSongs SET playlistId=?, songId=? WHERE playlistId=? and songId=?;" +
+                    "UPDATE PlaylistSongs SET playlistId=?, songId=? WHERE playlistId=? and songId=?;";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setInt(1, playlist.getId());
+            statement.setInt(2, song2.getId());
+            statement.setInt(3, playlist.getId());
+            statement.setInt(4, song1.getId());
+            statement.setInt(5, playlist.getId());
+            statement.setInt(6, song1.getId());
+            statement.setInt(7, playlist.getId());
+            statement.setInt(8, song2.getId());
+            statement.execute();
+        }
+    }
+    
 }

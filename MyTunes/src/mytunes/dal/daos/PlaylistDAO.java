@@ -84,6 +84,7 @@ public class PlaylistDAO {
     
     public void deletePlaylist(Playlist playlist) throws SQLException
     {
+        psDao.deleteAllSongsFromPlaylist(playlist);
         String sqlStatement = "DELETE FROM Playlists WHERE id=?";
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement))

@@ -103,4 +103,16 @@ public class PlaylistSongsDAO {
         }
     }
     
+    public void deleteAllSongsFromPlaylist(Playlist playlist) throws SQLException
+    {
+        String sqlStatement = "DELETE FROM PlaylistSongs WHERE playlistId=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setInt(1, playlist.getId());
+            statement.execute();
+        }
+    }
+    
+    
 }

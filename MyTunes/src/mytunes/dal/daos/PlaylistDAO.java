@@ -5,6 +5,7 @@
  */
 package mytunes.dal.daos;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
+import mytunes.be.Song;
 import mytunes.dal.DbConnectionProvider;
 
 /**
@@ -73,6 +75,7 @@ public class PlaylistDAO {
                 String name = rs.getString("name");
                 allPlaylists.add(new Playlist(id, name));
             }
+            addSongsToPlaylists(allPlaylists);
         }
         return allPlaylists;
     }
@@ -85,6 +88,33 @@ public class PlaylistDAO {
         {
             statement.setInt(1, playlist.getId());
             statement.execute();
+        }
+    }
+    
+    private void addSongsToPlaylists(List<Playlist> allPlaylists) throws SQLException
+    {
+        String sqlStatement = "SELECT Playlists.id as playlistId, Songs.* FROM PlaylistSongs " +
+                                        "INNER JOIN Playlists on PlaylistSongs.playlistId=Playlists.id " +
+                                        "INNER JOIN Songs on PlaylistSongs.songId=Songs.id";
+        try(Connection con = connector.getConnection();
+                PreparedStatement songsStatement = con.prepareStatement(sqlStatement))
+        {
+        ResultSet rs = songsStatement.executeQuery();
+        rs.next();
+        for(Playlist p : allPlaylists)
+            {
+                while(!rs.isAfterLast() && rs.getInt("playlistId") == p.getId())
+                {
+                    int id = rs.getInt("id");
+                    String title = rs.getString("title");
+                    String artist = rs.getString("artist");
+                    String genre = rs.getString("genre");
+                    String path = rs.getString("path");
+                    int time = rs.getInt("time");
+                    p.addSong(new Song(id, title, artist, genre, path, time));
+                    rs.next();
+                }
+            }
         }
     }
 }

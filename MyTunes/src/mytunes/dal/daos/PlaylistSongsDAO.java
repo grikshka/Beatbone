@@ -53,20 +53,22 @@ public class PlaylistSongsDAO {
         try(Connection con = connector.getConnection();
                 PreparedStatement songsStatement = con.prepareStatement(sqlStatement))
         {
-        ResultSet rs = songsStatement.executeQuery();
-        rs.next();
-        for(Playlist p : allPlaylists)
+            ResultSet rs = songsStatement.executeQuery();
+            if(rs.next())
             {
-                while(!rs.isAfterLast() && rs.getInt("playlistId") == p.getId())
+                for(Playlist p : allPlaylists)
                 {
-                    int id = rs.getInt("id");
-                    String title = rs.getString("title");
-                    String artist = rs.getString("artist");
-                    String genre = rs.getString("genre");
-                    String path = rs.getString("path");
-                    int time = rs.getInt("time");
-                    p.addSong(new Song(id, title, artist, genre, path, time));
-                    rs.next();
+                    while(!rs.isAfterLast() && rs.getInt("playlistId") == p.getId())
+                    {
+                        int id = rs.getInt("id");
+                        String title = rs.getString("title");
+                        String artist = rs.getString("artist");
+                        String genre = rs.getString("genre");
+                        String path = rs.getString("path");
+                        int time = rs.getInt("time");
+                        p.addSong(new Song(id, title, artist, genre, path, time));
+                        rs.next();
+                    }
                 }
             }
         }
@@ -114,5 +116,14 @@ public class PlaylistSongsDAO {
         }
     }
     
-    
+    public void deleteSongFromAllPlaylists(Song song) throws SQLException
+    {
+        String sqlStatement = "DELETE FROM PlaylistSongs WHERE songId=?";
+        try(Connection con = connector.getConnection();
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
+        {
+            statement.setInt(1, song.getId());
+            statement.execute();
+        }
+    }
 }

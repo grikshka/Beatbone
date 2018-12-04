@@ -420,7 +420,7 @@ public class MainViewController implements Initializable {
         Optional<ButtonType> action = alert.showAndWait();
         if(action.get() == ButtonType.OK)
         {
-            model.removeSongFromPlaylist(selectedPlaylist, selectedSong);
+            model.deleteSongFromPlaylist(selectedPlaylist, selectedSong);
             tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
         }
     }

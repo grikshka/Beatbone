@@ -154,8 +154,9 @@ public class MainModel {
         }
     }
     
-    public void removeSongFromPlaylist(Playlist playlist, Song song)
+    public void deleteSongFromPlaylist(Playlist playlist, Song song)
     {
+        bllManager.deleteSongFromPlaylist(playlist, song);
         playlist.removeSong(song);
         updateListOfPlaylists(playlist);     
     }

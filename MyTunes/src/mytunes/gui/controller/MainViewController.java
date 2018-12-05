@@ -139,6 +139,8 @@ public class MainViewController implements Initializable {
         btnDeleteSongFromPlaylist.setDisable(true);
         btnPreviousSong.setDisable(true);
         btnNextSong.setDisable(true);
+        sldTime.setDisable(true);
+        btnMute.setDisable(true);
     }
     
     public void createSliderListener()
@@ -547,16 +549,16 @@ public class MainViewController implements Initializable {
     
     private void playSong(Song songToPlay, PlayingMode mode)
     {
-        if(mediaPlayer == null)
-        {
-            enableChangeSongButtons();
-        }
-        else if(mediaPlayer.getStatus().equals(Status.PLAYING))
+        if(mediaPlayer != null && mediaPlayer.getStatus().equals(Status.PLAYING))
         {
             mediaPlayer.stop();
         }
         File fileSong = new File(songToPlay.getPath());
         Media song = new Media(fileSong.toURI().toString());
+        if(mediaPlayer == null)
+        {
+            enableSongButtons();
+        }
         mediaPlayer = new MediaPlayer(song);
         setMediaPlayer(songToPlay);  
         model.setCurrentlyPlaying(songToPlay, mode);
@@ -600,10 +602,12 @@ public class MainViewController implements Initializable {
         btnDeletePlaylist.setDisable(false);
     }
     
-    private void enableChangeSongButtons() 
+    private void enableSongButtons() 
     {
         btnPreviousSong.setDisable(false);
         btnNextSong.setDisable(false);
+        sldTime.setDisable(false);
+        btnMute.setDisable(false);
     }
     
 }

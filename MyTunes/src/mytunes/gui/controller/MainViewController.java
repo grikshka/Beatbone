@@ -34,6 +34,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Modality;
@@ -228,8 +229,6 @@ public class MainViewController implements Initializable {
             if(songToPlay != null)
             {
                 playSong(songToPlay, PlayingMode.SONG_LIST);
-                labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
-                btnPlaySong.setText("||");
             }
             else
             {
@@ -257,16 +256,12 @@ public class MainViewController implements Initializable {
     private void clickNextSong(ActionEvent event) {
         Song songToPlay = model.getNextSong();
         playSong(songToPlay, model.getCurrentPlayingMode());
-        labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
-        btnPlaySong.setText("||");
     }
 
     @FXML
     private void clickPreviousSong(ActionEvent event) {
         Song songToPlay = model.getPreviousSong();
         playSong(songToPlay, model.getCurrentPlayingMode());
-        labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
-        btnPlaySong.setText("||");
     }
     
     @FXML
@@ -307,8 +302,6 @@ public class MainViewController implements Initializable {
             {
                 Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
                 playSong(selectedSong, PlayingMode.SONG_LIST);
-                labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
-                btnPlaySong.setText("||");
             }
             else
             {
@@ -334,8 +327,6 @@ public class MainViewController implements Initializable {
                 {
                     playSong(songToPlay, PlayingMode.PLAYLIST);
                     model.setCurrentPlaylist(selectedPlaylist);
-                    labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
-                    btnPlaySong.setText("||");
                 }
             }
             else
@@ -360,8 +351,6 @@ public class MainViewController implements Initializable {
             {              
                 playSong(selectedSong, PlayingMode.PLAYLIST);
                 model.setCurrentPlaylist(selectedPlaylist);
-                labelCurrentSong.setText("Now playing: " + selectedSong.getTitle());
-                btnPlaySong.setText("||");
             }
             else
             {                
@@ -554,23 +543,42 @@ public class MainViewController implements Initializable {
             mediaPlayer.stop();
         }
         File fileSong = new File(songToPlay.getPath());
-        Media song = new Media(fileSong.toURI().toString());
-        if(mediaPlayer == null)
+        try
         {
-            enableSongButtons();
+            Media song = new Media(fileSong.toURI().toString());
+            if(mediaPlayer == null)
+            {
+                enableSongButtons();
+            }
+            mediaPlayer = new MediaPlayer(song);
+            setMediaPlayer(songToPlay, mode);
+            mediaPlayer.play();
         }
-        mediaPlayer = new MediaPlayer(song);
-        setMediaPlayer(songToPlay);  
-        model.setCurrentlyPlaying(songToPlay, mode);
-        mediaPlayer.play();
+        catch(MediaException e)
+        {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Cannot play a song");
+            alert.setHeaderText(null);
+            alert.setContentText("Could not find path to song \"" + songToPlay.getTitle() + "\"");
+            Optional<ButtonType> action = alert.showAndWait();
+        }
     }    
     
-    private void setMediaPlayer(Song songToPlay)
+    public void setMediaPlayer(Song songToPlay, PlayingMode mode)
     {
+        setMediaPlayerOptions(songToPlay);  
+        model.setCurrentlyPlaying(songToPlay, mode);
         mediaPlayer.setVolume(sldVolume.getValue());
         lblSongCurrentTime.setText("00:00");
         lblSongEndTime.setText(songToPlay.getTimeInString());
         sldTime.setMax(songToPlay.getTime());
+        labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
+        btnPlaySong.setText("||");
+    }
+    
+    
+    private void setMediaPlayerOptions(Song songToPlay)
+    {
         mediaPlayer.setOnEndOfMedia(new Runnable()
             {
                 @Override

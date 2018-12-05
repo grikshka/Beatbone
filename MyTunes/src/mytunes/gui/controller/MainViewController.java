@@ -29,19 +29,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import mytunes.bll.util.SongChooser;
+import mytunes.bll.util.TimeConverter;
 import mytunes.gui.PlayingMode;
 import mytunes.gui.model.MainModel;
 
@@ -53,7 +52,7 @@ public class MainViewController implements Initializable {
     
     private MainModel model;
     private MediaPlayer mediaPlayer;
-//    private PlayingMode playMode;
+    private boolean songTimeChanged = false;
 
     @FXML
     private Button btnPlaySong;
@@ -105,6 +104,12 @@ public class MainViewController implements Initializable {
     private TextField txtSearchSongs;
     @FXML
     private TextField txtSearchPlaylists;
+    @FXML
+    private Slider sldTime;
+    @FXML
+    private Label lblSongEndTime;
+    @FXML
+    private Label lblSongCurrentTime;
    
     public MainViewController()
     {
@@ -143,6 +148,15 @@ public class MainViewController implements Initializable {
                     {
                         mediaPlayer.setVolume(sldVolume.getValue());
                     }
+                }
+            }     
+        );
+        sldTime.valueProperty().addListener(new ChangeListener()
+            {
+                @Override
+                public void changed(ObservableValue arg0, Object arg1, Object arg2)
+                {
+                    lblSongCurrentTime.setText(TimeConverter.convertToString((int)sldTime.getValue()));
                 }
             }     
         );
@@ -243,6 +257,12 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickShuffle(ActionEvent event) {
         model.switchShuffling();
+    }
+    
+    @FXML
+    private void dropTimeSlider(MouseEvent event) {
+        mediaPlayer.seek(Duration.seconds(sldTime.getValue()));
+        songTimeChanged=true;
     }
 
     
@@ -507,15 +527,17 @@ public class MainViewController implements Initializable {
         File fileSong = new File(songToPlay.getPath());
         Media song = new Media(fileSong.toURI().toString());
         mediaPlayer = new MediaPlayer(song);
-        setMediaPlayer();  
+        setMediaPlayer(songToPlay);  
         model.setCurrentlyPlaying(songToPlay, mode);
-//        playMode = mode;
         mediaPlayer.play();
     }    
     
-    private void setMediaPlayer()
+    private void setMediaPlayer(Song songToPlay)
     {
         mediaPlayer.setVolume(sldVolume.getValue());
+        lblSongCurrentTime.setText("00:00");
+        lblSongEndTime.setText(songToPlay.getTimeInString());
+        sldTime.setMax(songToPlay.getTime());
         mediaPlayer.setOnEndOfMedia(new Runnable()
             {
                 @Override
@@ -524,6 +546,20 @@ public class MainViewController implements Initializable {
                     btnNextSong.fire();
                 }
             }      
+        );
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
+            {
+                @Override
+                public void changed(ObservableValue arg0, Duration arg1, Duration arg2)
+                {
+                    if(!sldTime.isPressed() && !songTimeChanged)
+                    {
+                        sldTime.setValue(arg2.toSeconds());
+                    }
+                    else if(songTimeChanged)
+                        songTimeChanged=false;
+                }
+            }
         );
     }
     

@@ -28,6 +28,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -53,6 +54,7 @@ public class MainViewController implements Initializable {
     private MainModel model;
     private MediaPlayer mediaPlayer;
     private boolean songTimeChanged = false;
+    private double previousVolume;
 
     @FXML
     private Button btnPlaySong;
@@ -110,6 +112,8 @@ public class MainViewController implements Initializable {
     private Label lblSongEndTime;
     @FXML
     private Label lblSongCurrentTime;
+    @FXML
+    private ToggleButton btnMute;
    
     public MainViewController()
     {
@@ -146,6 +150,15 @@ public class MainViewController implements Initializable {
                 {
                     if(mediaPlayer != null)
                     {
+                        if(btnMute.isSelected() && sldVolume.getValue() != 0)
+                        {
+                            btnMute.setSelected(false);
+                        }
+                        else if(!btnMute.isSelected() && sldVolume.getValue() == 0)
+                        {
+                            previousVolume=0;
+                            btnMute.setSelected(true);
+                        }
                         mediaPlayer.setVolume(sldVolume.getValue());
                     }
                 }
@@ -258,6 +271,24 @@ public class MainViewController implements Initializable {
     private void clickShuffle(ActionEvent event) {
         model.switchShuffling();
     }
+    
+    @FXML
+    private void clickMute(ActionEvent event) {
+        if(btnMute.isSelected())
+        {
+            previousVolume = sldVolume.getValue();
+            sldVolume.setValue(0);
+        }
+        else
+        {
+            if(sldVolume.getValue() == 0)
+            {
+                btnMute.setSelected(true);
+            }
+            sldVolume.setValue(previousVolume);
+        }
+    }
+
     
     @FXML
     private void dropTimeSlider(MouseEvent event) {
@@ -574,5 +605,5 @@ public class MainViewController implements Initializable {
         btnPreviousSong.setDisable(false);
         btnNextSong.setDisable(false);
     }
-
+    
 }

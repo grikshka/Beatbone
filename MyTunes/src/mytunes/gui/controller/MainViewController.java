@@ -10,9 +10,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,6 +61,8 @@ public class MainViewController implements Initializable {
     private MediaPlayer mediaPlayer;
     private boolean songTimeChanged = false;
     private double previousVolume;
+    private Timeline stopPlayer;
+    private long unixTime = System.currentTimeMillis();
 
     @FXML
     private Button btnPlaySong;
@@ -242,26 +249,46 @@ public class MainViewController implements Initializable {
         }
         else if(mediaPlayer.getStatus().equals(Status.PLAYING))
         {
-            mediaPlayer.pause();
-            btnPlaySong.setText("⏵");
+            stopSong();
         }
         else
         {
-            mediaPlayer.play();
-            btnPlaySong.setText("||");
+            resumeSong();
         }
+    }
+    
+    private void stopSong()
+    {
+        stopPlayer.play();
+        btnPlaySong.setText("⏵");
+    }
+    
+    private void resumeSong()
+    {
+        Timeline resumePlayer = new Timeline(
+            new KeyFrame(Duration.seconds(0.30),
+                new KeyValue(mediaPlayer.volumeProperty(), sldVolume.getValue())));
+        mediaPlayer.play();
+        resumePlayer.play();
+        btnPlaySong.setText("||");
     }
 
     @FXML
-    private void clickNextSong(ActionEvent event) {
-        Song songToPlay = model.getNextSong();
-        playSong(songToPlay, model.getCurrentPlayingMode());
+    private void clickNextSong(ActionEvent event) {    
+        if(isPlayable())
+        {
+            Song songToPlay = model.getNextSong();
+            playSong(songToPlay, model.getCurrentPlayingMode());
+        }
     }
 
     @FXML
     private void clickPreviousSong(ActionEvent event) {
-        Song songToPlay = model.getPreviousSong();
-        playSong(songToPlay, model.getCurrentPlayingMode());
+        if(isPlayable())
+        {
+            Song songToPlay = model.getPreviousSong();
+            playSong(songToPlay, model.getCurrentPlayingMode());
+        }
     }
     
     @FXML
@@ -542,9 +569,9 @@ public class MainViewController implements Initializable {
         {
             mediaPlayer.stop();
         }
-        File fileSong = new File(songToPlay.getPath());
         try
         {
+            File fileSong = new File(songToPlay.getPath());
             Media song = new Media(fileSong.toURI().toString());
             if(mediaPlayer == null)
             {
@@ -566,7 +593,7 @@ public class MainViewController implements Initializable {
     
     public void setMediaPlayer(Song songToPlay, PlayingMode mode)
     {
-        setMediaPlayerOptions(songToPlay);  
+        setMediaPlayerSettings(songToPlay);  
         model.setCurrentlyPlaying(songToPlay, mode);
         mediaPlayer.setVolume(sldVolume.getValue());
         lblSongCurrentTime.setText("00:00");
@@ -574,10 +601,11 @@ public class MainViewController implements Initializable {
         sldTime.setMax(songToPlay.getTime());
         labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
         btnPlaySong.setText("||");
+        selectPlayedSong(songToPlay, mode);
     }
     
     
-    private void setMediaPlayerOptions(Song songToPlay)
+    private void setMediaPlayerSettings(Song songToPlay)
     {
         mediaPlayer.setOnEndOfMedia(new Runnable()
             {
@@ -602,6 +630,40 @@ public class MainViewController implements Initializable {
                 }
             }
         );
+        stopPlayer = new Timeline(
+            new KeyFrame(Duration.seconds(0.30),
+                new KeyValue(mediaPlayer.volumeProperty(), 0)));
+        stopPlayer.setOnFinished(new EventHandler()
+            {
+                @Override
+                public void handle(Event event)
+                {
+                    mediaPlayer.pause();
+                }
+            }       
+        );
+    }
+    
+    private void selectPlayedSong(Song playedSong, PlayingMode mode)
+    {
+        if(mode == PlayingMode.PLAYLIST)
+        {
+
+        }
+        else
+        {
+            tblSongs.getSelectionModel().select(playedSong);
+        }
+    }
+    
+    private boolean isPlayable()
+    {
+        if(System.currentTimeMillis() - unixTime < 200)
+        {
+            return false;
+        }
+        unixTime =  System.currentTimeMillis();
+        return true;
     }
     
     private void enableButtonsForPlaylists() 

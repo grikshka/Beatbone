@@ -63,7 +63,7 @@ public class SongViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         disableElements();
-        cmbGenre.getItems().addAll("Hip Hop", "Rap", "Blues", "Rock");  // temporary - later we will get genres from database
+        cmbGenre.getItems().addAll("Hip Hop", "Rap", "Blues", "Rock", "Jazz");  // temporary - later we will get genres from database
     }    
 
     @FXML

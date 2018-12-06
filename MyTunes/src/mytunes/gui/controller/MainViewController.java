@@ -122,6 +122,8 @@ public class MainViewController implements Initializable {
     private Label lblSongCurrentTime;
     @FXML
     private ToggleButton btnMute;
+    @FXML
+    private ToggleButton btnRepeat;
    
     public MainViewController()
     {
@@ -612,7 +614,14 @@ public class MainViewController implements Initializable {
                 @Override
                 public void run()
                 {
-                    btnNextSong.fire();
+                    if(btnRepeat.isSelected())
+                    {
+                        mediaPlayer.seek(Duration.ZERO);
+                    }
+                    else
+                    {
+                        btnNextSong.fire();
+                    }
                 }
             }      
         );
@@ -679,5 +688,5 @@ public class MainViewController implements Initializable {
         sldTime.setDisable(false);
         btnMute.setDisable(false);
     }
-    
+
 }

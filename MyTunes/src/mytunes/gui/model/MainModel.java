@@ -75,6 +75,7 @@ public class MainModel {
     
     public void updateSong(Song song, String title, String artist, String genre)
     {
+        updateSongOnAllPlaylists(song, title, artist, genre);
         Song updatedSong = bllManager.updateSong(song, title, artist, genre);
         updateListOfSongs(updatedSong);
     }
@@ -192,6 +193,24 @@ public class MainModel {
                 if(song.getId() == playlists.get(i).getTracklist().get(j).getId())
                 {
                     playlists.get(i).removeSong(playlists.get(i).getTracklist().get(j));
+                    updateListOfPlaylists(playlists.get(i));
+                }
+            }
+        }
+    }
+    
+    private void updateSongOnAllPlaylists(Song song, String title, String artist, String genre)
+    {
+        for(int i = 0; i < playlists.size(); i++)
+        {
+            for(int j = 0; j < playlists.get(i).getTracklist().size(); j++)
+            {
+                if(song.getId() == playlists.get(i).getTracklist().get(j).getId())
+                {
+                    Song songToUpdate = playlists.get(i).getTracklist().get(j);
+                    songToUpdate.setTitle(title);
+                    songToUpdate.setArtist(artist);
+                    songToUpdate.setGenre(genre);
                     updateListOfPlaylists(playlists.get(i));
                 }
             }

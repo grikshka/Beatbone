@@ -82,13 +82,8 @@ public class MainModel {
     
     private void updateListOfSongs(Song song)
     {
-        int index = getIndexOfSong(song);
+        int index = songlist.indexOf(song);
         songlist.set(index, song);
-    }
-    
-    public int getIndexOfSong(Song song)
-    {
-        return songlist.indexOf(song);
     }
     
     public ObservableList<Playlist> getPlaylists()
@@ -113,12 +108,7 @@ public class MainModel {
         Playlist updatedPlaylist = bllManager.updatePlaylist(playlist, name);
         updateListOfPlaylists(playlist);
     }
-              
-    public int getIndexOfSongInPlaylist(Playlist playlist, Song song)
-    {
-        return playlist.getTracklist().indexOf(song);
-    }
-    
+
     public void moveSongUpOnPlaylist(Playlist playlist, Song song)
     {
         int id = playlistSongs.indexOf(song);
@@ -154,18 +144,6 @@ public class MainModel {
     {
         playlistSongs.setAll(playlist.getTracklist());
         return playlistSongs;
-    }
-    
-    public boolean checkIfPlaylistContainsSong(Playlist playlist, Song song)
-    {
-        for(Song s : playlist.getTracklist())
-        {
-            if(s.getId() == song.getId())
-            {
-                return true;
-            }
-        }
-        return false;
     }
     
     private void setPlaylistSongs(Playlist playlist)
@@ -217,7 +195,7 @@ public class MainModel {
         }
     }
     
-    public int getIndexOfPlaylist(Playlist playlist)
+    private int getIndexOfPlaylist(Playlist playlist)
     {
         return playlists.indexOf(playlist);
     }

@@ -86,4 +86,21 @@ public class Playlist {
     {
         return TimeConverter.convertToString(time);
     }
+    
+    public int getPositionOfSong(Song song)
+    {
+        return tracklist.indexOf(song);
+    }
+    
+    public boolean isSongOnTracklist(Song song)
+    {
+        for(Song s : tracklist)
+        {
+            if(s.getId() == song.getId())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

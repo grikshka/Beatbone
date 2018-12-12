@@ -133,7 +133,7 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         disableElements();
-        createSliderListener();
+        createSliderListeners();
         loadData();
     }
     
@@ -153,7 +153,7 @@ public class MainViewController implements Initializable {
         btnMute.setDisable(true);
     }
     
-    public void createSliderListener()
+    public void createSliderListeners()
     {
         sldVolume.valueProperty().addListener(new ChangeListener()
             {
@@ -346,6 +346,9 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickOnPlaylists(MouseEvent event) {
+        btnDeleteSongFromPlaylist.setDisable(true);
+        btnMoveUpOnPlaylist.setDisable(true);
+        btnMoveDownOnPlaylist.setDisable(true);
         if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
         {
             Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
@@ -384,7 +387,7 @@ public class MainViewController implements Initializable {
             else
             {                
                 btnDeleteSongFromPlaylist.setDisable(false);
-                if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
+                if(selectedPlaylist.getPositionOfSong(selectedSong) == 0)
                 {
                     btnMoveUpOnPlaylist.setDisable(true);
                 }
@@ -392,7 +395,7 @@ public class MainViewController implements Initializable {
                 {
                     btnMoveUpOnPlaylist.setDisable(false);
                 }
-                if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs() - 1)
+                if(selectedPlaylist.getPositionOfSong(selectedSong) == selectedPlaylist.getNumberOfSongs() - 1)
                 {
                     btnMoveDownOnPlaylist.setDisable(true);  
                 }
@@ -456,8 +459,8 @@ public class MainViewController implements Initializable {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
         Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
         model.moveSongUpOnPlaylist(selectedPlaylist, selectedSong);
-        lstPlaylistSongs.getSelectionModel().select(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong));
-        if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == 0)
+        lstPlaylistSongs.getSelectionModel().select(selectedPlaylist.getPositionOfSong(selectedSong));
+        if(selectedPlaylist.getPositionOfSong(selectedSong) == 0)
         {
             btnMoveUpOnPlaylist.setDisable(true);
             btnMoveDownOnPlaylist.setDisable(false);
@@ -474,8 +477,8 @@ public class MainViewController implements Initializable {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
         Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
         model.moveSongDownOnPlaylist(selectedPlaylist, selectedSong);
-        lstPlaylistSongs.getSelectionModel().select(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong));
-        if(model.getIndexOfSongInPlaylist(selectedPlaylist, selectedSong) == selectedPlaylist.getNumberOfSongs()-1)
+        lstPlaylistSongs.getSelectionModel().select(selectedPlaylist.getPositionOfSong(selectedSong));
+        if(selectedPlaylist.getPositionOfSong(selectedSong) == selectedPlaylist.getNumberOfSongs()-1)
         {
             btnMoveDownOnPlaylist.setDisable(true);
             btnMoveUpOnPlaylist.setDisable(false);
@@ -499,7 +502,7 @@ public class MainViewController implements Initializable {
         if(action.get() == ButtonType.OK)
         {
             model.deleteSongFromPlaylist(selectedPlaylist, selectedSong);
-            tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
+            tblPlaylists.getSelectionModel().select(selectedPlaylist);
         }
     }
 
@@ -550,10 +553,10 @@ public class MainViewController implements Initializable {
     private void clickAddSongToPlaylist(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        if(!model.checkIfPlaylistContainsSong(selectedPlaylist,selectedSong))
+        if(!selectedPlaylist.isSongOnTracklist(selectedSong))
         {
             model.addSongToPlaylist(selectedPlaylist, selectedSong);
-            tblPlaylists.getSelectionModel().select(model.getIndexOfPlaylist(selectedPlaylist));
+            tblPlaylists.getSelectionModel().select(selectedPlaylist);
         }
         else
         {

@@ -140,16 +140,18 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public void switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
+    public Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
     {
+        Playlist updatedPlaylist = null;
         try
         {
-            playlistSongsDao.switchSongPlacesOnPlaylist(playlist, song1, song2);
+            updatedPlaylist = playlistSongsDao.switchSongPlacesOnPlaylist(playlist, song1, song2);
         }
         catch(SQLException e)
         {
             //TO DO
         }
+        return updatedPlaylist;
     }
 
     @Override

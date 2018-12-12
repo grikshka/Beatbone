@@ -5,7 +5,6 @@
  */
 package mytunes.dal.daos;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
-import mytunes.be.Song;
 import mytunes.dal.DbConnectionProvider;
 
 /**
@@ -34,13 +32,11 @@ public class PlaylistDAO {
     
     public Playlist createPlaylist(String name) throws SQLException
     {
-        String sqlStatement = "INSERT INTO Playlists(name, time, numberOfSongs) values(?, ?, ?)";
+        String sqlStatement = "INSERT INTO Playlists(name) values(?)";
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS))
         {
             statement.setString(1, name);
-            statement.setInt(2, 0);
-            statement.setInt(3, 0);
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();

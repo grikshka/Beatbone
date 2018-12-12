@@ -29,16 +29,12 @@ public class PlaylistSongsDAO {
     
     public Playlist addSongToPlaylist(Playlist playlist, Song song) throws SQLException
     {
-        String sqlStatement = "INSERT INTO PlaylistSongs(playlistId, songId) values(?,?);"
-                + "UPDATE Playlists SET time=?, numberOfSongs=? WHERE id=?";
+        String sqlStatement = "INSERT INTO PlaylistSongs(playlistId, songId) values(?,?)";
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement))
         {
             statement.setInt(1, playlist.getId());
             statement.setInt(2, song.getId());
-            statement.setInt(3, playlist.getTime() + song.getTime());
-            statement.setInt(4, playlist.getNumberOfSongs()+1);
-            statement.setInt(5, playlist.getId());
             statement.execute();
             playlist.addSong(song);
             return playlist;
@@ -74,7 +70,7 @@ public class PlaylistSongsDAO {
         }
     }
     
-    public void switchSongPlacesOnPlaylist(Playlist playlist, Song song1, Song song2) throws SQLException
+    public Playlist switchSongPlacesOnPlaylist(Playlist playlist, Song song1, Song song2) throws SQLException
     {
         String sqlStatement = "UPDATE PlaylistSongs SET playlistId=?, songId=? WHERE playlistId=? and songId=?;" +
                     "UPDATE PlaylistSongs SET playlistId=?, songId=? WHERE playlistId=? and songId=?;";
@@ -91,6 +87,7 @@ public class PlaylistSongsDAO {
             statement.setInt(8, song2.getId());
             statement.execute();
         }
+        return playlist;
     }
     
     public void deleteSongFromPlaylist(Playlist playlist, Song song) throws SQLException

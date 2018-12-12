@@ -66,9 +66,9 @@ public class BllManager implements IBllFacade{
     }
 
     @Override
-    public void switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
+    public Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
     {
-        dalController.switchSongsPlacesOnPlaylist(playlist, song1, song2);
+        return dalController.switchSongsPlacesOnPlaylist(playlist, song1, song2);
     }
 
     @Override

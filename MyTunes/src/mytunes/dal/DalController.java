@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.dal.daos.GenreDAO;
 import mytunes.dal.daos.PlaylistDAO;
 import mytunes.dal.daos.PlaylistSongsDAO;
 import mytunes.dal.daos.SongDAO;
@@ -23,12 +24,14 @@ public class DalController implements IDalFacade{
     private SongDAO songDao;
     private PlaylistDAO playlistDao;
     private PlaylistSongsDAO playlistSongsDao;
+    private GenreDAO genreDao;
     
     public DalController()
     {
         songDao = new SongDAO();
         playlistDao = new PlaylistDAO();
         playlistSongsDao = new PlaylistSongsDAO();
+        genreDao = new GenreDAO();
     }
     
     public Song createSong(String title, String artist, String genre, String path, int time)
@@ -178,6 +181,21 @@ public class DalController implements IDalFacade{
             //TO DO
         }
         return updatedPlaylist;
+    }
+    
+    @Override
+    public List<String> getAllGenres()
+    {
+        List<String> allGenres = null;
+        try
+        {
+            allGenres = genreDao.getAllGenres();
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return allGenres;
     }
 
 }

@@ -37,4 +37,6 @@ public interface IDalFacade {
     
     Playlist addSongToPlaylist(Playlist playlist, Song song);
     
+    List<String> getAllGenres();
+    
 }

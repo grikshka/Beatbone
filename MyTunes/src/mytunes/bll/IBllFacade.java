@@ -37,5 +37,6 @@ public interface IBllFacade {
     
     Playlist addSongToPlaylist(Playlist playlist, Song song);
     
+    List<String> getAllGenres();
     
 }

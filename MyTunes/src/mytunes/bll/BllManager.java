@@ -81,4 +81,9 @@ public class BllManager implements IBllFacade{
         return dalController.addSongToPlaylist(playlist, song);
     }
     
+    @Override
+    public List<String> getAllGenres() {
+        return dalController.getAllGenres();
+    }
+    
 }

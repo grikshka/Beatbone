@@ -6,13 +6,17 @@
 package mytunes.gui.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -20,9 +24,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mytunes.be.Song;
 import mytunes.bll.util.TimeConverter;
+import mytunes.gui.model.GenresViewModel;
 import mytunes.gui.model.MainModel;
 
 /**
@@ -35,6 +41,7 @@ public class SongViewController implements Initializable {
     private boolean editing;
     private Song editingSong;
     private MainModel model;
+    private GenresViewModel genresModel;
 
     @FXML
     private TextField txtTitle;
@@ -55,6 +62,7 @@ public class SongViewController implements Initializable {
     {
         editing = false;
         model = MainModel.createInstance();
+        genresModel = GenresViewModel.createInstance();
     }
 
     /**
@@ -63,7 +71,7 @@ public class SongViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         disableElements();
-        cmbGenre.getItems().addAll("Hip Hop", "Rap", "Blues", "Rock", "Jazz", "Classical");  // temporary - later we will get genres from database
+        cmbGenre.getItems().setAll(genresModel.getMainGenres());
     }    
 
     @FXML
@@ -82,7 +90,19 @@ public class SongViewController implements Initializable {
     }
 
     @FXML
-    private void clickMoreGenres(ActionEvent event) {
+    private void clickMoreGenres(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/GenresView.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("More Genres");
+        stage.setScene(new Scene(root));  
+        stage.showAndWait();
+        String selectedGenre = genresModel.getSelectedGenre();
+        if(selectedGenre != null)
+        {
+            setGenre(selectedGenre);
+        }
     }
 
     @FXML
@@ -181,6 +201,15 @@ public class SongViewController implements Initializable {
                 }
             }      
         );
+    }
+    
+    private void setGenre(String genre)
+    {
+        if(!cmbGenre.getItems().contains(genre))
+        {
+            cmbGenre.getItems().add(genre);
+        }
+        cmbGenre.getSelectionModel().select(genre);
     }
     
 }

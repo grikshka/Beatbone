@@ -160,6 +160,12 @@ public class MainViewController implements Initializable {
     
     public void createSliderListeners()
     {
+        createVolumeSliderListener();
+        createTimeSliderListener();
+    }
+    
+    private void createVolumeSliderListener()
+    {
         sldVolume.valueProperty().addListener(new ChangeListener()
             {
                 @Override
@@ -181,6 +187,10 @@ public class MainViewController implements Initializable {
                 }
             }     
         );
+    }
+    
+    private void createTimeSliderListener()
+    {
         sldTime.valueProperty().addListener(new ChangeListener()
             {
                 @Override
@@ -335,8 +345,7 @@ public class MainViewController implements Initializable {
             }
             else
             {
-                btnEditSong.setDisable(false);
-                btnDeleteSongFromSongs.setDisable(false);
+                enableButtonsForSongs();
                 if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
                 {
                     btnAddSongToPlaylist.setDisable(false);
@@ -347,9 +356,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickOnPlaylists(MouseEvent event) {
-        btnDeleteSongFromPlaylist.setDisable(true);
-        btnMoveUpOnPlaylist.setDisable(true);
-        btnMoveDownOnPlaylist.setDisable(true);
+        disableButtonsForPlaylistSongs();
         if(tblPlaylists.getSelectionModel().getSelectedItem() != null)
         {
             Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
@@ -444,11 +451,8 @@ public class MainViewController implements Initializable {
             tblPlaylists.getSelectionModel().clearSelection();
             model.clearPlaylistSongs();
             btnAddSongToPlaylist.setDisable(true);
-            btnDeletePlaylist.setDisable(true);
-            btnEditPlaylist.setDisable(true);
-            btnMoveUpOnPlaylist.setDisable(true);
-            btnMoveDownOnPlaylist.setDisable(true);
-            btnDeleteSongFromPlaylist.setDisable(true);
+            disableButtonsForPlaylists();
+            disableButtonsForPlaylistSongs();
         }
     }
 
@@ -568,7 +572,7 @@ public class MainViewController implements Initializable {
             Media song = new Media(fileSong.toURI().toString());
             if(mediaPlayer == null)
             {
-                enableSongButtons();
+                enablePlayingButtons();
             }
             mediaPlayer = new MediaPlayer(song);
             setMediaPlayer(songToPlay, mode);
@@ -596,6 +600,13 @@ public class MainViewController implements Initializable {
     
     private void setMediaPlayerSettings(Song songToPlay)
     {
+        setAutoplay();
+        setTimeListener();
+        setFadingForStopping();
+    }
+    
+    private void setAutoplay()
+    {
         mediaPlayer.setOnEndOfMedia(new Runnable()
             {
                 @Override
@@ -612,6 +623,10 @@ public class MainViewController implements Initializable {
                 }
             }      
         );
+    }
+    
+    private void setTimeListener()
+    {
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
             {
                 @Override
@@ -626,6 +641,10 @@ public class MainViewController implements Initializable {
                 }
             }
         );
+    }
+    
+    private void setFadingForStopping()
+    {
         stopPlayer = new Timeline(
             new KeyFrame(Duration.seconds(0.30),
                 new KeyValue(mediaPlayer.volumeProperty(), 0)));
@@ -662,18 +681,36 @@ public class MainViewController implements Initializable {
         return true;
     }
     
+    private void enableButtonsForSongs() {
+        btnEditSong.setDisable(false);
+        btnDeleteSongFromSongs.setDisable(false);
+    }
+    
     private void enableButtonsForPlaylists() 
     {
         btnEditPlaylist.setDisable(false);
         btnDeletePlaylist.setDisable(false);
     }
     
-    private void enableSongButtons() 
+    private void enablePlayingButtons() 
     {
         btnPreviousSong.setDisable(false);
         btnNextSong.setDisable(false);
         sldTime.setDisable(false);
         btnMute.setDisable(false);
+    }
+    
+    private void disableButtonsForPlaylists() 
+    {
+        btnEditPlaylist.setDisable(true);
+        btnDeletePlaylist.setDisable(true);
+    }
+    
+    private void disableButtonsForPlaylistSongs()
+    {
+        btnDeleteSongFromPlaylist.setDisable(true);
+        btnMoveUpOnPlaylist.setDisable(true);
+        btnMoveDownOnPlaylist.setDisable(true);
     }
 
     public void setVolume(double volume)

@@ -195,14 +195,9 @@ public class MainModel {
         }
     }
     
-    private int getIndexOfPlaylist(Playlist playlist)
-    {
-        return playlists.indexOf(playlist);
-    }
-    
     private void updateListOfPlaylists(Playlist playlist)
     {
-        int index = getIndexOfPlaylist(playlist);
+        int index = playlists.indexOf(playlist);
         playlists.set(index, playlist);
         setPlaylistSongs(playlist);
     }

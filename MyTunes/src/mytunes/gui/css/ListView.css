@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-08-2016, 12:36:01
+    Author     : Stegger
+*/
+
+
+.list-view {
+    -fx-background-color: #121212;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #b3b3b3;
+      -fx-text-fill:#ff006f;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: ff006f;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #121212;
+    -fx-text-fill: white;
+}
+
+.list-view .label {
+    -fx-text-fill: white;
+}

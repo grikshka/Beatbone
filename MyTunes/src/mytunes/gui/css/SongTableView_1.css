@@ -1,0 +1,27 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-08-2016, 12:36:01
+    Author     : Stegger
+*/
+
+
+/* Styling the slider track */
+.jfx-slider > .track {
+     -fx-background-color: #535353;
+}
+/* Styling the filled track */
+.jfx-slider > .colored-track {
+     -fx-background-color:  ff006f;
+}
+/* Styling the slider thumb */
+.jfx-slider > .thumb {
+     -fx-background-color: white;
+}
+/* Styling the animated thumb */
+.jfx-slider > .animated-thumb {
+     -fx-background-color:  ff006f;
+}

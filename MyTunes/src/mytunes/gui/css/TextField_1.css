@@ -1,0 +1,24 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-08-2016, 12:36:01
+    Author     : Stegger
+*/
+.text-field {
+    -fx-background-color:  #181818;
+     -fx-prompt-text-fill: #b3b3b3;
+}
+
+.text-field:focused{
+    -fx-background-color: #535353;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #b3b3b3;
+}
+.text-field:focus:required:placeholder-shown{
+    -fx-background-color: #535353;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}

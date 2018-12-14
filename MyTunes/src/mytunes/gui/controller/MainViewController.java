@@ -23,8 +23,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -50,6 +48,7 @@ import mytunes.be.Song;
 import mytunes.bll.util.TimeConverter;
 import mytunes.gui.PlayingMode;
 import mytunes.gui.model.MainModel;
+import mytunes.gui.util.WarningDisplayer;
 
 /**
  *
@@ -63,9 +62,10 @@ public class MainViewController implements Initializable {
     private double previousVolume;
     private Timeline stopPlayer;
     private long unixTime = System.currentTimeMillis();
+    private WarningDisplayer warningDisplayer;
 
     @FXML
-    private Button btnPlaySong;
+    private ToggleButton btnPlaySong;
     @FXML
     private Button btnNextSong;
     @FXML
@@ -124,10 +124,15 @@ public class MainViewController implements Initializable {
     private ToggleButton btnMute;
     @FXML
     private ToggleButton btnRepeat;
+    @FXML
+    private Button btnNewPlaylist;
+    @FXML
+    private ToggleButton btnShuffle;
    
     public MainViewController()
     {
         model = MainModel.createInstance();
+        warningDisplayer = new WarningDisplayer();
     }
     
     @Override
@@ -160,18 +165,18 @@ public class MainViewController implements Initializable {
                 @Override
                 public void changed(ObservableValue arg0, Object arg1, Object arg2)
                 {
+                    if(btnMute.isSelected() && getVolume() != 0)
+                    {
+                        btnMute.setSelected(false);
+                    }
+                    else if(!btnMute.isSelected() && getVolume() == 0)
+                    {
+                        previousVolume=0;
+                        btnMute.setSelected(true);
+                    }
                     if(mediaPlayer != null)
                     {
-                        if(btnMute.isSelected() && sldVolume.getValue() != 0)
-                        {
-                            btnMute.setSelected(false);
-                        }
-                        else if(!btnMute.isSelected() && sldVolume.getValue() == 0)
-                        {
-                            previousVolume=0;
-                            btnMute.setSelected(true);
-                        }
-                        mediaPlayer.setVolume(sldVolume.getValue());
+                        mediaPlayer.setVolume(getVolume());
                     }
                 }
             }     
@@ -241,11 +246,7 @@ public class MainViewController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Cannot play a song");
-                alert.setHeaderText(null);
-                alert.setContentText("Your list of songs is empty");
-                Optional<ButtonType> action = alert.showAndWait();
+                warningDisplayer.displayError("Cannot play a song", "Your list of songs is empty");
             }
             
         }
@@ -269,7 +270,7 @@ public class MainViewController implements Initializable {
     {
         Timeline resumePlayer = new Timeline(
             new KeyFrame(Duration.seconds(0.30),
-                new KeyValue(mediaPlayer.volumeProperty(), sldVolume.getValue())));
+                new KeyValue(mediaPlayer.volumeProperty(), getVolume())));
         mediaPlayer.play();
         resumePlayer.play();
         btnPlaySong.setText("||");
@@ -302,16 +303,16 @@ public class MainViewController implements Initializable {
     private void clickMute(ActionEvent event) {
         if(btnMute.isSelected())
         {
-            previousVolume = sldVolume.getValue();
-            sldVolume.setValue(0);
+            previousVolume = getVolume();
+            setVolume(0);
         }
         else
         {
-            if(sldVolume.getValue() == 0)
+            if(getVolume() == 0)
             {
                 btnMute.setSelected(true);
             }
-            sldVolume.setValue(previousVolume);
+            setVolume(previousVolume);
         }
     }
 
@@ -435,11 +436,8 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickDeletePlaylist(ActionEvent event) {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete \"" + selectedPlaylist.getName() + "\" from your playlists?");
-        Optional<ButtonType> action = alert.showAndWait();
+        Optional<ButtonType> action = warningDisplayer.displayConfirmation("Confirmation", 
+                "Are you sure you want to delete \"" + selectedPlaylist.getName() + "\" from your playlists?");
         if(action.get() == ButtonType.OK)
         {
             model.deletePlaylist(selectedPlaylist);
@@ -494,11 +492,8 @@ public class MainViewController implements Initializable {
     private void clickDeleteSongInPlaylist(ActionEvent event) {
         Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete \"" + selectedSong.getTitle() + "\" from \"" + selectedPlaylist.getName() + "\"?");
-        Optional<ButtonType> action = alert.showAndWait();
+        Optional<ButtonType> action = warningDisplayer.displayConfirmation("Confirmation", 
+                "Are you sure you want to delete \"" + selectedSong.getTitle() + "\" from \"" + selectedPlaylist.getName() + "\"?");;
         if(action.get() == ButtonType.OK)
         {
             model.deleteSongFromPlaylist(selectedPlaylist, selectedSong);
@@ -534,11 +529,8 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickDeleteSong(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete \"" + selectedSong.getTitle() + "\" from your songs?");
-        Optional<ButtonType> action = alert.showAndWait();
+        Optional<ButtonType> action = warningDisplayer.displayConfirmation("Confirmation", 
+                "Are you sure you want to delete \"" + selectedSong.getTitle() + "\" from your songs?");;
         if(action.get() == ButtonType.OK)
         {
             model.deleteSong(selectedSong);
@@ -560,11 +552,7 @@ public class MainViewController implements Initializable {
         }
         else
         {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Duplicate song");
-            alert.setHeaderText(null);
-            alert.setContentText("This song is already in your playlist");
-            Optional<ButtonType> action = alert.showAndWait();
+            warningDisplayer.displayError("Duplicate song", "This song is already in your playlist");
         }
     }
     
@@ -588,11 +576,7 @@ public class MainViewController implements Initializable {
         }
         catch(MediaException e)
         {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Cannot play a song");
-            alert.setHeaderText(null);
-            alert.setContentText("Could not find path to song \"" + songToPlay.getTitle() + "\"");
-            Optional<ButtonType> action = alert.showAndWait();
+            warningDisplayer.displayError("Cannot play a song", "Could not find path to song \"" + songToPlay.getTitle() + "\"");
         }
     }    
     
@@ -600,7 +584,7 @@ public class MainViewController implements Initializable {
     {
         setMediaPlayerSettings(songToPlay);  
         model.setCurrentlyPlaying(songToPlay, mode);
-        mediaPlayer.setVolume(sldVolume.getValue());
+        mediaPlayer.setVolume(getVolume());
         lblSongCurrentTime.setText("00:00");
         lblSongEndTime.setText(songToPlay.getTimeInString());
         sldTime.setMax(songToPlay.getTime());
@@ -692,4 +676,12 @@ public class MainViewController implements Initializable {
         btnMute.setDisable(false);
     }
 
+    public void setVolume(double volume)
+    {
+        sldVolume.setValue(volume*10);
+    }
+    public double getVolume()
+    {
+        return sldVolume.getValue()/10;
+    }
 }

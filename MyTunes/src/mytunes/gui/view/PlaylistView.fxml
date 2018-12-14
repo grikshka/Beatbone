@@ -4,12 +4,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="272.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.PlaylistViewController">
+<AnchorPane id="AnchorPane" prefHeight="153.0" prefWidth="668.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.PlaylistViewController">
    <children>
-      <TextField fx:id="txtName" layoutX="108.0" layoutY="81.0" onKeyReleased="#keyNameTyped" prefHeight="25.0" prefWidth="250.0" />
-      <Label layoutX="48.0" layoutY="85.0" text="Name" />
-      <Button fx:id="btnSave" layoutX="303.0" layoutY="151.0" mnemonicParsing="false" onAction="#clickSave" prefHeight="25.0" prefWidth="92.0" text="Save" />
-      <Button layoutX="197.0" layoutY="151.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="25.0" prefWidth="92.0" text="Cancel" />
+      <TextField fx:id="txtName" layoutX="-3.0" layoutY="45.0" onKeyReleased="#keyNameTyped" prefHeight="42.0" prefWidth="671.0" promptText="Playlist name" style="-fx-background-color: #181818;" stylesheets="@../css/TextField_2.css">
+         <font>
+            <Font name="Gotham-Medium" size="14.0" />
+         </font></TextField>
+      <Label layoutX="270.0" layoutY="14.0" text="Playlist Name" textFill="WHITE">
+         <font>
+            <Font name="Gotham-Bold" size="18.0" />
+         </font></Label>
+      <Button fx:id="btnSave" layoutX="348.0" layoutY="98.0" mnemonicParsing="false" onAction="#clickSave" prefHeight="39.0" prefWidth="220.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonNewSong.css" text="Save" textFill="WHITE">
+         <font>
+            <Font name="Gotham-Bold" size="18.0" />
+         </font></Button>
+      <Button layoutX="110.0" layoutY="98.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="39.0" prefWidth="215.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonSecondary.css" text="Cancel">
+         <font>
+            <Font name="Gotham-Bold" size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

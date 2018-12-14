@@ -10,10 +10,12 @@ import java.sql.SQLException;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.be.User;
 import mytunes.dal.daos.GenreDAO;
 import mytunes.dal.daos.PlaylistDAO;
 import mytunes.dal.daos.PlaylistSongsDAO;
 import mytunes.dal.daos.SongDAO;
+import mytunes.dal.daos.UserDAO;
 
 /**
  *
@@ -25,6 +27,7 @@ public class DalController implements IDalFacade{
     private PlaylistDAO playlistDao;
     private PlaylistSongsDAO playlistSongsDao;
     private GenreDAO genreDao;
+    private UserDAO userDao;
     
     public DalController()
     {
@@ -32,14 +35,15 @@ public class DalController implements IDalFacade{
         playlistDao = new PlaylistDAO();
         playlistSongsDao = new PlaylistSongsDAO();
         genreDao = new GenreDAO();
+        userDao = new UserDAO();
     }
     
-    public Song createSong(String title, String artist, String genre, String path, int time)
+    public Song createSong(User user, String title, String artist, String genre, String path, int time)
     {
         Song createdSong = null;
         try
         {
-            createdSong = songDao.createSong(title,artist,genre,path,time);
+            createdSong = songDao.createSong(user, title,artist,genre,path,time);
         }
         catch(SQLException e)
         {
@@ -75,11 +79,11 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public List<Song> getAllSongs() {
+    public List<Song> getAllSongs(User user) {
         List<Song> allSongs = null;
         try
         {
-            allSongs = songDao.getAllSongs();
+            allSongs = songDao.getAllSongs(user);
         }
         catch(SQLException e)
         {
@@ -89,11 +93,11 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public Playlist createPlaylist(String name) {
+    public Playlist createPlaylist(User user, String name) {
         Playlist createdPlaylist = null;
         try
         {
-            createdPlaylist = playlistDao.createPlaylist(name);
+            createdPlaylist = playlistDao.createPlaylist(user, name);
         }
         catch(SQLException e)
         {
@@ -129,11 +133,11 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public List<Playlist> getAllPlaylists() {
+    public List<Playlist> getAllPlaylists(User user) {
         List<Playlist> allPlaylists = null;
         try
         {
-            allPlaylists = playlistDao.getAllPlaylists();
+            allPlaylists = playlistDao.getAllPlaylists(user);
         }
         catch(SQLException e)
         {
@@ -196,6 +200,36 @@ public class DalController implements IDalFacade{
             //TO DO
         }
         return allGenres;
+    }
+    
+    @Override
+    public User createUser(String email, String password)
+    {
+        User user = null;
+        try
+        {
+            user = userDao.createUser(email, password);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return user;
+    }
+    
+    @Override
+    public User getUser(String email, String password)
+    {
+        User user = null;
+        try
+        {
+            user = userDao.getUser(email, password);
+        }
+        catch(SQLException e)
+        {
+            //TO DO
+        }
+        return user;
     }
 
 }

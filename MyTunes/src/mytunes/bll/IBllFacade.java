@@ -8,6 +8,7 @@ package mytunes.bll;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.be.User;
 
 /**
  *
@@ -15,21 +16,21 @@ import mytunes.be.Song;
  */
 public interface IBllFacade {
     
-    Song createSong(String title, String artist, String genre, String path, int time);
+    Song createSong(User user, String title, String artist, String genre, String path, int time);
     
     Song updateSong(Song song, String title, String artist, String genre);
     
     void deleteSong(Song song);
     
-    List<Song> getAllSongs();
+    List<Song> getAllSongs(User user);
     
-    Playlist createPlaylist(String name);
+    Playlist createPlaylist(User user, String name);
     
     Playlist updatePlaylist(Playlist playlist, String newName);
     
     void deletePlaylist(Playlist playlist);
     
-    List<Playlist> getAllPlaylists();
+    List<Playlist> getAllPlaylists(User user);
     
     Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2);
     
@@ -38,5 +39,9 @@ public interface IBllFacade {
     Playlist addSongToPlaylist(Playlist playlist, Song song);
     
     List<String> getAllGenres();
+    
+    User createUser(String email, String password);
+    
+    User getUser(String email, String password);
     
 }

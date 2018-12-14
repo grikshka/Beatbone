@@ -17,6 +17,6 @@ and open the template in the editor.
 	-fx-background-position:center;	
 }
 #btnNewPlaylist:hover{
-    -fx-background-image: url("../images/add-song6.png");}
+    -fx-background-image: url("../images/AddSongWhite.png");}
 #btnNewPlaylist:pressed{
     -fx-background-image: url("../images/AddSongGrey.png");}

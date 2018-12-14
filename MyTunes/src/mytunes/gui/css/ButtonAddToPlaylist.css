@@ -8,8 +8,30 @@ and open the template in the editor.
     Author     : Stegger
 */
 
+#btnAddSongToPlaylist {
+    -fx-background-color:  #181818;
+     -fx-prompt-text-fill: #b3b3b3;
+    -fx-background-image:url("../images/AddSongGrey.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+    -fx-background-size: 26 26;
+}
 
-#btnAddSongToPlaylist {			
+#btnAddSongToPlaylist:hover{
+    -fx-text-fill: white;
+        -fx-background-image:url("../images/AddSongWhite.png");  
+}
+#btnAddSongToPlaylist:focused{
+    -fx-background-color: #535353;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #b3b3b3;
+}
+#btnAddSongToPlaylist:focus:required:placeholder-shown{
+    -fx-background-color: #535353;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}
+/*#btnAddSongToPlaylist {			
 	-fx-base:#121212;
 	-fx-background-image: url("../images/AddSongGrey.png");
 	-fx-background-size: 26 26;
@@ -19,4 +41,4 @@ and open the template in the editor.
 btnMoveDownOnPlaylist:hover{
     -fx-background-image: url("../images/add-song6.png");}
 #btnAddSongToPlaylist:pressed{
-    -fx-background-image: url("../images/AddSongGrey.png");}
+    -fx-background-image: url("../images/AddSongGrey.png");}*/

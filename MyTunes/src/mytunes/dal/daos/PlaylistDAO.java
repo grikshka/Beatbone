@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
+import mytunes.be.User;
 import mytunes.dal.DbConnectionProvider;
 
 /**
@@ -30,13 +31,14 @@ public class PlaylistDAO {
         psDao = new PlaylistSongsDAO();
     }
     
-    public Playlist createPlaylist(String name) throws SQLException
+    public Playlist createPlaylist(User user, String name) throws SQLException
     {
-        String sqlStatement = "INSERT INTO Playlists(name) values(?)";
+        String sqlStatement = "INSERT INTO Playlists(userId, name) values(?, ?)";
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS))
         {
-            statement.setString(1, name);
+            statement.setInt(1, user.getId());
+            statement.setString(2, name);
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
@@ -59,13 +61,14 @@ public class PlaylistDAO {
         }
     }
     
-    public List<Playlist> getAllPlaylists() throws SQLException
+    public List<Playlist> getAllPlaylists(User user) throws SQLException
     {
-        String sqlStatement = "SELECT * FROM Playlists";
+        String sqlStatement = "SELECT * FROM Playlists WHERE userId=?";
         List<Playlist> allPlaylists = new ArrayList();
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement))
         {
+            statement.setInt(1, user.getId());
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {

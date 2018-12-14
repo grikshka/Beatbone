@@ -11,12 +11,12 @@ and open the template in the editor.
 
 #btnPreviousSong {			
 	-fx-base:#121212;
-	-fx-background-image: url("../images/previousGrey.png");
+	-fx-background-image: url("../images/PreviousGrey.png");
 	-fx-background-size: 20 20;
 	-fx-background-repeat: no-repeat;
 	-fx-background-position:center;	
 }
 #btnPreviousSong:hover{
-    -fx-background-image: url("../images/NextWhite.png");}
+    -fx-background-image: url("../images/PreviousWhite.png");}
 #btnPreviousSong:pressed{
-    -fx-background-image: url("../images/previousGrey.png");}
+    -fx-background-image: url("../images/PreviousGrey.png");}

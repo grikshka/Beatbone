@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.gui.model.MainModel;
@@ -88,6 +90,12 @@ public class PlaylistViewController implements Initializable {
         editing = true;
         editingPlaylist = playlist;
         txtName.setText(editingPlaylist.getName());
+    }
+    
+    @FXML
+    private void clickClose(ActionEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
     
 }

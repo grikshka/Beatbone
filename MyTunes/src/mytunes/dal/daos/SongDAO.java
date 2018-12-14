@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Song;
+import mytunes.be.User;
 import mytunes.dal.DbConnectionProvider;
 
 /**
@@ -32,17 +33,18 @@ public class SongDAO {
         playlistSongsDao = new PlaylistSongsDAO();
     }
     
-    public Song createSong(String title, String artist, String genre, String path, int time) throws SQLException
+    public Song createSong(User user, String title, String artist, String genre, String path, int time) throws SQLException
     {
-        String sqlStatement = "INSERT INTO Songs(title, artist,genre,path,time) values(?,?,?,?,?)";
+        String sqlStatement = "INSERT INTO Songs(userId, title, artist,genre,path,time) values(?,?,?,?,?,?)";
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS))
         {
-            statement.setString(1, title);
-            statement.setString(2, artist);
-            statement.setString(3, genre);
-            statement.setString(4, path);
-            statement.setInt(5, time);
+            statement.setInt(1, user.getId());
+            statement.setString(2, title);
+            statement.setString(3, artist);
+            statement.setString(4, genre);
+            statement.setString(5, path);
+            statement.setInt(6, time);
             statement.execute();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
@@ -69,13 +71,14 @@ public class SongDAO {
         }
     }
     
-    public List<Song> getAllSongs() throws SQLException
+    public List<Song> getAllSongs(User user) throws SQLException
     {
-        String sqlStatement = "SELECT * FROM Songs";
+        String sqlStatement = "SELECT * FROM Songs WHERE userId=?";
         List<Song> allSongs = new ArrayList();
         try(Connection con = connector.getConnection();
                 PreparedStatement statement = con.prepareStatement(sqlStatement))
         {
+            statement.setInt(1, user.getId());
             ResultSet rs = statement.executeQuery();
             while(rs.next())
             {

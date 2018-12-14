@@ -8,11 +8,13 @@ package mytunes.gui.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.EventObject;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,6 +23,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,6 +45,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -63,6 +67,8 @@ public class MainViewController implements Initializable {
     private Timeline stopPlayer;
     private long unixTime = System.currentTimeMillis();
     private WarningDisplayer warningDisplayer;
+    private double xOffset;
+    private double yOffset;
 
     @FXML
     private ToggleButton btnPlaySong;
@@ -423,6 +429,7 @@ public class MainViewController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("New Playlist");
         stage.setScene(new Scene(root));  
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
@@ -512,7 +519,8 @@ public class MainViewController implements Initializable {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("New Song");
-        stage.setScene(new Scene(root));  
+        stage.setScene(new Scene(root));
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
@@ -720,5 +728,30 @@ public class MainViewController implements Initializable {
     public double getVolume()
     {
         return sldVolume.getValue()/10;
+    }
+
+    @FXML
+    private void clickClose(ActionEvent event) {
+        Platform.exit();
+    }
+
+    @FXML
+    private void clickMinimalize(ActionEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    private void clickMouseDragged(MouseEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() + xOffset);
+        stage.setY(event.getScreenY() + yOffset);
+    }
+
+    @FXML
+    private void clickMousePressed(MouseEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        xOffset = stage.getX() - event.getScreenX();
+        yOffset = stage.getY() - event.getScreenY();
     }
 }

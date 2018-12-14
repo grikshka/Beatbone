@@ -46,14 +46,14 @@ and open the template in the editor.
 }
 
 .list-view .list-cell:hover {
-    -fx-text-fill:#b3b3b3;
+      -fx-text-fill:   #b3b3b3
 }
 
 .list-view .list-cell:selected {
-    -fx-text-fill: ff006f;
+    -fx-background-color: ff006f;
 }
 .list-view .list-cell:selected:hover{
-    -fx-text-fill:#b3b3b3;
+    -fx-text-fill: white;
 }
 .list-view .list-cell {
     -fx-background-color: #121212;

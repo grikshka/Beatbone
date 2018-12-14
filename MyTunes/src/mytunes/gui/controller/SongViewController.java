@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,13 +22,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import mytunes.be.Song;
-import mytunes.bll.util.TimeConverter;
 import mytunes.gui.model.GenresViewModel;
 import mytunes.gui.model.MainModel;
 
@@ -97,6 +99,7 @@ public class SongViewController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("More Genres");
         stage.setScene(new Scene(root));  
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.showAndWait();
         String selectedGenre = genresModel.getSelectedGenre();
         if(selectedGenre != null)
@@ -211,5 +214,12 @@ public class SongViewController implements Initializable {
         }
         cmbGenre.getSelectionModel().select(genre);
     }
+    
+    @FXML
+    private void clickClose(ActionEvent event) {
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
+    }
+
     
 }

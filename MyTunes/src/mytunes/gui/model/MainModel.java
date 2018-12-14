@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.be.User;
 import mytunes.bll.BllManager;
 import mytunes.bll.util.MusicSearcher;
 import mytunes.bll.util.TimeConverter;
@@ -29,6 +30,7 @@ public class MainModel {
     private ObservableList<Song> songlist;
     private ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
+    private static User currentUser;
     private static MainModel instance;
     private PlayingMode mode;
     private Song currentlyPlaying;
@@ -39,11 +41,16 @@ public class MainModel {
     private MainModel()
     {
         bllManager = new BllManager();
-        songlist = FXCollections.observableArrayList(bllManager.getAllSongs());
-        playlists = FXCollections.observableArrayList(bllManager.getAllPlaylists());
+        songlist = FXCollections.observableArrayList(bllManager.getAllSongs(currentUser));
+        playlists = FXCollections.observableArrayList(bllManager.getAllPlaylists(currentUser));
         playlistSongs = FXCollections.observableArrayList();
         shuffle = false;
         
+    }
+    
+    public static void setUser(User user)
+    {
+        currentUser = user;
     }
     
     public static MainModel createInstance()
@@ -69,7 +76,7 @@ public class MainModel {
     
     public void createSong(String title, String artist, String genre, String path, int time)
     {
-        Song song = bllManager.createSong(title, artist, genre, path, time);
+        Song song = bllManager.createSong(currentUser, title, artist, genre, path, time);
         songlist.add(song);
     }
     
@@ -99,7 +106,7 @@ public class MainModel {
     
     public void createPlaylist(String name)
     {
-        Playlist playlist = bllManager.createPlaylist(name);
+        Playlist playlist = bllManager.createPlaylist(currentUser, name);
         playlists.add(playlist);
     }
     

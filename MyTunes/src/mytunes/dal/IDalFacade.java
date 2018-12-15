@@ -7,7 +7,7 @@ import mytunes.be.User;
 
 /**
  * The {@code IDalDacade} interface is a facade for Data Access Layer.
- * It consist of methods that are needed for all database operations.
+ * It consists of methods that are needed for all database operations.
  * 
  * @author schemabuoi
  * @author kiddo
@@ -36,7 +36,7 @@ public interface IDalFacade {
      * @param newGenre The new genre for song.
      * @return Updated song.
      */
-    Song updateSong(Song song, String title, String artist, String genre);
+    Song updateSong(Song song, String newTitle, String newArtist, String newGenre);
     
     /**
      * Deletes song from database.

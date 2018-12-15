@@ -1,16 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.bll.util;
 
 /**
- *
- * @author Acer
+ * The {@code TimeConverter} class is responsible for
+ * converting time between seconds and format specific for our 
+ * application.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class TimeConverter {
     
+    /**
+     * Converts the time from seconds (int) to
+     * format specific for our application (string).
+     * 
+     * @param timeInSeconds The time in seconds.
+     * @return The time in string format.
+     */
     public static String convertToString(int timeInSeconds)
     {
         String result = "";
@@ -44,6 +50,13 @@ public class TimeConverter {
         
     }
     
+    /**
+     * Converts the time from format specific for 
+     * our application (string) to seconds (int).
+     * 
+     * @param timeInString The time in string.
+     * @return The time in seconds.
+     */
     public static int convertToInt(String timeInString)
     {
         String[] time = timeInString.split(":");

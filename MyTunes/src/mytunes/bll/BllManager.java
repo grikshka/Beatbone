@@ -14,13 +14,20 @@ import mytunes.bll.IBllFacade;
 import mytunes.dal.IDalFacade;
 
 /**
- *
- * @author Acer
+ * The {@code BllManager} class is responsible for
+ * connection between GUI and DAL. It is implementing IDalFacade
+ * interface.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class BllManager implements IBllFacade{
     
     private IDalFacade dalController;
     
+    /**
+     * Creates connection with DAL.
+     */
     public BllManager()
     {
         dalController = new DalController();
@@ -32,8 +39,8 @@ public class BllManager implements IBllFacade{
     }
 
     @Override
-    public Song updateSong(Song song, String title, String artist, String genre) {
-        return dalController.updateSong(song, title, artist, genre);
+    public Song updateSong(Song song, String newTitle, String newArtist, String newGenre) {
+        return dalController.updateSong(song, newTitle, newArtist, newGenre);
     }
 
     @Override
@@ -67,9 +74,9 @@ public class BllManager implements IBllFacade{
     }
 
     @Override
-    public Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
+    public Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song firstSong, Song secondSong)
     {
-        return dalController.switchSongsPlacesOnPlaylist(playlist, song1, song2);
+        return dalController.switchSongsPlacesOnPlaylist(playlist, firstSong, secondSong);
     }
 
     @Override

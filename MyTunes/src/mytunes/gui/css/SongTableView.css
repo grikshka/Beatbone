@@ -69,3 +69,6 @@
 .table-row-cell{ 
     -fx-table-cell-border-color:transparent;
 }
+.table-view .placeholder .label{
+    -fx-text-fill:#b3b3b3;
+}

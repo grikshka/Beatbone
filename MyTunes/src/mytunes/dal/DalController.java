@@ -55,11 +55,11 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public Song updateSong(Song song, String title, String artist, String genre) {
+    public Song updateSong(Song song, String newTitle, String newArtist, String newGenre) {
         Song updatedSong = null;
         try
         {
-            updatedSong = songDao.updateSong(song, title, artist, genre);
+            updatedSong = songDao.updateSong(song, newTitle, newArtist, newGenre);
         }
         catch(SQLException e)
         {

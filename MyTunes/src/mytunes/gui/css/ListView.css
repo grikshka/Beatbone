@@ -45,9 +45,9 @@
 }
 .list-view .list-cell{
     -fx-background-color:#121212;
-    -fx-text-fill: white;
+    -fx-text-fill:white;
 }
 
 .list-view .label{
-    -fx-text-fill:white;
+    -fx-text-fill:#b3b3b3;
 }

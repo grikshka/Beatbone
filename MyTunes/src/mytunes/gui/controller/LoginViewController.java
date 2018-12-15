@@ -113,7 +113,7 @@ public class LoginViewController implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             stage.setScene(new Scene(root));  
             stage.centerOnScreen();
-            stage.show();
+            WindowDecorator.showStage(stage);
         }
         else
         {

@@ -31,7 +31,7 @@ public class GenreDAO {
      * Gets a list with names of all genres from the database.
      * 
      * @return List with genres.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public List<String> getAllGenres() throws SQLException
     {

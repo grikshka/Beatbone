@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mytunes.be.User;
 import mytunes.gui.model.UserModel;
@@ -58,7 +56,7 @@ public class CreateUserViewController implements Initializable {
         Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         if(!isEmailCorrect(txtEmail.getText()))
         {
-            warningDisplayer.displayError(currentStage, "Cannot create user", "Address email is invalid");
+            warningDisplayer.displayError(currentStage, "Cannot create user", "Address e-mail is invalid");
         }       
         else
         {
@@ -74,14 +72,14 @@ public class CreateUserViewController implements Initializable {
             }
             else if(!txtPassword.getText().equals(txtRepeatPassword.getText()))
             {
-                warningDisplayer.displayError(currentStage, "Cannot create user", "Your passwords are not the same");
+                warningDisplayer.displayError(currentStage, "Cannot create user", "Your passwords do not match");
             }
             else
             {
                 User user = model.createUser(txtEmail.getText(), txtPassword.getText());
                 if(user == null)
                 {
-                    warningDisplayer.displayError(currentStage, "Cannot create user", "This adres e-mail is already taken");
+                    warningDisplayer.displayError(currentStage, "Cannot create user", "This e-mail address is already in use");
                 }
                 else
                 {
@@ -106,19 +104,19 @@ public class CreateUserViewController implements Initializable {
         List<String> faults = new ArrayList();
         if(password.length()<7)
         {
-            faults.add("Your password need o have at least 8 characters");
+            faults.add("Your password has to contain at least 8 characters");
         }
         if(password.equals(password.toLowerCase()) || password.equals(password.toUpperCase()))
         {
-            faults.add("Your password need to contain small and big letters");
+            faults.add("Your password has to contain at least one upper case and one lower case letter");
         }
         if(!password.matches(".*\\d+.*"))
         {
-            faults.add("Your password need to contain numbers");
+            faults.add("Your password has to contain at least one number");
         }
         if(password.matches("[a-zA-Z0-9]*"))
         {
-            faults.add("Your password need to contain special characters");
+            faults.add("Your password has to contain at least one special character");
         }
         return faults;
 

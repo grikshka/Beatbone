@@ -44,7 +44,7 @@ public class SongDAO {
      * @param path The path to file with song.
      * @param time The time of the song.
      * @return Created song.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public Song createSong(User user, String title, String artist, String genre, String path, int time) throws SQLException
     {
@@ -74,7 +74,7 @@ public class SongDAO {
      * @param newArtist The new artist for song.
      * @param newGenre The new genre for song.
      * @return Updated song.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public Song updateSong(Song song, String newTitle, String newArtist, String newGenre) throws SQLException
     {
@@ -99,7 +99,7 @@ public class SongDAO {
      * 
      * @param user The songs user.
      * @return List with songs.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public List<Song> getAllSongs(User user) throws SQLException
     {
@@ -128,7 +128,7 @@ public class SongDAO {
      * Deletes song from database.
      * 
      * @param song The song to delete.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public void deleteSong(Song song) throws SQLException
     {

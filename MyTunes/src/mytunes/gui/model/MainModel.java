@@ -27,20 +27,22 @@ import mytunes.bll.util.SongChooser;
 
 public class MainModel {
     
+    private static MainModel instance;
     private ObservableList<Song> songlist;
     private ObservableList<Playlist> playlists;
     private ObservableList<Song> playlistSongs;
     private static User currentUser;
-    private static MainModel instance;
     private PlayingMode mode;
     private Song currentlyPlaying;
     private Playlist currentPlaylist;
     private boolean shuffle;
     private IBllFacade bllManager;
+    private SongChooser songChooser;
        
     private MainModel()
     {
         bllManager = new BllManager();
+        songChooser = new SongChooser();
         songlist = FXCollections.observableArrayList(bllManager.getAllSongs(currentUser));
         playlists = FXCollections.observableArrayList(bllManager.getAllPlaylists(currentUser));
         playlistSongs = FXCollections.observableArrayList();
@@ -213,7 +215,7 @@ public class MainModel {
     {
         if(mode!=this.mode)
         {
-            SongChooser.clearPreviousRandomSongs();
+            songChooser.clearPreviousRandomSongs();
         }
         this.mode = mode;
         currentlyPlaying = playedSong;
@@ -226,7 +228,7 @@ public class MainModel {
     
     public void switchShuffling()
     {
-        SongChooser.clearPreviousRandomSongs();
+        songChooser.clearPreviousRandomSongs();
         shuffle = !shuffle;
     }
     
@@ -234,11 +236,11 @@ public class MainModel {
     {
         if(shuffle)
         {
-            return SongChooser.getRandomSong(songlist);
+            return songChooser.getRandomSong(songlist);
         }
         else
         {
-            return SongChooser.getFirstSong(songlist);
+            return songChooser.getFirstSong(songlist);
         }
     }
     
@@ -246,11 +248,11 @@ public class MainModel {
     {
         if(shuffle)
         {
-            return SongChooser.getRandomSong(playlist.getTracklist());
+            return songChooser.getRandomSong(playlist.getTracklist());
         }
         else
         {
-            return SongChooser.getFirstSong(playlist.getTracklist());
+            return songChooser.getFirstSong(playlist.getTracklist());
         }
     }
         
@@ -260,22 +262,22 @@ public class MainModel {
         {
             if(mode == PlayingMode.PLAYLIST)
             {
-                return SongChooser.getNextRandomSong(currentPlaylist.getTracklist(), currentlyPlaying);
+                return songChooser.getNextRandomSong(currentPlaylist.getTracklist(), currentlyPlaying);
             }
             else
             {
-                return SongChooser.getNextRandomSong(songlist, currentlyPlaying);
+                return songChooser.getNextRandomSong(songlist, currentlyPlaying);
             }
         }
         else
         {
             if(mode == PlayingMode.PLAYLIST)
             {
-                return SongChooser.getNextSong(currentPlaylist.getTracklist(), currentlyPlaying);
+                return songChooser.getNextSong(currentPlaylist.getTracklist(), currentlyPlaying);
             }
             else
             {
-                return SongChooser.getNextSong(songlist, currentlyPlaying);
+                return songChooser.getNextSong(songlist, currentlyPlaying);
             }
         }
     }
@@ -289,17 +291,17 @@ public class MainModel {
     {
         if(shuffle)
         {
-            return SongChooser.getPreviousRandomSong(currentlyPlaying);
+            return songChooser.getPreviousRandomSong(currentlyPlaying);
         }
         else
         {
             if(mode == PlayingMode.PLAYLIST)
             {
-                return SongChooser.getPreviousSong(currentPlaylist.getTracklist(), currentlyPlaying);
+                return songChooser.getPreviousSong(currentPlaylist.getTracklist(), currentlyPlaying);
             }
             else
             {
-                return SongChooser.getPreviousSong(songlist, currentlyPlaying);
+                return songChooser.getPreviousSong(songlist, currentlyPlaying);
             }
         }
     }

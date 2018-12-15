@@ -34,7 +34,7 @@ public class PlaylistSongsDAO {
      * @param playlist The playlist for song.
      * @param song The song to add.
      * @return Updated playlist with added song
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public Playlist addSongToPlaylist(Playlist playlist, Song song) throws SQLException
     {
@@ -54,7 +54,7 @@ public class PlaylistSongsDAO {
      * Adds all songs from database to playlists from given list.
      * 
      * @param playlists The list of a playlists.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public void addAllSongsToPlaylists(List<Playlist> playlists) throws SQLException
     {
@@ -92,7 +92,7 @@ public class PlaylistSongsDAO {
      * @param firstSong The first song to switch.
      * @param secondSong The second song to switch.
      * @return Updated playlist with switched positions of songs.
-     * @throws SQLServerException if connection with database cannot be established. 
+     * @throws SQLException if connection with database cannot be established. 
      */
     public Playlist switchSongPlacesOnPlaylist(Playlist playlist, Song firstSong, Song secondSong) throws SQLException
     {
@@ -119,7 +119,7 @@ public class PlaylistSongsDAO {
      * 
      * @param playlist The playlist with song to delete.
      * @param song The song to delete.
-     * @throws SQLServerException if connection with database cannot be established.  
+     * @throws SQLException if connection with database cannot be established.  
      */
     public void deleteSongFromPlaylist(Playlist playlist, Song song) throws SQLException
     {
@@ -137,7 +137,7 @@ public class PlaylistSongsDAO {
      * Deletes all songs from given playlist in database.
      * 
      * @param playlist The playlist to clear.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public void deleteAllSongsFromPlaylist(Playlist playlist) throws SQLException
     {
@@ -154,7 +154,7 @@ public class PlaylistSongsDAO {
      * Deletes given song from all playlists.
      * 
      * @param song The song to delete.
-     * @throws SQLServerException if connection with database cannot be established. 
+     * @throws SQLException if connection with database cannot be established. 
      */
     public void deleteSongFromAllPlaylists(Song song) throws SQLException
     {

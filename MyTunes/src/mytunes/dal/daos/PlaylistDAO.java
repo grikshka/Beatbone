@@ -41,7 +41,7 @@ public class PlaylistDAO {
      * @param user The playlist user.
      * @param name The name of the playlist.
      * @return Created playlist.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public Playlist createPlaylist(User user, String name) throws SQLException
     {
@@ -65,7 +65,7 @@ public class PlaylistDAO {
      * @param playlist The playlist to update.
      * @param newName The new name for the playlist.
      * @return Updated playlist.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public Playlist updatePlaylist(Playlist playlist, String newName) throws SQLException
     {
@@ -88,7 +88,7 @@ public class PlaylistDAO {
      * 
      * @param user The playlists user.
      * @return List with playlists.
-     * @throws SQLServerException if connection with database cannot be established. 
+     * @throws SQLException if connection with database cannot be established. 
      */
     public List<Playlist> getAllPlaylists(User user) throws SQLException
     {
@@ -114,7 +114,7 @@ public class PlaylistDAO {
      * Deletes playlist from the database.
      * 
      * @param playlist The playlist to delete.
-     * @throws SQLServerException if connection with database cannot be established. 
+     * @throws SQLException if connection with database cannot be established. 
      */
     public void deletePlaylist(Playlist playlist) throws SQLException
     {

@@ -33,7 +33,7 @@ public class UserDAO {
      * @param email The users e-mail address.
      * @param password The users password.
      * @return Created user.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     public User createUser(String email, String password) throws SQLException
     {
@@ -64,7 +64,7 @@ public class UserDAO {
      * 
      * @param email The e-mail to check.
      * @return true if e-mail is not in use.
-     * @throws SQLServerException if connection with database cannot be established.
+     * @throws SQLException if connection with database cannot be established.
      */
     private boolean isEmailTaken(String email) throws SQLException
     {
@@ -93,7 +93,7 @@ public class UserDAO {
      * @param email The users e-mail address.
      * @param password The users password.
      * @return The user.
-     * @throws SQLServerException if connection with database cannot be established. 
+     * @throws SQLException if connection with database cannot be established. 
      */
     public User getUser(String email, String password) throws SQLException
     {

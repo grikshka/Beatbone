@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal.daos;
 
 import java.sql.Connection;
@@ -14,18 +9,32 @@ import mytunes.be.User;
 import mytunes.dal.DbConnectionProvider;
 
 /**
- *
- * @author Acer
+ * The {@code UserDAO} class is responsible for
+ * operations on Users table in our database.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class UserDAO {
     
     private DbConnectionProvider connector;
     
+    /**
+     * Creates connector with database and DAO for PlaylistSongs.
+     */
     public UserDAO()
     {
         connector = new DbConnectionProvider();
     }
     
+    /**
+     * Creates user in database.
+     * 
+     * @param email The users e-mail address.
+     * @param password The users password.
+     * @return Created user.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public User createUser(String email, String password) throws SQLException
     {
         if(isEmailTaken(email))
@@ -50,6 +59,13 @@ public class UserDAO {
         }
     }
     
+    /**
+     * Checks if given e-mail address is already in use by some user in database.
+     * 
+     * @param email The e-mail to check.
+     * @return true if e-mail is not in use.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     private boolean isEmailTaken(String email) throws SQLException
     {
         String sqlStatement = "SELECT * FROM Users WHERE email=?";
@@ -71,6 +87,14 @@ public class UserDAO {
             }
     }
     
+    /**
+     * Gets the user with given e-mail address and password from database.
+     * 
+     * @param email The users e-mail address.
+     * @param password The users password.
+     * @return The user.
+     * @throws SQLServerException if connection with database cannot be established. 
+     */
     public User getUser(String email, String password) throws SQLException
     {
         String sqlStatement = "SELECT * FROM Users WHERE email=? and password=?";

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
@@ -13,14 +8,20 @@ import java.sql.Connection;
 import java.util.Properties;
 
 /**
- *
- * @author Acer
+ * The {@code DbConnectionProvider} class is responsible for 
+ * establishing connection with a database.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class DbConnectionProvider {
     
     private static final String PROP_FILE = "data/connectionInfo.settings";
     private SQLServerDataSource ds;
     
+    /**
+     * Creates a connection with the database.
+     */
     public DbConnectionProvider()
     {
         try
@@ -39,6 +40,13 @@ public class DbConnectionProvider {
         }
     }
     
+    /**
+     * Returns Connection object which is able to
+     * provide informations about database.
+     * 
+     * @return The connection with database.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public Connection getConnection() throws SQLServerException
     {
         return ds.getConnection();

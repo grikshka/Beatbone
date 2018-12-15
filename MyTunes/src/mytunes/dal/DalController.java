@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import mytunes.be.Playlist;
@@ -18,8 +12,12 @@ import mytunes.dal.daos.SongDAO;
 import mytunes.dal.daos.UserDAO;
 
 /**
- *
- * @author Acer
+ * The {@code DalController} class is responsible for
+ * all operations on database. It is implementing IDalFacade
+ * interface.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class DalController implements IDalFacade{
     
@@ -29,6 +27,9 @@ public class DalController implements IDalFacade{
     private GenreDAO genreDao;
     private UserDAO userDao;
     
+    /**
+     * Creates all Data Access Objects.
+     */
     public DalController()
     {
         songDao = new SongDAO();
@@ -38,6 +39,7 @@ public class DalController implements IDalFacade{
         userDao = new UserDAO();
     }
     
+    @Override
     public Song createSong(User user, String title, String artist, String genre, String path, int time)
     {
         Song createdSong = null;
@@ -147,12 +149,12 @@ public class DalController implements IDalFacade{
     }
 
     @Override
-    public Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song song1, Song song2)
+    public Playlist switchSongsPlacesOnPlaylist(Playlist playlist, Song firstSong, Song secondSong)
     {
         Playlist updatedPlaylist = null;
         try
         {
-            updatedPlaylist = playlistSongsDao.switchSongPlacesOnPlaylist(playlist, song1, song2);
+            updatedPlaylist = playlistSongsDao.switchSongPlacesOnPlaylist(playlist, firstSong, secondSong);
         }
         catch(SQLException e)
         {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal.daos;
 
 import java.sql.Connection;
@@ -17,20 +12,37 @@ import mytunes.be.User;
 import mytunes.dal.DbConnectionProvider;
 
 /**
- *
- * @author Acer
+ * The {@code PlaylistDAO} class is responsible for
+ * operations on Playlists table in our database.
+ * It is also using {@code PlaylistSongsDAO} class
+ * for operations on PlaylistSongs table because both
+ * tables are connected with each other.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class PlaylistDAO {
     
     private DbConnectionProvider connector;
     private PlaylistSongsDAO psDao;
-    
+        
+    /**
+     * Creates connector with database and DAO for PlaylistSongs.
+     */
     public PlaylistDAO()
     {
         connector = new DbConnectionProvider();
         psDao = new PlaylistSongsDAO();
     }
     
+    /**
+     * Creates a Playlist in the database for a given user.
+     * 
+     * @param user The playlist user.
+     * @param name The name of the playlist.
+     * @return Created playlist.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public Playlist createPlaylist(User user, String name) throws SQLException
     {
         String sqlStatement = "INSERT INTO Playlists(userId, name) values(?, ?)";
@@ -47,6 +59,14 @@ public class PlaylistDAO {
         }
     }
     
+    /**
+     * Updates the name of the playlist in the database.
+     * 
+     * @param playlist The playlist to update.
+     * @param newName The new name for the playlist.
+     * @return Updated playlist.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public Playlist updatePlaylist(Playlist playlist, String newName) throws SQLException
     {
         String sqlStatement = "UPDATE Playlists SET name=? WHERE id=?";
@@ -61,6 +81,15 @@ public class PlaylistDAO {
         }
     }
     
+    /**
+     * Gets a list with all playlists from the database for given user. After adding all playlists
+     * to the list,it uses object of PlaylistSongsDAO to add
+     * all songs for all playlist.
+     * 
+     * @param user The playlists user.
+     * @return List with playlists.
+     * @throws SQLServerException if connection with database cannot be established. 
+     */
     public List<Playlist> getAllPlaylists(User user) throws SQLException
     {
         String sqlStatement = "SELECT * FROM Playlists WHERE userId=?";
@@ -76,11 +105,17 @@ public class PlaylistDAO {
                 String name = rs.getString("name");
                 allPlaylists.add(new Playlist(id, name));
             }
-            psDao.addAllSongsToAllPlaylists(allPlaylists);
+            psDao.addAllSongsToPlaylists(allPlaylists);
         }
         return allPlaylists;
     }
     
+    /**
+     * Deletes playlist from the database.
+     * 
+     * @param playlist The playlist to delete.
+     * @throws SQLServerException if connection with database cannot be established. 
+     */
     public void deletePlaylist(Playlist playlist) throws SQLException
     {
         psDao.deleteAllSongsFromPlaylist(playlist);

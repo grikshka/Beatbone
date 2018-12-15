@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal.daos;
 
 import java.sql.Connection;
@@ -14,18 +9,30 @@ import java.util.List;
 import mytunes.dal.DbConnectionProvider;
 
 /**
- *
- * @author Acer
+ * The {@code GenreDAO} class is responsible for
+ * operations on Genres table in our database.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class GenreDAO {
     
     private DbConnectionProvider connector;
     
+    /**
+     * Creates connector with database.
+     */
     public GenreDAO()
     {
         connector = new DbConnectionProvider();
     }
     
+    /**
+     * Gets a list with names of all genres from the database.
+     * 
+     * @return List with genres.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public List<String> getAllGenres() throws SQLException
     {
         List<String> allGenres = new ArrayList();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal.daos;
 
 import java.sql.Connection;
@@ -15,18 +10,32 @@ import mytunes.be.Song;
 import mytunes.dal.DbConnectionProvider;
 
 /**
- *
- * @author Acer
+ * The {@code PlaylistSongsDAO} class is responsible for
+ * operations on PlaylistSongs table in our database.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class PlaylistSongsDAO {
     
     private DbConnectionProvider connector;
     
+    /**
+     * Creates connector with database.
+     */
     public PlaylistSongsDAO()
     {
         connector = new DbConnectionProvider();
     }
     
+    /**
+     * Adds a song to the playlist in database.
+     * 
+     * @param playlist The playlist for song.
+     * @param song The song to add.
+     * @return Updated playlist with added song
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public Playlist addSongToPlaylist(Playlist playlist, Song song) throws SQLException
     {
         String sqlStatement = "INSERT INTO PlaylistSongs(playlistId, songId) values(?,?)";
@@ -41,7 +50,13 @@ public class PlaylistSongsDAO {
         }
     }
     
-    public void addAllSongsToAllPlaylists(List<Playlist> allPlaylists) throws SQLException
+    /**
+     * Adds all songs from database to playlists from given list.
+     * 
+     * @param playlists The list of a playlists.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
+    public void addAllSongsToPlaylists(List<Playlist> playlists) throws SQLException
     {
         String sqlStatement = "SELECT Playlists.id as playlistId, Songs.* FROM PlaylistSongs " +
                                         "INNER JOIN Playlists on PlaylistSongs.playlistId=Playlists.id " +
@@ -52,7 +67,7 @@ public class PlaylistSongsDAO {
             ResultSet rs = songsStatement.executeQuery();
             if(rs.next())
             {
-                for(Playlist p : allPlaylists)
+                for(Playlist p : playlists)
                 {
                     while(!rs.isAfterLast() && rs.getInt("playlistId") == p.getId())
                     {
@@ -70,7 +85,16 @@ public class PlaylistSongsDAO {
         }
     }
     
-    public Playlist switchSongPlacesOnPlaylist(Playlist playlist, Song song1, Song song2) throws SQLException
+    /**
+     * Switches the places of songs in database.
+     * 
+     * @param playlist The playlist with songs to switch.
+     * @param firstSong The first song to switch.
+     * @param secondSong The second song to switch.
+     * @return Updated playlist with switched positions of songs.
+     * @throws SQLServerException if connection with database cannot be established. 
+     */
+    public Playlist switchSongPlacesOnPlaylist(Playlist playlist, Song firstSong, Song secondSong) throws SQLException
     {
         String sqlStatement = "UPDATE PlaylistSongs SET playlistId=?, songId=? WHERE playlistId=? and songId=?;" +
                     "UPDATE PlaylistSongs SET playlistId=?, songId=? WHERE playlistId=? and songId=?;";
@@ -78,18 +102,25 @@ public class PlaylistSongsDAO {
                 PreparedStatement statement = con.prepareStatement(sqlStatement))
         {
             statement.setInt(1, playlist.getId());
-            statement.setInt(2, song2.getId());
+            statement.setInt(2, secondSong.getId());
             statement.setInt(3, playlist.getId());
-            statement.setInt(4, song1.getId());
+            statement.setInt(4, firstSong.getId());
             statement.setInt(5, playlist.getId());
-            statement.setInt(6, song1.getId());
+            statement.setInt(6, firstSong.getId());
             statement.setInt(7, playlist.getId());
-            statement.setInt(8, song2.getId());
+            statement.setInt(8, secondSong.getId());
             statement.execute();
         }
         return playlist;
     }
     
+    /**
+     * Deletes song from given playlist in database.
+     * 
+     * @param playlist The playlist with song to delete.
+     * @param song The song to delete.
+     * @throws SQLServerException if connection with database cannot be established.  
+     */
     public void deleteSongFromPlaylist(Playlist playlist, Song song) throws SQLException
     {
         String sqlStatement = "DELETE FROM PlaylistSongs WHERE playlistId=? and songId=?";
@@ -102,6 +133,12 @@ public class PlaylistSongsDAO {
         }
     }
     
+    /**
+     * Deletes all songs from given playlist in database.
+     * 
+     * @param playlist The playlist to clear.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public void deleteAllSongsFromPlaylist(Playlist playlist) throws SQLException
     {
         String sqlStatement = "DELETE FROM PlaylistSongs WHERE playlistId=?";
@@ -113,6 +150,12 @@ public class PlaylistSongsDAO {
         }
     }
     
+    /**
+     * Deletes given song from all playlists.
+     * 
+     * @param song The song to delete.
+     * @throws SQLServerException if connection with database cannot be established. 
+     */
     public void deleteSongFromAllPlaylists(Song song) throws SQLException
     {
         String sqlStatement = "DELETE FROM PlaylistSongs WHERE songId=?";

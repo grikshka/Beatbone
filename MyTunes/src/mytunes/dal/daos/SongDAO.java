@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.dal.daos;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -19,20 +14,38 @@ import mytunes.be.User;
 import mytunes.dal.DbConnectionProvider;
 
 /**
- *
- * @author Acer
+ * The {@code SongDAO} class is responsible for
+ * operations on Songs table in our database.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class SongDAO {
     
     private DbConnectionProvider connector;
     private PlaylistSongsDAO playlistSongsDao;
     
+    /**
+     * Creates connector with database.
+     */
     public SongDAO()
     {
         connector = new DbConnectionProvider();
         playlistSongsDao = new PlaylistSongsDAO();
     }
     
+    /**
+     * Creates a song in database.
+     * 
+     * @param user The songs user.
+     * @param title The songs title.
+     * @param artist The songs artist.
+     * @param genre The name of genre of song.
+     * @param path The path to file with song.
+     * @param time The time of the song.
+     * @return Created song.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public Song createSong(User user, String title, String artist, String genre, String path, int time) throws SQLException
     {
         String sqlStatement = "INSERT INTO Songs(userId, title, artist,genre,path,time) values(?,?,?,?,?,?)";
@@ -53,6 +66,16 @@ public class SongDAO {
         }
     }
     
+    /**
+     * Updates the song in database.
+     * 
+     * @param song The song to update.
+     * @param newTitle The new title for song.
+     * @param newArtist The new artist for song.
+     * @param newGenre The new genre for song.
+     * @return Updated song.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public Song updateSong(Song song, String newTitle, String newArtist, String newGenre) throws SQLException
     {
         String sqlStatement = "UPDATE Songs SET title=?, artist=?, genre=? WHERE id=?";
@@ -71,6 +94,13 @@ public class SongDAO {
         }
     }
     
+    /**
+     * Gets all songs from database for given user.
+     * 
+     * @param user The songs user.
+     * @return List with songs.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public List<Song> getAllSongs(User user) throws SQLException
     {
         String sqlStatement = "SELECT * FROM Songs WHERE userId=?";
@@ -94,6 +124,12 @@ public class SongDAO {
         return allSongs;
     }
     
+    /**
+     * Deletes song from database.
+     * 
+     * @param song The song to delete.
+     * @throws SQLServerException if connection with database cannot be established.
+     */
     public void deleteSong(Song song) throws SQLException
     {
         playlistSongsDao.deleteSongFromAllPlaylists(song);

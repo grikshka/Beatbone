@@ -36,6 +36,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -70,6 +71,7 @@ public class MainViewController implements Initializable {
     private WarningDisplayer warningDisplayer;
     private double xOffset;
     private double yOffset;
+    private boolean buttonPlaySelected;
 
     @FXML
     private ToggleButton btnPlaySong;
@@ -144,6 +146,7 @@ public class MainViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setPlayButton();
         disableElements();
         createSliderListeners();
         loadData();
@@ -281,7 +284,7 @@ public class MainViewController implements Initializable {
     private void stopSong()
     {
         stopPlayer.play();
-        btnPlaySong.setText("⏵");
+        switchPlayButton();
     }
     
     private void resumeSong()
@@ -291,7 +294,7 @@ public class MainViewController implements Initializable {
                 new KeyValue(mediaPlayer.volumeProperty(), getVolume())));
         mediaPlayer.play();
         resumePlayer.play();
-        btnPlaySong.setText("||");
+        switchPlayButton();
     }
 
     @FXML
@@ -614,7 +617,8 @@ public class MainViewController implements Initializable {
         lblSongEndTime.setText(songToPlay.getTimeInString());
         sldTime.setMax(songToPlay.getTime());
         labelCurrentSong.setText("Now playing: " + songToPlay.getTitle());
-        btnPlaySong.setText("||");
+        btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/StopButton.png"));
+        buttonPlaySelected = false;
         selectPlayedSong(songToPlay, mode);
     }
     
@@ -700,6 +704,70 @@ public class MainViewController implements Initializable {
         }
         unixTime =  System.currentTimeMillis();
         return true;
+    }
+    
+    private void switchPlayButton()
+    {
+        if(buttonPlaySelected)
+        {
+            btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/StopButtonWhite.png"));
+            buttonPlaySelected = false;
+        }
+        else
+        {
+            btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/PlayButtonWhite.png"));
+            buttonPlaySelected = true;
+        }
+    }
+    
+    private void setPlayButton()
+    {
+        btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/PlayButton.png"));
+        buttonPlaySelected = true;
+        setPlayButtonHoverIn();
+        setPlayButtonHoverOut();
+    }
+    
+    private void setPlayButtonHoverIn()
+    {
+        btnPlaySong.setOnMouseEntered(new EventHandler() 
+            {
+                @Override
+                public void handle(Event event) 
+                {
+                    if(buttonPlaySelected)
+                    {
+                        btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/PlayButtonWhite.png"));
+                    }
+                    else
+                    {
+                        btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/StopButtonWhite.png"));
+                    }
+                }
+            
+            }
+        );
+    }
+    
+    private void setPlayButtonHoverOut()
+    {
+        btnPlaySong.setOnMouseExited(new EventHandler() 
+            {
+                @Override
+                public void handle(Event event) 
+                {
+                    if(buttonPlaySelected)
+                    {
+                        btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/PlayButton.png"));
+                    }
+                    else
+                    {
+                        btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/StopButton.png"));
+                    }
+                }
+            
+            }
+        );
     }
     
     private void enableButtonsForSongs() {

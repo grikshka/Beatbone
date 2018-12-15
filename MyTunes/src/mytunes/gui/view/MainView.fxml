@@ -32,19 +32,15 @@
          <font>
             <Font name="Gotham-Bold" size="14.0" />
          </font></TextField>
-      <StackPane layoutX="594.0" layoutY="668.0" prefHeight="78.0" prefWidth="62.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonStartSong.css">
+      <ToggleButton fx:id="btnPlaySong" layoutX="586.0" layoutY="683.0" mnemonicParsing="false" onAction="#clickPlay" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" />
+      <StackPane layoutX="654.0" layoutY="685.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonNextSong.css">
          <children>
-            <ToggleButton fx:id="btnPlaySong" mnemonicParsing="false" onAction="#clickPlay" prefHeight="39.0" prefWidth="55.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="btnNextSong" mnemonicParsing="false" onAction="#clickNextSong" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #282828;" />
          </children>
       </StackPane>
-      <StackPane layoutX="645.0" layoutY="673.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonNextSong.css">
+      <StackPane layoutX="540.0" layoutY="685.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonPreviousSong.css">
          <children>
-            <Button fx:id="btnNextSong" mnemonicParsing="false" onAction="#clickNextSong" prefHeight="44.0" prefWidth="55.0" style="-fx-background-color: #282828;" />
-         </children>
-      </StackPane>
-      <StackPane layoutX="552.0" layoutY="673.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonPreviousSong.css">
-         <children>
-            <Button fx:id="btnPreviousSong" mnemonicParsing="false" onAction="#clickPreviousSong" prefHeight="48.0" prefWidth="37.0" style="-fx-background-color: #282828;">
+            <Button fx:id="btnPreviousSong" mnemonicParsing="false" onAction="#clickPreviousSong" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #282828;">
                <font>
                   <Font size="11.0" />
                </font>
@@ -145,14 +141,14 @@
       </StackPane>
       <Pane onMouseDragged="#clickMouseDragged" onMousePressed="#clickMousePressed" prefHeight="30.0" prefWidth="1231.0" />
       <TextField fx:id="txtSearchPlaylists" layoutX="20.0" layoutY="13.0" onKeyReleased="#inputSearchPlaylists" prefHeight="30.0" prefWidth="168.0" promptText="Search" style="-fx-background-radius: 100;" stylesheets="@../css/TextFieldPlaylist.css" />
-      <StackPane layoutX="698.0" layoutY="668.0" prefHeight="78.0" prefWidth="62.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonReplay.css">
+      <StackPane layoutX="700.0" layoutY="685.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonReplay.css">
          <children>
             <ToggleButton fx:id="btnRepeat" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #282828;" />
          </children>
       </StackPane>
-      <StackPane layoutX="490.0" layoutY="674.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonShuffle.css">
+      <StackPane layoutX="484.0" layoutY="688.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonShuffle.css">
          <children>
-            <ToggleButton fx:id="btnShuffle" mnemonicParsing="false" onAction="#clickShuffle" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #282828;" />
+            <ToggleButton fx:id="btnShuffle" mnemonicParsing="false" onAction="#clickShuffle" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #282828;" />
          </children>
       </StackPane>
       <Slider layoutX="157.0" layoutY="708.0" prefHeight="14.0" prefWidth="291.0" visible="false" />

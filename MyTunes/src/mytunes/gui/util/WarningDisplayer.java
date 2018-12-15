@@ -53,6 +53,7 @@ public class WarningDisplayer {
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
                 getClass().getResource("/mytunes/gui/css/Alert.css").toExternalForm()); 
+        alert.initStyle(StageStyle.UNDECORATED);
         alert.setOnCloseRequest(new EventHandler()
             {
                 @Override

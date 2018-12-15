@@ -10,7 +10,8 @@ and open the template in the editor.
 
 
 .dialog-pane {
-    -fx-background-color: #535353;
+    -fx-border-color: #212121;
+    -fx-background-color: #282828;
 }
 
 .dialog-pane .label {

@@ -55,9 +55,10 @@ public class CreateUserViewController implements Initializable {
 
     @FXML
     private void clickCreate(ActionEvent event) {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         if(!isEmailCorrect(txtEmail.getText()))
         {
-            warningDisplayer.displayError("Cannot create user", "Address email is invalid");
+            warningDisplayer.displayError(currentStage, "Cannot create user", "Address email is invalid");
         }       
         else
         {
@@ -69,18 +70,18 @@ public class CreateUserViewController implements Initializable {
                 {
                     errorText += "- " + s + "\n";
                 }
-                warningDisplayer.displayError("Cannot create user", errorText);
+                warningDisplayer.displayError(currentStage, "Cannot create user", errorText);
             }
             else if(!txtPassword.getText().equals(txtRepeatPassword.getText()))
             {
-                warningDisplayer.displayError("Cannot create user", "Your passwords are not the same");
+                warningDisplayer.displayError(currentStage, "Cannot create user", "Your passwords are not the same");
             }
             else
             {
                 User user = model.createUser(txtEmail.getText(), txtPassword.getText());
                 if(user == null)
                 {
-                    warningDisplayer.displayError("Cannot create user", "This adres e-mail is already taken");
+                    warningDisplayer.displayError(currentStage, "Cannot create user", "This adres e-mail is already taken");
                 }
                 else
                 {

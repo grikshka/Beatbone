@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,6 +35,7 @@ import mytunes.be.User;
 import mytunes.gui.model.MainModel;
 import mytunes.gui.model.UserModel;
 import mytunes.gui.util.WarningDisplayer;
+import mytunes.gui.util.WindowDecorator;
 
 /**
  * FXML Controller class
@@ -65,7 +67,7 @@ public class LoginViewController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {       
         createTextFieldListeners();
     }    
     
@@ -115,12 +117,15 @@ public class LoginViewController implements Initializable {
         }
         else
         {
-            warningDisplayer.displayError("Cannot log in", "Invalid email or password");
+            Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+            warningDisplayer.displayError(currentStage, "Cannot log in", "Invalid email or password");
         }
     }
 
     @FXML
     private void clickCreateAccount(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        WindowDecorator.fadeOutStage(currentStage);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/CreateUserView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
@@ -128,7 +133,8 @@ public class LoginViewController implements Initializable {
         stage.setTitle("Sign In");
         stage.setScene(new Scene(root));  
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.show();
+        stage.showAndWait();
+        WindowDecorator.fadeInStage(currentStage);
     }
     
     @FXML

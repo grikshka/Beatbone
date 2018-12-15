@@ -5,6 +5,8 @@
  */
 package mytunes;
 
+import java.awt.Color;
+import java.awt.Paint;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +25,7 @@ public class MyTunes extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/LoginView.fxml"));
         
         stage.setTitle("MyTunes");
-        Scene scene = new Scene(root);    
+        Scene scene = new Scene(root); 
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();

@@ -32,6 +32,7 @@ import javafx.stage.StageStyle;
 import mytunes.be.Song;
 import mytunes.gui.model.GenresViewModel;
 import mytunes.gui.model.MainModel;
+import mytunes.gui.util.WindowDecorator;
 
 /**
  * FXML Controller class
@@ -93,6 +94,8 @@ public class SongViewController implements Initializable {
 
     @FXML
     private void clickMoreGenres(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        WindowDecorator.fadeOutStage(currentStage);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/GenresView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
@@ -106,6 +109,7 @@ public class SongViewController implements Initializable {
         {
             setGenre(selectedGenre);
         }
+        WindowDecorator.fadeInStage(currentStage);
     }
 
     @FXML

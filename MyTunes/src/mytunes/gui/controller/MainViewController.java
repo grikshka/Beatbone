@@ -53,6 +53,7 @@ import mytunes.bll.util.TimeConverter;
 import mytunes.gui.PlayingMode;
 import mytunes.gui.model.MainModel;
 import mytunes.gui.util.WarningDisplayer;
+import mytunes.gui.util.WindowDecorator;
 
 /**
  *
@@ -262,7 +263,8 @@ public class MainViewController implements Initializable {
             }
             else
             {
-                warningDisplayer.displayError("Cannot play a song", "Your list of songs is empty");
+                Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+                warningDisplayer.displayError(currentStage, "Cannot play a song", "Your list of songs is empty");
             }
             
         }
@@ -423,6 +425,8 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        WindowDecorator.fadeOutStage(currentStage);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/PlaylistView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
@@ -430,7 +434,8 @@ public class MainViewController implements Initializable {
         stage.setTitle("New Playlist");
         stage.setScene(new Scene(root));  
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.show();
+        stage.showAndWait();
+        WindowDecorator.fadeInStage(currentStage);
     }
 
     @FXML
@@ -450,7 +455,8 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickDeletePlaylist(ActionEvent event) {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> action = warningDisplayer.displayConfirmation("Confirmation", 
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        Optional<ButtonType> action = warningDisplayer.displayConfirmation(currentStage, "Confirmation", 
                 "Are you sure you want to delete \"" + selectedPlaylist.getName() + "\" from your playlists?");
         if(action.get() == ButtonType.OK)
         {
@@ -503,7 +509,8 @@ public class MainViewController implements Initializable {
     private void clickDeleteSongInPlaylist(ActionEvent event) {
         Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> action = warningDisplayer.displayConfirmation("Confirmation", 
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        Optional<ButtonType> action = warningDisplayer.displayConfirmation(currentStage, "Confirmation", 
                 "Are you sure you want to delete \"" + selectedSong.getTitle() + "\" from \"" + selectedPlaylist.getName() + "\"?");;
         if(action.get() == ButtonType.OK)
         {
@@ -514,6 +521,8 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        WindowDecorator.fadeOutStage(currentStage);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
@@ -521,7 +530,8 @@ public class MainViewController implements Initializable {
         stage.setTitle("New Song");
         stage.setScene(new Scene(root));
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.show();
+        stage.showAndWait();
+        WindowDecorator.fadeInStage(currentStage);
     }
 
     @FXML
@@ -541,7 +551,8 @@ public class MainViewController implements Initializable {
     @FXML
     private void clickDeleteSong(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> action = warningDisplayer.displayConfirmation("Confirmation", 
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        Optional<ButtonType> action = warningDisplayer.displayConfirmation(currentStage, "Confirmation", 
                 "Are you sure you want to delete \"" + selectedSong.getTitle() + "\" from your songs?");;
         if(action.get() == ButtonType.OK)
         {
@@ -564,7 +575,8 @@ public class MainViewController implements Initializable {
         }
         else
         {
-            warningDisplayer.displayError("Duplicate song", "This song is already in your playlist");
+            Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+            warningDisplayer.displayError(currentStage, "Duplicate song", "This song is already in your playlist");
         }
     }
     
@@ -588,7 +600,8 @@ public class MainViewController implements Initializable {
         }
         catch(MediaException e)
         {
-            warningDisplayer.displayError("Cannot play a song", "Could not find path to song \"" + songToPlay.getTitle() + "\"");
+            Stage currentStage = (Stage) btnPlaySong.getScene().getWindow();
+            warningDisplayer.displayError(currentStage, "Cannot play a song", "Could not find path to song \"" + songToPlay.getTitle() + "\"");
         }
     }    
     

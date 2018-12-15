@@ -27,7 +27,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#121212" height="78.0" layoutX="-1.0" layoutY="613.0" stroke="#121212" strokeType="INSIDE" width="233.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#121212" height="339.0" layoutX="-1.0" layoutY="341.0" stroke="#121212" strokeType="INSIDE" width="233.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#121212" height="338.0" layoutX="-1.0" layoutY="-1.0" stroke="#121212" strokeType="INSIDE" width="233.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#282828" height="94.0" layoutX="-1.0" layoutY="679.0" stroke="#181818" strokeType="INSIDE" width="1306.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#282828" height="94.0" layoutY="677.0" stroke="#181818" strokeType="INSIDE" width="1306.0" />
       <TextField fx:id="txtSearchSongs" layoutX="265.0" layoutY="187.0" onKeyReleased="#inputSearchSongs" prefHeight="26.0" prefWidth="720.0" promptText="Filter" stylesheets="@../css/TextFieldFilter.css">
          <font>
             <Font name="Gotham-Bold" size="14.0" />
@@ -52,7 +52,7 @@
          </children>
       </StackPane>
       <Slider layoutX="1004.0" layoutY="143.0" max="1.0" prefHeight="14.0" prefWidth="184.0" value="0.25" visible="false" />
-      <TableView fx:id="tblSongs" layoutX="292.0" layoutY="234.0" onMousePressed="#clickOnSongs" prefHeight="421.0" prefWidth="1013.0" stylesheets="@../css/SongTableView.css">
+      <TableView fx:id="tblSongs" layoutX="265.0" layoutY="234.0" onMousePressed="#clickOnSongs" prefHeight="421.0" prefWidth="1039.0" stylesheets="@../css/SongTableView.css">
         <placeholder>
               <Label text="" />
         </placeholder>
@@ -134,9 +134,9 @@
          <font>
             <Font name="Gotham-Black" size="18.0" />
          </font></Button>
-      <StackPane layoutX="958.0" layoutY="166.0" prefHeight="68.0" prefWidth="291.0" style="-fx-background-color: #181818;" stylesheets="@../css/ButtonAddToPlaylist.css">
+      <StackPane layoutX="998.0" layoutY="166.0" prefHeight="68.0" prefWidth="291.0" style="-fx-background-color: #181818;" stylesheets="@../css/ButtonAddToPlaylist.css">
          <children>
-            <Button fx:id="btnAddSongToPlaylist" mnemonicParsing="false" onAction="#clickAddSongToPlaylist" prefHeight="45.0" prefWidth="248.0" style="-fx-background-color: #181818;" text="Add song to playlist" textFill="#b3b3b3">
+            <Button fx:id="btnAddSongToPlaylist" mnemonicParsing="false" onAction="#clickAddSongToPlaylist" prefHeight="45.0" prefWidth="220.0" style="-fx-background-color: #181818;" text="Add song to playlist" textFill="#b3b3b3">
                <font>
                   <Font size="16.0" />
                </font>
@@ -180,7 +180,7 @@
             <Image url="@../images/SearchIconBlack.png" />
          </image>
       </ImageView>
-      <Button layoutX="1268.0" layoutY="-2.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="30.0" prefWidth="37.0" text="x" />
-      <Button layoutX="1231.0" layoutY="-2.0" mnemonicParsing="false" onAction="#clickMinimalize" prefHeight="30.0" prefWidth="37.0" text="-" />
+      <Button layoutX="1265.0" layoutY="1.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="30.0" prefWidth="40.0" stylesheets="@../css/ButtonClose.css" />
+      <Button layoutX="1228.0" layoutY="1.0" mnemonicParsing="false" onAction="#clickMinimalize" prefHeight="30.0" prefWidth="37.0" stylesheets="@../css/ButtonMinimalize.css" />
    </children>
 </AnchorPane>

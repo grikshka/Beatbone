@@ -6,9 +6,12 @@
 package mytunes.gui.util;
 
 import java.util.Optional;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
@@ -17,8 +20,9 @@ import javafx.stage.StageStyle;
  */
 public class WarningDisplayer {
     
-    public void displayError(String header, String content)
+    public void displayError(Stage currentStage, String header, String content)
     {
+        WindowDecorator.fadeOutStage(currentStage);
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(header);
         alert.setHeaderText(null);
@@ -27,18 +31,37 @@ public class WarningDisplayer {
         dialogPane.getStylesheets().add(
                 getClass().getResource("/mytunes/gui/css/Alert.css").toExternalForm());  
         alert.initStyle(StageStyle.UNDECORATED);
+        alert.setOnCloseRequest(new EventHandler()
+            {
+                @Override
+                public void handle(Event event) 
+                {
+                    WindowDecorator.fadeInStage(currentStage);
+                }
+            }
+        );
         Optional<ButtonType> action = alert.showAndWait();
     }
     
-    public Optional<ButtonType> displayConfirmation(String header, String content)
+    public Optional<ButtonType> displayConfirmation(Stage currentStage, String header, String content)
     {
+        WindowDecorator.fadeOutStage(currentStage);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(header);
         alert.setHeaderText(null);
         alert.setContentText(content);
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                getClass().getResource("/mytunes/gui/css/Alert.css").toExternalForm());          
+                getClass().getResource("/mytunes/gui/css/Alert.css").toExternalForm()); 
+        alert.setOnCloseRequest(new EventHandler()
+            {
+                @Override
+                public void handle(Event event) 
+                {
+                    WindowDecorator.fadeInStage(currentStage);
+                }
+            }
+        );
         return alert.showAndWait();
     }
     

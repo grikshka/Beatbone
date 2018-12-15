@@ -1,31 +1,22 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
-    Created on : 24-08-2016, 12:36:01
-    Author     : Stegger
+    Author schemabuoi
+    Author kiddo
 */
 
-
-.button:hover {
-    -fx-background-image: url("../images/CancelView.png");
-	-fx-background-size: 8 8;
-	-fx-background-repeat: no-repeat;
-	-fx-background-position:center;	
-        -fx-text-fill:white;
-        -fx-background-color:#ff006f;
-}
 .button{
-     -fx-background-image: url("../images/CancelView.png");
-	-fx-background-size: 8 8;
-	-fx-background-repeat: no-repeat;
-	-fx-background-position:center;	
-     -fx-background-color:#212121;
-      -fx-text-fill:#b3b3b3;
-           
+    -fx-background-color:#212121;    
+    -fx-background-image: url("../images/CancelView.png");
+    -fx-background-repeat:no-repeat;
+    -fx-background-position:center;
+    -fx-background-size:8 8;  
+}
+.button:hover{
+    -fx-background-color:#ff006f;
+    -fx-background-image: url("../images/CancelView.png");
+    -fx-background-repeat:no-repeat;
+    -fx-background-position:center;
+    -fx-background-size:8 8;
 }
 .button:pressed{
-         -fx-text-fill:#535353;
+    -fx-background-color:#f5006b;
 }

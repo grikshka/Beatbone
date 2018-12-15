@@ -4,6 +4,6 @@
 */
 
 .text-field{
-  -fx-prompt-text-fill:#535353;
-  -fx-padding:5 5 5 30;
+   -fx-prompt-text-fill:#b3b3b3;
+   -fx-text-fill:#b3b3b3;
 }

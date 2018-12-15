@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="764.0" prefWidth="1305.0" style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MainViewController">
+<AnchorPane id="AnchorPane" prefHeight="764.0" prefWidth="1305.0" style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MainViewController">
    <children>
       <Label fx:id="labelCurrentSong" layoutX="265.0" layoutY="-2.0" prefHeight="125.0" prefWidth="839.0" textFill="#b3b3b3">
          <font>
@@ -91,17 +91,17 @@
             <Button fx:id="btnDeletePlaylist" mnemonicParsing="false" onAction="#clickDeletePlaylist" prefHeight="34.0" prefWidth="60.0" style="-fx-background-color: #121212;" />
          </children>
       </StackPane>
-      <StackPane layoutX="22.0" layoutY="610.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonArrowUp.css">
+      <StackPane layoutX="22.0" layoutY="610.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonMoveSongOnPlaylist.css">
          <children>
-            <Button fx:id="btnMoveUpOnPlaylist" mnemonicParsing="false" onAction="#clickMoveUpOnPlaylist" prefHeight="34.0" prefWidth="42.0" scaleY="-1.0" style="-fx-background-color: #121212;" />
+            <Button fx:id="btnMoveUpOnPlaylist" mnemonicParsing="false" onAction="#clickMoveUpOnPlaylist" prefHeight="34.0" prefWidth="42.0" scaleY="-1.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonMoveSongOnPlaylist.css" />
          </children>
       </StackPane>
-      <StackPane layoutX="80.0" layoutY="610.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonArrowDown.css">
+      <StackPane layoutX="80.0" layoutY="610.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonMoveSongOnPlaylist.css">
          <children>
-            <Button fx:id="btnMoveDownOnPlaylist" mnemonicParsing="false" onAction="#clickMoveDownOnPlaylist" prefHeight="34.0" prefWidth="42.0" style="-fx-background-color: #121212;" />
+            <Button fx:id="btnMoveDownOnPlaylist" mnemonicParsing="false" onAction="#clickMoveDownOnPlaylist" prefHeight="34.0" prefWidth="42.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonMoveSongOnPlaylist.css" />
          </children>
       </StackPane>
-      <StackPane layoutX="139.0" layoutY="610.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonDeleteSongOnPlaylist.css">
+      <StackPane layoutX="139.0" layoutY="610.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonDelete.css">
          <children>
             <Button fx:id="btnDeleteSongFromPlaylist" mnemonicParsing="false" onAction="#clickDeleteSongInPlaylist" prefHeight="34.0" prefWidth="60.0" style="-fx-background-color: #121212;" />
          </children>
@@ -122,11 +122,11 @@
          <font>
             <Font name="Gotham-Bold" size="14.0" />
          </font></Label>
-      <Button fx:id="btnEditSong" layoutX="415.0" layoutY="129.0" mnemonicParsing="false" onAction="#clickEditSong" prefHeight="34.0" prefWidth="120.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonEditSong.css" text="Edit..." textFill="WHITE">
+      <Button fx:id="btnEditSong" layoutX="415.0" layoutY="129.0" mnemonicParsing="false" onAction="#clickEditSong" prefHeight="34.0" prefWidth="120.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonEditAndDeleteSong.css" text="Edit..." textFill="WHITE">
          <font>
             <Font name="Gotham-Black" size="18.0" />
          </font></Button>
-      <Button fx:id="btnDeleteSongFromSongs" layoutX="550.0" layoutY="129.0" mnemonicParsing="false" onAction="#clickDeleteSong" prefHeight="34.0" prefWidth="120.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonEditSong.css" text="Delete" textFill="WHITE">
+      <Button fx:id="btnDeleteSongFromSongs" layoutX="550.0" layoutY="129.0" mnemonicParsing="false" onAction="#clickDeleteSong" prefHeight="34.0" prefWidth="120.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonEditAndDeleteSong.css" text="Delete" textFill="WHITE">
          <font>
             <Font name="Gotham-Black" size="18.0" />
          </font></Button>
@@ -141,12 +141,12 @@
       </StackPane>
       <Pane onMouseDragged="#clickMouseDragged" onMousePressed="#clickMousePressed" prefHeight="30.0" prefWidth="1231.0" />
       <TextField fx:id="txtSearchPlaylists" layoutX="20.0" layoutY="13.0" onKeyReleased="#inputSearchPlaylists" prefHeight="30.0" prefWidth="168.0" promptText="Search" style="-fx-background-radius: 100;" stylesheets="@../css/TextFieldPlaylist.css" />
-      <StackPane layoutX="700.0" layoutY="685.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonReplay.css">
+      <StackPane layoutX="700.0" layoutY="685.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ToggleReplay.css">
          <children>
             <ToggleButton fx:id="btnRepeat" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #282828;" />
          </children>
       </StackPane>
-      <StackPane layoutX="484.0" layoutY="688.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonShuffle.css">
+      <StackPane layoutX="484.0" layoutY="688.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/ToggleShuffle.css">
          <children>
             <ToggleButton fx:id="btnShuffle" mnemonicParsing="false" onAction="#clickShuffle" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #282828;" />
          </children>
@@ -160,7 +160,7 @@
          <font>
             <Font name="Gotham-Medium" size="12.0" />
          </font></Label>
-      <StackPane layoutX="1096.0" layoutY="683.0" prefHeight="78.0" prefWidth="62.0" style="-fx-background-color: transparent;" stylesheets="@../css/ButtonMute.css">
+      <StackPane layoutX="1096.0" layoutY="683.0" prefHeight="78.0" prefWidth="62.0" stylesheets="@../css/ToggleMute.css">
          <children>
             <ToggleButton fx:id="btnMute" mnemonicParsing="false" onAction="#clickMute" prefHeight="25.0" prefWidth="37.0" style="-fx-background-color: #282828;">
                <font>
@@ -169,8 +169,8 @@
             </ToggleButton>
          </children>
       </StackPane>
-      <JFXSlider fx:id="sldVolume" layoutX="1159.0" layoutY="715.0" max="10.0" prefHeight="14.0" prefWidth="90.0" stylesheets="@../css/SongTableView_1.css" value="2.5" />
-      <JFXSlider fx:id="sldTime" layoutX="312.0" layoutY="732.0" onMouseReleased="#dropTimeSlider" prefHeight="14.0" prefWidth="625.0" stylesheets="@../css/SongTableView_1_1.css" value="0.1" />
+      <JFXSlider fx:id="sldVolume" layoutX="1159.0" layoutY="715.0" max="10.0" prefHeight="14.0" prefWidth="90.0" stylesheets="@../css/SliderVolume.css" value="2.5" />
+      <JFXSlider fx:id="sldTime" layoutX="312.0" layoutY="732.0" onMouseReleased="#dropTimeSlider" prefHeight="14.0" prefWidth="625.0" stylesheets="@../css/SliderVolume.css" value="0.1" />
       <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="26.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/SearchIconBlack.png" />

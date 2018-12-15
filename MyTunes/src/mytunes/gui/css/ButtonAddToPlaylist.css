@@ -1,44 +1,24 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
-    Created on : 24-08-2016, 12:36:01
-    Author     : Stegger
+    Author schemabuoi
+    Author kiddo
 */
 
-#btnAddSongToPlaylist {
-    -fx-background-color:  #181818;
-     -fx-prompt-text-fill: #b3b3b3;
+#btnAddSongToPlaylist{
+    -fx-text-fill:#b3b3b3;
     -fx-background-image:url("../images/AddSongGrey.png");
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: right center;
-    -fx-background-size: 26 26;
+    -fx-background-repeat:no-repeat;
+    -fx-background-position:right center;
+    -fx-background-size:26 26;
 }
-
 #btnAddSongToPlaylist:hover{
-    -fx-text-fill: white;
-        -fx-background-image:url("../images/AddSongWhite.png");  
+    -fx-text-fill:white;
+    -fx-background-image:url("../images/AddSongWhite.png");  
 }
-#btnAddSongToPlaylist:focused{
-    -fx-background-color: #535353;
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: #b3b3b3;
+#btnAddSongToPlaylist:pressed{
+    -fx-text-fill:#b3b3b3;
+    -fx-background-image:url("../images/AddSongGrey.png");
 }
 #btnAddSongToPlaylist:focus:required:placeholder-shown{
-    -fx-background-color: #535353;
+    -fx-background-color:#535353;
     -fx-text-fill: white;
-    -fx-prompt-text-fill: white;
 }
-/*#btnAddSongToPlaylist {			
-	-fx-base:#121212;
-	-fx-background-image: url("../images/AddSongGrey.png");
-	-fx-background-size: 26 26;
-	-fx-background-repeat: no-repeat;
-	-fx-background-position:center;	
-}
-btnMoveDownOnPlaylist:hover{
-    -fx-background-image: url("../images/add-song6.png");}
-#btnAddSongToPlaylist:pressed{
-    -fx-background-image: url("../images/AddSongGrey.png");}*/

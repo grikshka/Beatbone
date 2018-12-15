@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="372.0" prefWidth="596.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.SongViewController">
+<AnchorPane id="AnchorPane" prefHeight="372.0" prefWidth="596.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.SongViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="368.0" layoutX="2.0" layoutY="2.0" stroke="#212121" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="2.0" width="592.0" />
       <Label layoutX="53.0" layoutY="67.0" text="Title" textFill="#b3b3b3">
@@ -31,10 +31,10 @@
          <font>
             <Font name="Gotham-Medium" size="12.0" />
          </font></Label>
-      <TextField fx:id="txtTitle" layoutX="101.0" layoutY="57.0" onKeyReleased="#keyTitleTyped" prefHeight="30.0" prefWidth="246.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextField_2.css" />
-      <TextField fx:id="txtArtist" layoutX="101.0" layoutY="109.0" onKeyReleased="#keyArtistTyped" prefHeight="30.0" prefWidth="246.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextField_2.css" />
-      <TextField fx:id="txtTime" layoutX="101.0" layoutY="203.0" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextField_2.css" />
-      <TextField fx:id="txtFile" layoutX="101.0" layoutY="250.0" prefHeight="30.0" prefWidth="246.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextField_2.css" />
+      <TextField fx:id="txtTitle" layoutX="101.0" layoutY="57.0" onKeyReleased="#keyTitleTyped" prefHeight="30.0" prefWidth="246.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextFieldGeneric.css" />
+      <TextField fx:id="txtArtist" layoutX="101.0" layoutY="109.0" onKeyReleased="#keyArtistTyped" prefHeight="30.0" prefWidth="246.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextFieldGeneric.css" />
+      <TextField fx:id="txtTime" layoutX="101.0" layoutY="203.0" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextFieldGeneric.css" />
+      <TextField fx:id="txtFile" layoutX="101.0" layoutY="250.0" prefHeight="30.0" prefWidth="246.0" style="-fx-background-color: #181818;" stylesheets="@../css/TextFieldGeneric.css" />
       <ComboBox fx:id="cmbGenre" layoutX="101.0" layoutY="157.0" onAction="#clickGenrePicked" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #181818;;" stylesheets="@../css/ComboBox.css" />
       <Button layoutX="198.0" layoutY="158.0" mnemonicParsing="false" onAction="#clickMoreGenres" prefWidth="100.0" style="-fx-background-radius: 100;" stylesheets="@../css/ButtonSecondary.css" text="More...">
          <font>

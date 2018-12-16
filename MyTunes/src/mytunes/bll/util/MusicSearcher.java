@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.bll.util;
 
 import java.util.ArrayList;
@@ -11,16 +6,27 @@ import mytunes.be.Playlist;
 import mytunes.be.Song;
 
 /**
- *
- * @author Acer
+ * The {@code MusicSearcher} class is responsible for
+ * filtering lists of songs and playlists.  
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class MusicSearcher {
     
-    public static List<Song> searchSongs(List<Song> allSongs, String filter)
+    /**
+     * Takes the list with songs and filter and
+     * returns filtered list.
+     * 
+     * @param songList The List with songs to filter.
+     * @param filter The filter for list.
+     * @return Filtered list of songs.
+     */
+    public static List<Song> searchSongs(List<Song> songList, String filter)
     {
         filter = filter.toLowerCase();
         List<Song> filteredSongs = new ArrayList();
-        for(Song s : allSongs)
+        for(Song s : songList)
         {
             if(filter.length() <= s.getTitle().length() && filter.equals(s.getTitle().toLowerCase().substring(0, filter.length())))
             {
@@ -34,11 +40,19 @@ public class MusicSearcher {
         return filteredSongs;
     }
     
-    public static List<Playlist> searchPlaylists(List<Playlist> allPlaylists, String filter)
+    /**
+     * Takes the list with playlists and filter and
+     * returns filtered list.
+     * 
+     * @param playlists The List with playlists to filter.
+     * @param filter The filter for list.
+     * @return Filtered list of playlists.
+     */
+    public static List<Playlist> searchPlaylists(List<Playlist> playlists, String filter)
     {
         filter = filter.toLowerCase();
         List<Playlist> filteredPlaylists = new ArrayList();
-        for(Playlist p : allPlaylists)
+        for(Playlist p : playlists)
         {
             if(filter.length() <= p.getName().length() && filter.equals(p.getName().toLowerCase().substring(0, filter.length())))
             {

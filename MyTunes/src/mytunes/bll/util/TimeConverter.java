@@ -2,8 +2,10 @@ package mytunes.bll.util;
 
 /**
  * The {@code TimeConverter} class is responsible for
- * converting time between seconds and format specific for our 
- * application.
+ * converting time between seconds (int) and a format specific to our 
+ * application (String). Format of string with time depends on amount of seconds:
+ * If seconds are less than 3600, string is in format "mm:ss".
+ * If seconds are more or equal 3600, string is in format "h:mm:ss".
  * 
  * @author schemabuoi
  * @author kiddo

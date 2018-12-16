@@ -8,6 +8,7 @@ package mytunes.gui.model;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Playlist;
@@ -36,6 +37,7 @@ public class MainModel {
     private Song currentlyPlaying;
     private Playlist currentPlaylist;
     private boolean shuffle;
+    private Stack<Song> previouslyPlayedRandomSongs;
     private IBllFacade bllManager;
     private SongChooser songChooser;
        
@@ -47,6 +49,7 @@ public class MainModel {
         playlists = FXCollections.observableArrayList(bllManager.getAllPlaylists(currentUser));
         playlistSongs = FXCollections.observableArrayList();
         shuffle = false;
+        previouslyPlayedRandomSongs = new Stack();
         
     }
     

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.be.User;
 import mytunes.dal.DbConnectionProvider;
 
 /**
@@ -56,15 +57,17 @@ public class PlaylistSongsDAO {
      * @param playlists The list of a playlists.
      * @throws SQLException if connection with database cannot be established.
      */
-    public void addAllSongsToPlaylists(List<Playlist> playlists) throws SQLException
+    public void addAllSongsToPlaylists(User user, List<Playlist> playlists) throws SQLException
     {
         String sqlStatement = "SELECT Playlists.id as playlistId, Songs.* FROM PlaylistSongs " +
                                         "INNER JOIN Playlists on PlaylistSongs.playlistId=Playlists.id " +
-                                        "INNER JOIN Songs on PlaylistSongs.songId=Songs.id";
+                                        "INNER JOIN Songs on PlaylistSongs.songId=Songs.id " +
+                                        "WHERE Songs.userId=?";
         try(Connection con = connector.getConnection();
-                PreparedStatement songsStatement = con.prepareStatement(sqlStatement))
+                PreparedStatement statement = con.prepareStatement(sqlStatement))
         {
-            ResultSet rs = songsStatement.executeQuery();
+            statement.setInt(1, user.getId());
+            ResultSet rs = statement.executeQuery();
             if(rs.next())
             {
                 for(Playlist p : playlists)

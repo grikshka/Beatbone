@@ -53,20 +53,4 @@ public class WindowDecorator {
         stage.show();
     }
     
-    public static void hideStage(Stage stage)
-    {
-        Timeline timeline = new Timeline(
-            new KeyFrame(Duration.millis(800),
-                new KeyValue (stage.opacityProperty(), 0)));  
-        timeline.setOnFinished(new EventHandler() 
-            {
-                @Override
-                public void handle(Event event) 
-                {
-                    stage.hide();
-                }                     
-            }
-        );
-        timeline.play();
-    }
 }

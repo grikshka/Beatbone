@@ -105,7 +105,7 @@ public class PlaylistDAO {
                 String name = rs.getString("name");
                 allPlaylists.add(new Playlist(id, name));
             }
-            psDao.addAllSongsToPlaylists(allPlaylists);
+            psDao.addAllSongsToPlaylists(user, allPlaylists);
         }
         return allPlaylists;
     }

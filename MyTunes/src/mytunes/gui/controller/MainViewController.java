@@ -259,7 +259,7 @@ public class MainViewController implements Initializable {
     private void clickPlay(ActionEvent event) {
         if(mediaPlayer == null)
         {
-            Song songToPlay = model.getFirstSong();
+            Song songToPlay = model.getSong();
             if(songToPlay != null)
             {
                 playSong(songToPlay, PlayingMode.SONG_LIST);
@@ -373,17 +373,18 @@ public class MainViewController implements Initializable {
             Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
-                Song songToPlay = model.getFirstSongFromPlaylist(selectedPlaylist);
+                Song songToPlay = model.getSongFromPlaylist(selectedPlaylist);
                 if(songToPlay != null)
                 {
                     playSong(songToPlay, PlayingMode.PLAYLIST);
-                    model.setCurrentPlaylist(selectedPlaylist);
+                    model.setCurrentlyPlayingPlaylist(selectedPlaylist);
                 }
             }
             else
             {
                 enableButtonsForPlaylists();
-                lstPlaylistSongs.setItems(model.getPlaylistSongs(selectedPlaylist));
+                model.setPlaylistSongs(selectedPlaylist);
+                lstPlaylistSongs.setItems(model.getPlaylistSongs());
                 if(tblSongs.getSelectionModel().getSelectedItem() != null)
                 {
                     btnAddSongToPlaylist.setDisable(false);
@@ -401,7 +402,7 @@ public class MainViewController implements Initializable {
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {              
                 playSong(selectedSong, PlayingMode.PLAYLIST);
-                model.setCurrentPlaylist(selectedPlaylist);
+                model.setCurrentlyPlayingPlaylist(selectedPlaylist);
             }
             else
             {                
@@ -611,7 +612,7 @@ public class MainViewController implements Initializable {
     public void setMediaPlayer(Song songToPlay, PlayingMode mode)
     {
         setMediaPlayerSettings(songToPlay);  
-        model.setCurrentlyPlaying(songToPlay, mode);
+        model.setCurrentlyPlayingSong(songToPlay, mode);
         mediaPlayer.setVolume(getVolume());
         lblSongCurrentTime.setText("00:00");
         lblSongEndTime.setText(songToPlay.getTimeInString());

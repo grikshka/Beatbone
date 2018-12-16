@@ -125,7 +125,8 @@ public class SongDAO {
     }
     
     /**
-     * Deletes song from database.
+     * Uses object of PlaylistSongsDAO class to delete song from
+     * all playlists that contain this song and then completely deletes song from database.
      * 
      * @param song The song to delete.
      * @throws SQLException if connection with database cannot be established.

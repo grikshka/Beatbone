@@ -83,7 +83,7 @@ public class PlaylistDAO {
     
     /**
      * Gets a list with all playlists from the database for given user. After adding all playlists
-     * to the list,it uses object of PlaylistSongsDAO to add
+     * to the list,it uses object of PlaylistSongsDAO class to add
      * all songs for all playlist.
      * 
      * @param user The playlists user.
@@ -111,7 +111,8 @@ public class PlaylistDAO {
     }
     
     /**
-     * Deletes playlist from the database.
+     * Uses object of PlaylistSongsDAO class to delete all songs 
+     * from the given playlist and deletes playlist from the database.
      * 
      * @param playlist The playlist to delete.
      * @throws SQLException if connection with database cannot be established. 

@@ -62,7 +62,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="tblPlaylists" layoutX="17.0" layoutY="83.0" onMousePressed="#clickOnPlaylists" prefHeight="218.0" prefWidth="214.0" style="-fx-background-color: #121212;" stylesheets="@../css/SongTableView.css">
+      <TableView fx:id="tblPlaylists" layoutX="17.0" layoutY="83.0" onMousePressed="#clickOnPlaylists" prefHeight="197.0" prefWidth="214.0" style="-fx-background-color: #121212;" stylesheets="@../css/SongTableView.css">
           <placeholder>
               <Label text="You do not have any playlists&#13;&#13;Click + to create a new playlist" textAlignment="CENTER" />
           </placeholder>
@@ -80,17 +80,17 @@
               <Label alignment="CENTER" text="Click on a playlist to&#13;display the list of songs" textAlignment="CENTER" />
           </placeholder>
       </ListView>
-      <StackPane layoutX="17.0" layoutY="265.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonNew.css">
+      <StackPane layoutX="24.0" layoutY="269.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonNew.css">
          <children>
             <Button fx:id="btnNewPlaylist" layoutX="50.0" mnemonicParsing="false" onAction="#clickNewPlaylist" prefHeight="43.0" prefWidth="60.0" style="-fx-background-color: #121212;" />
          </children>
       </StackPane>
-      <StackPane layoutX="78.0" layoutY="265.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonEdit.css">
+      <StackPane layoutX="85.0" layoutY="269.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonEdit.css">
          <children>
             <Button fx:id="btnEditPlaylist" mnemonicParsing="false" onAction="#clickEditPlaylist" prefHeight="34.0" prefWidth="60.0" style="-fx-background-color: #121212;" />
          </children>
       </StackPane>
-      <StackPane layoutX="139.0" layoutY="265.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonDelete.css">
+      <StackPane layoutX="146.0" layoutY="269.0" prefHeight="68.0" prefWidth="61.0" style="-fx-background-color: #121212;" stylesheets="@../css/ButtonDelete.css">
          <children>
             <Button fx:id="btnDeletePlaylist" mnemonicParsing="false" onAction="#clickDeletePlaylist" prefHeight="34.0" prefWidth="60.0" style="-fx-background-color: #121212;" />
          </children>

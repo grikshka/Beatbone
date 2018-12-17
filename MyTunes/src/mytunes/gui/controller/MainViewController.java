@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.gui.controller;
 
 import java.io.File;
@@ -57,8 +52,12 @@ import mytunes.gui.util.WarningDisplayer;
 import mytunes.gui.util.WindowDecorator;
 
 /**
- *
- * @author Acer
+ * The {@code MainViewController} class is a controller for
+ * {@code MainView}. It performs all actions connected with playing song.
+ * It is als responsible for displaying views for operating on songs and playlists.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public class MainViewController implements Initializable {
     
@@ -67,7 +66,7 @@ public class MainViewController implements Initializable {
     private boolean songTimeChanged = false;
     private double previousVolume;
     private Timeline stopPlayer;
-    private long unixTime = System.currentTimeMillis();
+    private long timeOfPlayingLastSong = System.currentTimeMillis();
     private WarningDisplayer warningDisplayer;
     private double xOffset;
     private double yOffset;
@@ -138,12 +137,19 @@ public class MainViewController implements Initializable {
     @FXML
     private ToggleButton btnShuffle;
    
+    /**
+     * Creates a connection with {@code MainModel instance}.
+     */
     public MainViewController()
     {
         model = MainModel.createInstance();
         warningDisplayer = new WarningDisplayer();
     }
     
+    /**
+     * Loads all the data to tables, creates a listeners for sliders and sets the elements 
+     * to their initial state on the {@code MainView}
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setPlayButton();
@@ -152,6 +158,9 @@ public class MainViewController implements Initializable {
         loadData();
     }
     
+    /**
+     * Disables all elements that should be disabled at a starting point of the {@code MainView}.
+     */
     private void disableElements()
     {
         btnEditSong.setDisable(true);
@@ -168,12 +177,19 @@ public class MainViewController implements Initializable {
         btnMute.setDisable(true);
     }
     
+    /**
+     * Invokes methods for creating listeners for Volume and Time sliders.
+     */
     public void createSliderListeners()
     {
         createVolumeSliderListener();
         createTimeSliderListener();
     }
     
+    /**
+     * Creates a listener vor volume slider. When value of volume slider is changing it also
+     * changes the actual volume of the {@code mediaPlayer} object.
+     */
     private void createVolumeSliderListener()
     {
         sldVolume.valueProperty().addListener(new ChangeListener()
@@ -199,6 +215,11 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * Creates a listener for time slider. When value of time slider is changing it sets
+     * the label with current song time to the value of the slider converted to proper format
+     * using {@code TimeConverter} class.
+     */
     private void createTimeSliderListener()
     {
         sldTime.valueProperty().addListener(new ChangeListener()
@@ -212,6 +233,9 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * Loads the data to the tables.
+     */
     private void loadData()
     {
         //load playlists
@@ -227,7 +251,12 @@ public class MainViewController implements Initializable {
         colSongTime.setCellValueFactory(new PropertyValueFactory("timeInString"));
         tblSongs.setItems(model.getSongs());
     }
-
+    
+    /**
+     * Method which is invoked everytime some key is typed on a text field for filtering songs.
+     * It uses {@code MainModel} for getting filtered list of songs
+     * and sets the Table View with songs to results received from {@code MainModel}.
+     */
     @FXML
     private void inputSearchSongs(KeyEvent event) {
         String filter = txtSearchSongs.getText().trim();
@@ -241,6 +270,11 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /**
+     * Method which is invoked everytime some key is typed on a text field for filtering playlists.
+     * It uses {@code MainModel} for getting filtered list of playlists
+     * and sets the Table View with playlists to results received from {@code MainModel}.
+     */
     @FXML
     private void inputSearchPlaylists(KeyEvent event) {
         String filter = txtSearchPlaylists.getText().trim();
@@ -254,7 +288,10 @@ public class MainViewController implements Initializable {
         }
     }
     
-
+    /**
+     * Method which is invoked after clicking Play/Stop button on the {@code MainView}.
+     * It is performing proper action depending on {@code mediaPlayer} state.
+     */
     @FXML
     private void clickPlay(ActionEvent event) {
         if(mediaPlayer == null)
@@ -281,12 +318,21 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /**
+     * Stops the {@code mediaPlayer}. Uses the Timeline on volume property
+     * of mediaPlayer to achieve the fading effect on stopping song.
+     */
     private void stopSong()
     {
         stopPlayer.play();
         switchPlayButton();
     }
     
+    /**
+     * Resumes the {@code mediaPlayer}. Uses the Timeline on volume property
+     * of mediaPlayer to achieve the fading effect on resuming song. It firstly resumes
+     * mediaPlayer then invokes play method on Timeline object for fading the volume.
+     */
     private void resumeSong()
     {
         Timeline resumePlayer = new Timeline(
@@ -296,7 +342,12 @@ public class MainViewController implements Initializable {
         resumePlayer.play();
         switchPlayButton();
     }
-
+    
+    /**
+     * Method which is invoked after clicking Next Song button on the
+     * {@code MainView}. Invokes the methods for getting the next song from model
+     * and for playing the song.
+     */
     @FXML
     private void clickNextSong(ActionEvent event) {    
         if(isPlayable())
@@ -306,6 +357,11 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /**
+     * Method which is invoked after clicking Previous Song button on the
+     * {@code MainView}. Invokes the methods for getting the previous song from {@code MainModel}.
+     * and for playing the song.
+     */
     @FXML
     private void clickPreviousSong(ActionEvent event) {
         if(isPlayable())
@@ -315,6 +371,10 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /**
+     * Method which is invoked after clicking shuffle button on the
+     * {@code MainView}. Invokes method for switching shuffle mode in {@code MainModel}.
+     */
     @FXML
     private void clickShuffle(ActionEvent event) {
         model.switchShuffling();
@@ -337,14 +397,22 @@ public class MainViewController implements Initializable {
         }
     }
 
-    
+    /**
+     * Method which is invoked after dropping time slider. It is setting
+     * the time of the mediaPlayer to the value of slider with time.
+     */
     @FXML
     private void dropTimeSlider(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(sldTime.getValue()));
         songTimeChanged=true;
     }
 
-    
+    /**
+     * Method which is invoked after clicking on Table View with songs.
+     * It checks if item on the list was double-clicked - if yes it invokes method
+     * for playing clicked song. If item was single-clicked it enables the proper buttons
+     * on the screen.
+     */
     @FXML
     private void clickOnSongs(MouseEvent event) {
         if(tblSongs.getSelectionModel().getSelectedItem() != null)
@@ -364,7 +432,13 @@ public class MainViewController implements Initializable {
             }
         }
     }
-
+    
+    /**
+     * Method which is invoked after clicking on Table View with playlists.
+     * It checks if item on the list was double-clicked - if yes it invokes method
+     * for playing the proper song from clicked playlist. If item was single-clicked it enables the proper buttons
+     * on the screen and sets the List View with songs on selected playlist.
+     */
     @FXML
     private void clickOnPlaylists(MouseEvent event) {
         disableButtonsForPlaylistSongs();
@@ -392,7 +466,11 @@ public class MainViewController implements Initializable {
             }
         }
     }
-
+    
+    /**
+     * Method which invoked after clicking on a List View with songs on selected playlist.
+     * It invokes method for playing the proper song from clicked playlist.
+     */
     @FXML
     private void clickOnPlaylistSongs(MouseEvent event) {
         if(lstPlaylistSongs.getSelectionModel().getSelectedItem() != null)
@@ -426,7 +504,11 @@ public class MainViewController implements Initializable {
             }
         }
     }
-
+    
+    /**
+     * Method which is invoked after clicking New Playlist button on the {@code MainView}.
+     * It creates and shows a new stage for creating new playlist.
+     */
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
         Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
@@ -441,21 +523,33 @@ public class MainViewController implements Initializable {
         stage.showAndWait();
         WindowDecorator.fadeInStage(currentStage);
     }
-
+    
+    /**
+     * Method which is invoked after clicking Edit Playlist button on the {@code MainView}.
+     * It creates and shows a new stage for editing playlist which is selected on Table View.
+     */
     @FXML
     private void clickEditPlaylist(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        WindowDecorator.fadeOutStage(currentStage);
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/PlaylistView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         PlaylistViewController controller = (PlaylistViewController) fxmlLoader.getController();
-        controller.setElementsForEditing(selectedPlaylist);
+        controller.setEditingMode(selectedPlaylist);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edit Playlist");
-        stage.setScene(new Scene(root));  
-        stage.show();
+        stage.setScene(new Scene(root));
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.showAndWait();
+        WindowDecorator.fadeInStage(currentStage);
     }
 
+    /**
+     * Method which is invoked after clicking Delete Playlist button on the {@code MainView}.
+     * It sends the request to the {@code MainModel} for the playlist selected on a Table View with playlists.
+     */
     @FXML
     private void clickDeletePlaylist(ActionEvent event) {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
@@ -472,7 +566,12 @@ public class MainViewController implements Initializable {
             disableButtonsForPlaylistSongs();
         }
     }
-
+    
+    /**
+     * Method which is invoked after clicking Move Song Up button on the {@code MainVIew}.
+     * It sends the request to the {@code MainModel} for moving selected song up on playlist.
+     * It also enables and siables the proper buttons.
+     */
     @FXML
     private void clickMoveUpOnPlaylist(ActionEvent event) {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
@@ -490,7 +589,12 @@ public class MainViewController implements Initializable {
             btnMoveDownOnPlaylist.setDisable(false);
         }
     }
-
+    
+    /**
+     * Method which is invoked after clicking Move Song Down button on the {@code MainVIew}.
+     * It sends the request to the {@code MainModel} for moving selected song down on playlist.
+     * It also enables and siables the proper buttons.
+     */
     @FXML
     private void clickMoveDownOnPlaylist(ActionEvent event) {
         Playlist selectedPlaylist = tblPlaylists.getSelectionModel().getSelectedItem();
@@ -508,7 +612,12 @@ public class MainViewController implements Initializable {
             btnMoveUpOnPlaylist.setDisable(false);            
         }
     }
-
+    
+    /**
+     * Method which is invoked after clicking Delete song on playlist button on
+     * {@code MainView}. It sends a request to the {@code MainModel} for deleting song selected
+     * on a list view with songs on playlist from selected playlist.
+     */
     @FXML
     private void clickDeleteSongInPlaylist(ActionEvent event) {
         Song selectedSong = lstPlaylistSongs.getSelectionModel().getSelectedItem();
@@ -523,6 +632,10 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /**
+     * Method which is invoked after clicking New Song button on the {@code MainView}.
+     * It creates and shows a new stage for creating new song.
+     */
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
         Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
@@ -538,20 +651,32 @@ public class MainViewController implements Initializable {
         WindowDecorator.fadeInStage(currentStage);
     }
 
+    /**
+     * Method which is invoked after clicking Edit Song button on the {@code MainView}.
+     * It creates and shows a new stage for editing song which is selected on Table View.
+     */
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        WindowDecorator.fadeOutStage(currentStage);
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongView.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         SongViewController controller = (SongViewController) fxmlLoader.getController();
-        controller.setElementsForEditing(selectedSong);
+        controller.setEditingMode(selectedSong);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edit Song");
         stage.setScene(new Scene(root));  
-        stage.show();  
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.showAndWait();
+        WindowDecorator.fadeInStage(currentStage); 
     }
 
+    /**
+     * Method which is invoked after clicking Delete Song button on the {@code MainView}.
+     * It sends the request to the {@code MainModel} for the song selected on a Table View with playlists.
+     */
     @FXML
     private void clickDeleteSong(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
@@ -568,6 +693,10 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /**
+     * Method which is invoked after clicking add song to palylist button on the {@code MainView}
+     * It sends a request to {@code MainModel} for adding a selected song to the selected playlist.
+     */
     @FXML
     private void clickAddSongToPlaylist(ActionEvent event) {
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
@@ -584,6 +713,14 @@ public class MainViewController implements Initializable {
         }
     }
     
+
+    /**
+     * Plays the song using {@code mediaPlayer}. If some song is currently playing it stops the current song
+     * to prevent imposing two songs on each other. If path for the song is wrong it displays an error.
+     * 
+     * @param songToPlay The song to play.
+     * @param mode The proper playing mode in which song should be played.
+     */
     private void playSong(Song songToPlay, PlayingMode mode)
     {
         if(mediaPlayer != null && mediaPlayer.getStatus().equals(Status.PLAYING))
@@ -609,6 +746,14 @@ public class MainViewController implements Initializable {
         }
     }    
     
+    /**
+     * Passes to the {@code MainModel} informations about currently playing song
+     * and playing mode and invokes methods for setting the {@code mediaPlayer}.
+     * Also adjusts elements on the {@code MainView} for given song.
+     * 
+     * @param songToPlay The song to be played.
+     * @param mode The selected playing mode.
+     */
     public void setMediaPlayer(Song songToPlay, PlayingMode mode)
     {
         setMediaPlayerSettings(songToPlay);  
@@ -623,7 +768,11 @@ public class MainViewController implements Initializable {
         selectPlayedSong(songToPlay, mode);
     }
     
-    
+    /**
+     * Invokes methods for setting the {@code mediaPlayer} settings.
+     * 
+     * @param songToPlay Th song to which mediaPlayer should be adjusted.
+     */
     private void setMediaPlayerSettings(Song songToPlay)
     {
         setAutoplay();
@@ -631,6 +780,11 @@ public class MainViewController implements Initializable {
         setFadingForStopping();
     }
     
+    /**
+     * Sets the autoplay of {@code mediaPlayer}. If button repeat is selected it goes to the
+     * start of the current song, if not it fires the Next Song button.
+     * 
+     */
     private void setAutoplay()
     {
         mediaPlayer.setOnEndOfMedia(new Runnable()
@@ -651,6 +805,11 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * Sets the listener for time property of the {@code mediaPlayer}.
+     * Everytime time property is changing it sets the value of time slider to the value
+     * compatible with time of the song.
+     */
     private void setTimeListener()
     {
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()
@@ -669,6 +828,10 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * Sets the Timeline object for fading the volume while stopping the song.
+     * After fading out the volume, {@code mediaPlayer} would be paused.
+     */
     private void setFadingForStopping()
     {
         stopPlayer = new Timeline(
@@ -685,6 +848,13 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * It selects the playing song on the proper table depending on the
+     * current Playing Mode.
+     * 
+     * @param playedSong Currently playing song.
+     * @param mode Current playing mode.
+     */
     private void selectPlayedSong(Song playedSong, PlayingMode mode)
     {
         if(mode == PlayingMode.PLAYLIST)
@@ -697,16 +867,26 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /**
+     * Returns the information if song can be played. It checks if enough time has passed since
+     * previous song was played. It prevents a bug while
+     * spamming on next/previous song button and playing multiple songs at the same time.
+     * 
+     * @return true if song can be played.
+     */
     private boolean isPlayable()
     {
-        if(System.currentTimeMillis() - unixTime < 200)
+        if(System.currentTimeMillis() - timeOfPlayingLastSong < 200)
         {
             return false;
         }
-        unixTime =  System.currentTimeMillis();
+        timeOfPlayingLastSong =  System.currentTimeMillis();
         return true;
     }
     
+    /**
+     * Switches the image of Play/Stop button.
+     */
     private void switchPlayButton()
     {
         if(buttonPlaySelected)
@@ -721,6 +901,9 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /**
+     * Sets the image and invokes methods for setting animations of play/stop button.
+     */
     private void setPlayButton()
     {
         btnPlaySong.setGraphic(new ImageView("/mytunes/gui/images/PlayButton.png"));
@@ -729,6 +912,9 @@ public class MainViewController implements Initializable {
         setPlayButtonHoverOut();
     }
     
+    /**
+     * Sets the Hover in animation of play/stop button.
+     */
     private void setPlayButtonHoverIn()
     {
         btnPlaySong.setOnMouseEntered(new EventHandler() 
@@ -750,6 +936,9 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * Sets the Hover out animation of play/stop button
+     */
     private void setPlayButtonHoverOut()
     {
         btnPlaySong.setOnMouseExited(new EventHandler() 
@@ -771,17 +960,26 @@ public class MainViewController implements Initializable {
         );
     }
     
+    /**
+     * Enables songs buttons.
+     */
     private void enableButtonsForSongs() {
         btnEditSong.setDisable(false);
         btnDeleteSongFromSongs.setDisable(false);
     }
     
+    /**
+     * Enables playlists buttons.
+     */
     private void enableButtonsForPlaylists() 
     {
         btnEditPlaylist.setDisable(false);
         btnDeletePlaylist.setDisable(false);
     }
     
+    /**
+     * Enables buttons for manipulating song.
+     */
     private void enablePlayingButtons() 
     {
         btnPreviousSong.setDisable(false);
@@ -790,39 +988,71 @@ public class MainViewController implements Initializable {
         btnMute.setDisable(false);
     }
     
+    /**
+     * Disables playlists buttons.
+     */
     private void disableButtonsForPlaylists() 
     {
         btnEditPlaylist.setDisable(true);
         btnDeletePlaylist.setDisable(true);
     }
     
+    /**
+     * Disable buttons for songs on playlist.
+     */
     private void disableButtonsForPlaylistSongs()
     {
         btnDeleteSongFromPlaylist.setDisable(true);
         btnMoveUpOnPlaylist.setDisable(true);
         btnMoveDownOnPlaylist.setDisable(true);
     }
-
+    
+    /**
+     * Sets the value of volume slider to the scaled value in range 0.0 to 10.0.
+     * 
+     * @param volume real volume value in range 0.0 to 1.0
+     */
     public void setVolume(double volume)
     {
         sldVolume.setValue(volume*10);
     }
+    
+    /**
+     * Returns the real volume value in range 0.0 to 1.0 by scaling it
+     * from value getted from the volume slider in range 0.0 to 10.0.
+     * 
+     * @return real volume value in range 0.0 to 1.0
+     */
     public double getVolume()
     {
         return sldVolume.getValue()/10;
     }
 
+    /**
+     * Method which is invoked after clicking on Close
+     * button on {@code CreateUserView}. It is closing the
+     * current stage.
+     */
     @FXML
     private void clickClose(ActionEvent event) {
         Platform.exit();
     }
-
+    
+    /**
+     * Method which is invoked after clicking on Minimalize
+     * button on {@code CreateUserView}. It is minimalizing the
+     * current stage.
+     */
     @FXML
     private void clickMinimalize(ActionEvent event) {
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
-
+    
+    /**
+     * Method which is invoked after clicking on a top stage bar. It performs a moving stage
+     * while dragging top stage bar.
+     */
     @FXML
     private void clickMouseDragged(MouseEvent event) {
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
@@ -830,6 +1060,10 @@ public class MainViewController implements Initializable {
         stage.setY(event.getScreenY() + yOffset);
     }
 
+    /**
+     * Method which is invoked after clicking on a top stage bar. It sets the data necessary for moving
+     * a stage.
+     */
     @FXML
     private void clickMousePressed(MouseEvent event) {
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();

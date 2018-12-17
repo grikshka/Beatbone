@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.gui.util;
 
 import java.util.Optional;
@@ -15,10 +10,22 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- *
- * @author Acer
+ * The {@code WarningDisplayer} class is responsible for
+ * displaying warning windows.
+ * @author schemabuoi
+ * @author kiddo
  */
+
 public class WarningDisplayer {
+    
+     /**
+     * Displays an error window in the given stage
+     * with a specified header and text content.
+     * 
+     * @param currentStage the stage to display this error window to.
+     * @param header the header that will be set on the error window's title.
+     * @param content the content that will be set on the error window's text area.
+     */
     
     public void displayError(Stage currentStage, String header, String content)
     {
@@ -43,6 +50,15 @@ public class WarningDisplayer {
         Optional<ButtonType> action = alert.showAndWait();
     }
     
+     /**
+     * Displays a confirmation window in the given stage
+     * with a specified header and text content.
+     * 
+     * @param currentStage the stage to display this confirmation window to.
+     * @param header the header that will be set on the confirmation window's title.
+     * @param content the content that will be set on the confirmation window's text area.
+     */
+     
     public Optional<ButtonType> displayConfirmation(Stage currentStage, String header, String content)
     {
         WindowDecorator.fadeOutStage(currentStage);

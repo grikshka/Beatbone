@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.gui.controller;
 
 import java.net.URL;
@@ -22,10 +17,15 @@ import mytunes.gui.model.UserModel;
 import mytunes.gui.util.WarningDisplayer;
 
 /**
- * FXML Controller class
- *
- * @author Acer
+ * The {@code CreateUserViewController} class is a controller for
+ * {@code CreateUserView}. It is responsible for sending request to model
+ * to create new user and for checking conditions for users address e-mail
+ * and password.
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
+
 public class CreateUserViewController implements Initializable {
     
     private UserModel model;
@@ -38,6 +38,9 @@ public class CreateUserViewController implements Initializable {
     @FXML
     private PasswordField txtRepeatPassword;
     
+    /**
+     * Creates connection with {@code UserModel} instance.
+     */
     public CreateUserViewController()
     {
         model = UserModel.createInstance();
@@ -51,6 +54,12 @@ public class CreateUserViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
+    /**
+     * Method which is invoked after clicking Create button on 
+     * {@code CreateUserView}. Its responsibility is creating a new user - it is
+     * displaying warnings if user data are incorrect and sending request 
+     * to model to create a new user.
+     */
     @FXML
     private void clickCreate(ActionEvent event) {
         Stage currentStage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
@@ -90,6 +99,12 @@ public class CreateUserViewController implements Initializable {
         }
     }
     
+    /**
+     * Checks if given e-mail address is correct.
+     * 
+     * @param email The e-mail to check
+     * @return true if e-mail is correct.
+     */
     private boolean isEmailCorrect(String email)
     {
         if(email.length()<5 || !email.contains("@") || !email.contains("."))
@@ -99,6 +114,12 @@ public class CreateUserViewController implements Initializable {
         return true;
     }
     
+    /**
+     * Returns all faults of given password as a list of strings.
+     * 
+     * @param password The password to check.
+     * @return List of strings.
+     */
     private List<String> getPasswordFaults(String password)
     {
         List<String> faults = new ArrayList();
@@ -122,6 +143,11 @@ public class CreateUserViewController implements Initializable {
 
     }
     
+    /**
+     * Method which is invoked after clicking on Close
+     * button on {@code CreateUserView}. It is closing the
+     * current stage.
+     */
     @FXML
     private void clickClose(ActionEvent event) {
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();

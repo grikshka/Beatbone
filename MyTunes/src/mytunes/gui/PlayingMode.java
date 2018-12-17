@@ -6,8 +6,9 @@
 package mytunes.gui;
 
 /**
- *
- * @author Acer
+ * 
+ * @author schemabuoi
+ * @author kiddo
  */
 public enum PlayingMode {
     

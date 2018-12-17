@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mytunes.gui.util;
 
 import javafx.animation.KeyFrame;
@@ -14,11 +9,19 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- *
- * @author Acer
+ * The {@code WindowDecorator} class is responsible for
+ * visual effects for windows.
+ * @author schemabuoi
+ * @author kiddo
  */
+
 public class WindowDecorator {
     
+    /**
+     * Lowers the opacity of the given stage in a specified timeframe.
+     * 
+     * @param stage the stage that this effect is applied to.
+     */
     public static void fadeOutStage(Stage stage)
     {
         Timeline timeline = new Timeline(
@@ -27,6 +30,11 @@ public class WindowDecorator {
             timeline.play();
     }
     
+    /**
+     * Resets the opacity of the given stage in a specified timeframe.
+     * 
+     * @param stage the stage that this effect is applied to.
+     */
     public static void fadeInStage(Stage stage)
     {
         Timeline timeline = new Timeline(
@@ -35,6 +43,12 @@ public class WindowDecorator {
         timeline.play();
     }
     
+    /**
+     * It sets the given stage's opacity to 0 on start-up
+     * and then resets it in a specified timeframe.
+     * 
+     * @param stage the stage that this effect is applied to.
+     */
     public static void showStage(Stage stage)
     {
         stage.setOpacity(0);

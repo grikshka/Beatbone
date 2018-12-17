@@ -18,7 +18,7 @@ import mytunes.gui.util.WindowDecorator;
  * @author schemabuoi
  * @author kiddo
  */
-public class MyTunes extends Application {
+public class Beatbone extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {

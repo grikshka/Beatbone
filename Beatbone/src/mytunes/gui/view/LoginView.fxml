@@ -31,7 +31,7 @@
          </font></PasswordField>
       <Pane layoutY="-1.0" onMouseDragged="#clickMouseDragged" onMousePressed="#clickMousePressed" prefHeight="30.0" prefWidth="591.0" />
       <Button layoutX="814.0" layoutY="2.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="30.0" prefWidth="40.0" stylesheets="@../css/ButtonClose.css" />
-      <Button layoutX="781.0" layoutY="2.0" mnemonicParsing="false" onAction="#clickMinimalize" prefHeight="30.0" prefWidth="37.0" stylesheets="@../css/ButtonMinimalize.css" />
+      <Button layoutX="777.0" layoutY="2.0" mnemonicParsing="false" onAction="#clickMinimalize" prefHeight="30.0" prefWidth="37.0" stylesheets="@../css/ButtonMinimalize.css" />
       <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="295.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/LogoHeader.png" />

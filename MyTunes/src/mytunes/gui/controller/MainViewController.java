@@ -380,6 +380,11 @@ public class MainViewController implements Initializable {
         model.switchShuffling();
     }
     
+    /**
+     * Method which is invoked after clicking mute button. It is 
+     * invoking method for setting the volume of {@code mediaPlayer} with value which depends
+     * on the mute button state.
+     */
     @FXML
     private void clickMute(ActionEvent event) {
         if(btnMute.isSelected())
